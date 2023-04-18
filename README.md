@@ -1,16 +1,8 @@
 # **Evaluating forest quality with Forest**
 
-**03/1/2023**  
-
-[TOC]
+R包forestat是基于Institute of Forest Resource Information Techniques,Chinese Academy of Forestry的doctor Fu L的天然林立地质量评价方法。实现的功能有，天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。
 
 ## Introduction
-
-### Overview
-
-R包forest是基于Institute of Forest Resource Information Techniques,Chinese Academy of Forestry的doctor Fu L的天然林立地质量评价方法。实现的功能有，天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。
-
- 
 
 ### Package dependencies
 
@@ -20,17 +12,13 @@ R包forest是基于Institute of Forest Resource Information Techniques,Chinese A
 | ggplot2     | https://CRAN.R-project.org/package=ggplot2 |
 | nlme        | https://CRAN.R-project.org/package=nlme    |
 
-### Supported os:
+### Supported OS
 
 Windows, Linux and Mac OS are currently supported.
-
- 
 
 ### Package installation
 
 You can install the released version of *localshiny* package from Cran or GitHub with the following command in R:
-
- 
 
 ```R
 #install package dependencie
@@ -44,19 +32,13 @@ install.packages("forest")
 devtools::install_github("xxx/forest")
 ```
 
- 
-
 To ensure you have successfully installed *forest*, try loading it into your R session.
 
 `library(forest)`
 
-
-
 ## Standard workflow
 
-
-
-### Quick Start
+### Quick start
 
 这里我们展示的是林立地质量评估的完整步骤。在class.plot的上游有一些步骤，在获得了AGE(Stand age of the tree)，H(Height of the tree)，S(Forest density index)，BA(Basal area of the tree)，Bio(Biomass of the tree)之后，应当自定义ID(Unique identifier for each tree)以及code(Codes for forest types)。这个代码块假设你有拥有了以上所述的数据。
 
@@ -89,7 +71,6 @@ forestData <- class.plot(forestData,model="Richards",
 
 其中参数model可以选择"Logistic"、"Richards"、"Korf"、"Gompertz"、"Weibull"、"Schumacher "这六个中的一个，这会使用对应的model形式建立H model；interval 是树高分类的区间，interval=5就是创建一个以5 stand ages作为区间的初始树高分类；number是树高分类区间的最大值，number=5即初始树高分类数最多为5；a,b,c 是拟合模型的初始参数，当拟合出现错误时，可以多尝试一些初始参数作为尝试。
 
-
 ### 用forestData绘制示例图
 
 forestData类的plot函数，使用经过class.plot函数处理过后的数据，可以分别绘制H Model,BA Model,Bio Model的Curve图，residual图，数据Scatter图，数据Scatter与模型拟合曲线图。
@@ -100,8 +81,6 @@ plot.forestData(x,model.type="H",
                 xlab=NA,ylab=NA,legend.lab="Site class",
                 title="Oak broadleaf mixed",...)
 ```
-
-![](C:\Users\86153\Desktop\1111.png)
 
 以上为使用默认参数与样本数据绘制的示例图
 
@@ -129,12 +108,3 @@ forestData类的summary函数，使用经过class.plot函数处理过后的数�
 ```R
 summary(forestData)
 ```
-
-
-
-
-
-
-
-
-

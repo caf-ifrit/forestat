@@ -1,6 +1,6 @@
-# **Evaluating forest quality with Forest**
+# **Evaluating forest quality with Forestat**
 
-R包forestat是基于Institute of Forest Resource Information Techniques,Chinese Academy of Forestry的doctor Fu L的天然林立地质量评价方法。实现的功能有，天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。
+R包`forestat`是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的符利勇博士的天然林立地质量评价方法。实现的功能有，天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。
 
 ## Introduction
 
@@ -18,23 +18,23 @@ Windows, Linux and Mac OS are currently supported.
 
 ### Package installation
 
-You can install the released version of *localshiny* package from Cran or GitHub with the following command in R:
+You can install the released version of *forestat* package from Cran or GitHub with the following command in R:
 
 ```R
 #install package dependencie
 install.packages(c("dplyr", "ggplot2", "nlme"))
 
 #install package
-install.packages("forest")
+install.packages("forestat")
 
 #install.packages("devtools")
 
-devtools::install_github("xxx/forest")
+devtools::install_github("caf-ifrit/forestat")
 ```
 
-To ensure you have successfully installed *forest*, try loading it into your R session.
+To ensure you have successfully installed *forestat*, try loading it into your R session.
 
-`library(forest)`
+`library(forestat)`
 
 ## Standard workflow
 

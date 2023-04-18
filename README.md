@@ -34,30 +34,37 @@ devtools::install_github("caf-ifrit/forestat/forestat")
 
 To ensure you have successfully installed *forestat*, try loading it into your R session.
 
-`library(forestat)`
+```R
+library(forestat)
+```
 
 ## Standard workflow
 
-### Quick start
+### 快速开始
 
 这里我们展示的是林立地质量评估的完整步骤。在class.plot的上游有一些步骤，在获得了AGE(Stand age of the tree)，H(Height of the tree)，S(Forest density index)，BA(Basal area of the tree)，Bio(Biomass of the tree)之后，应当自定义ID(Unique identifier for each tree)以及code(Codes for forest types)。这个代码块假设你有拥有了以上所述的数据。
 
 ```R
 data("forestData")
+
+head(select(forestData,ID,code,AGE,H,S,BA,Bio))
+
 #使用包中自带的forestData数据
 forestData <- class.plot(forestData,model="Richards",
                          interval=5,number=5,a=19,b=0.1,c=0.8)
 
-plot(forestData,model.type = "BA",plot.type = "Scatter",
-     xlab = "AGE",ylab = "BA",legend.lab = "LastGroup",
-     title = "Forest")
+plot(forestData,model.type="BA",plot.type="Scatter",
+     xlab="AGE",ylab ="BA",
+     legend.lab="LastGroup",title="Forest")
 
-forestData <- potential.productivity(forestData)
 #计算forestData的潜在生产力
-forestData <- reality.productivity(forestData)
+forestData <- potential.productivity(forestData)
+
 #计算forestData的现实生产力
-summary(forestData)
+forestData <- reality.productivity(forestData)
+
 #获得forestData的summary
+summary(forestData)
 ```
 
 ### 建立模型
@@ -76,10 +83,13 @@ forestData <- class.plot(forestData,model="Richards",
 forestData类的plot函数，使用经过class.plot函数处理过后的数据，可以分别绘制H Model,BA Model,Bio Model的Curve图，residual图，数据Scatter图，数据Scatter与模型拟合曲线图。
 
 ```R
-plot.forestData(x,model.type="H",
-                plot.type="Curve",
-                xlab=NA,ylab=NA,legend.lab="Site class",
-                title="Oak broadleaf mixed",...)
+plot(forestData,model.type="H",plot.type="Curve",
+     xlab="Stand age (year)",ylab="Height (m)",
+     legend.lab="Site class",title="Oak broadleaf")
+
+plot(forestData,model.type="H",plot.type="Curve",
+     xlab="Age",ylab="Height",
+     legend.lab="LASTGROUP",title="Broadleaf")
 ```
 
 以上为使用默认参数与样本数据绘制的示例图

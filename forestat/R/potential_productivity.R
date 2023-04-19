@@ -19,15 +19,15 @@ potential.productivity <- function(forestData, code=1,
   if(!inherits(forestData, "forestData")){
     stop("Only data in forestData format is available!")
   }
-  if(inherits(forestData$BAmodel,"modelobj")){
+  if(!inherits(forestData$BAmodel,"modelobj")){
     stop("BA model is missing!")
   }
-  if(inherits(forestData$Biomodel,"modelobj")){
+  if(!inherits(forestData$Biomodel,"modelobj")){
     stop("Bio model is missing!")
   }
-  data_BA <- forestData$estimateParameter$BA
-  data_V <- forestData$estimateParameter$Bio
-  N <- 2+max(forestData$grading$LASTGROUP)
+  data_BA <- forestData$output$BA
+  data_V <- forestData$output$Bio
+  N <- 2+max(forestData$Input$LASTGROUP)
   Nrow <- c(data_BA$code == code)
   parameterBA <- list(b1 = data_BA[Nrow,2:(N-1)] %>%
                         as.numeric(.),
@@ -46,7 +46,7 @@ potential.productivity <- function(forestData, code=1,
                        as.numeric(.),
                      S0_V = data_V[Nrow,2*N]
   )
-  LASTGROUP <- 1:max(forestData$grading$LASTGROUP)
+  LASTGROUP <- 1:max(forestData$Input$LASTGROUP)
   AGE <- age.min:age.max
   outputGet <- function(LASTGROUP){
     BAVI.opt(AGE,LASTGROUP,parameterBA,parameterV,left,right,e=1e-05,maxiter = 50,Smin=20,Smax=3000)

@@ -53,7 +53,7 @@ plot.forestData <-function(x,model.type="H",
 plot_Curve <- function(forestData,type="H",xlab="Stand age (year)",
                        ylab=NA,legend.lab="Site class",
                        title="Oak broadleaf mixed"){
-  temp <- forestData$grading
+  temp <- forestData$Input
   if(type == "H"){
     plotModel <- forestData$Hmodel$model
   } else if(type == "BA"){
@@ -81,7 +81,7 @@ plot_Curve <- function(forestData,type="H",xlab="Stand age (year)",
 plot_residuals <- function(forestData,type="H",xlab="residuals",
                            ylab=NA,legend.lab="Site class",
                            title="Oak broadleaf mixed"){
-  temp <- forestData$grading
+  temp <- forestData$Input
   if(type == "H"){
     plotModel <- forestData$Hmodel$model
     ylab <- ifelse(is.na(ylab),"Height fitted values",ylab)
@@ -111,7 +111,7 @@ plot_residuals <- function(forestData,type="H",xlab="residuals",
 plot_Scatter_Curve <- function(forestData,type="H",xlab="Stand age (year)",
                                ylab=NA,legend.lab="Site class",
                                title="Oak broadleaf mixed"){
-  temp <- forestData$grading
+  temp <- forestData$Input
   if(type == "H"){
     plotModel <- forestData$Hmodel$model
   } else if(type == "BA"){
@@ -138,7 +138,7 @@ plot_Scatter_Curve <- function(forestData,type="H",xlab="Stand age (year)",
 plot_Scatter <- function(forestData,type="H",xlab="Stand age (year)",
                          ylab=NA,legend.lab="Site class",
                          title="Oak broadleaf mixed"){
-  temp <- forestData$grading
+  temp <- forestData$Input
   if(type == "H"){
     plotModel <- forestData$Hmodel$model
     ylab <- ifelse(is.na(ylab),"Height (m)",ylab)

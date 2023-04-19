@@ -11,20 +11,20 @@ reality.productivity <- function(forestData, left=0.05, right=100) {
   if(!inherits(forestData, "forestData")){
     stop("Only data in forestData format is available!")
   }
-  if(inherits(forestData$BAmodel,"modelobj")){
+  if(!inherits(forestData$BAmodel,"modelobj")){
     stop("BA model is missing!")
   }
-  if(inherits(forestData$Biomodel,"modelobj")){
+  if(!inherits(forestData$Biomodel,"modelobj")){
     stop("Bio model is missing!")
   }
-  data <- forestData$grading
-  data_BA <- forestData$estimateParameter$BA
-  data_V <- forestData$estimateParameter$Bio
+  data <- forestData$Input
+  data_BA <- forestData$output$BA
+  data_V <- forestData$output$Bio
   data <- arrange(data,code)
   code.level <- unique(data$code)
   output <- data.frame()
   for (code in code.level) {
-    N <- 2+max(forestData$grading$LASTGROUP)
+    N <- 2+max(forestData$Input$LASTGROUP)
     Nrow <- c(data_BA$code == code)
     parameterBA <- list(b1 = data_BA[Nrow,2:(N-1)] %>%
                           as.numeric(.),

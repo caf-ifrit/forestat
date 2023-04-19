@@ -40,7 +40,7 @@ class.get <- function(data,model="Logistic",a=30,b=10,c=0.1,maxiter = 1000){
     k2 <- k2+1
   }
   data$LASTGROUP <- temp$LASTGROUP
-  data <- list(grading = data,
+  data <- list(Input = data,
                Hmodel = list(residual = residuals(modelInformation),
                              initialValue = list(a=a,b=b,c=c),
                              model = modelInformation)
@@ -480,7 +480,7 @@ parameterEstimate <- function(forestData){
                          a5 = coef(H_Model)[5,1],
                          b = coef(H_Model)[1,2],
                          c = coef(H_Model)[1,3])
-    H_jieguo <- data.frame(H_Coef, index.f(H_Model,forestData$grading$H,num,m=3)[4:ncol(index.f(H_Model,forestData$grading$H,num,m=3))])
+    H_jieguo <- data.frame(H_Coef, index.f(H_Model,forestData$Input$H,num,m=3)[4:ncol(index.f(H_Model,forestData$Input$H,num,m=3))])
   }
   if(inherits(forestData$BAmodel, "modelobj")){
     BA_Model <- forestData$BAmodel$model
@@ -496,8 +496,8 @@ parameterEstimate <- function(forestData){
                           d1 = coef(BA_Model)[1,4],
                           d2 = d1, d3= d1, d4= d1, d5 =d1,
                           Sbase = 1000,
-                          Smean = mean(forestData$grading$S))
-    BA_jieguo <- data.frame(BA_Coef, index.f(BA_Model,forestData$grading$BA,num,m=4)[5:ncol(index.f(BA_Model,forestData$grading$BA,num,m=4))])
+                          Smean = mean(forestData$Input$S))
+    BA_jieguo <- data.frame(BA_Coef, index.f(BA_Model,forestData$Input$BA,num,m=4)[5:ncol(index.f(BA_Model,forestData$Input$BA,num,m=4))])
   }
   if(inherits(forestData$Biomodel, "modelobj")){
     Bio_Model <- forestData$Biomodel$model
@@ -513,8 +513,8 @@ parameterEstimate <- function(forestData){
                            d1 = coef(Bio_Model)[1,4],
                            d2 = d1, d3= d1, d4= d1, d5 =d1,
                            Sbase = 1000,
-                           Smean = mean(forestData$grading$S))
-    Bio_jieguo <- data.frame(Bio_Coef, index.f(Bio_Model,forestData$grading$Bio,num,m=4)[5:ncol(index.f(Bio_Model,forestData$grading$Bio,num,m=4))])
+                           Smean = mean(forestData$Input$S))
+    Bio_jieguo <- data.frame(Bio_Coef, index.f(Bio_Model,forestData$Input$Bio,num,m=4)[5:ncol(index.f(Bio_Model,forestData$Input$Bio,num,m=4))])
   }
 
   parameter_list <- list()

@@ -29,10 +29,10 @@ class.plot <- function(data,model="Logistic",
                       Weibull=H ~ 1.3 + a * (1 - exp(-b * AGE^c)),
                       Schumacher=H ~ 1.3 + a * exp(-b/AGE)
   )
-  grading <- NULL
+  Input <- NULL
 
-  grading <- class.initial(data,interval = interval,number = number)
-  result <- class.get(grading,model = model,a = a,b = b,c = c,maxiter = maxiter)
+  Input <- class.initial(data,interval = interval,number = number)
+  result <- class.get(Input,model = model,a = a,b = b,c = c,maxiter = maxiter)
 
   result$Hmodel$formule = formulaList[[model]]
   class(result$Hmodel) <- c("modelobj",class(result$Hmodel))
@@ -42,7 +42,7 @@ class.plot <- function(data,model="Logistic",
                         Biomodel = NULL
                         )
                    )
-  data$LASTGROUP <- result$grading$LASTGROUP
+  data$LASTGROUP <- result$Input$LASTGROUP
   if(all(c("BA","S") %in% colnames(data))){
     BA_Model <- nlme(BA ~ a*(1-exp(-b*(S/1000)^c*AGE))^d, data=data, start=c(a=60, b=0.0002, c=10, d=0.1),
                      fixed = a+b+c+d~1,random = list(LASTGROUP=pdDiag(a~1)),
@@ -52,8 +52,8 @@ class.plot <- function(data,model="Logistic",
                            initialValue = list(a=60, b=0.0002, c=10, d=0.1),
                            model = BA_Model
                            )
-    result$grading$BA <- data$BA
-    result$grading$S <- data$S
+    result$Input$BA <- data$BA
+    result$Input$S <- data$S
     class(result$BAmodel) <- c("modelobj",class(result$BAmodel))
   }
   if(all(c("Bio","S") %in% colnames(data))){
@@ -65,13 +65,13 @@ class.plot <- function(data,model="Logistic",
                            initialValue = list(a=400, b=0.0008, c=8, d=0.16),
                            model = Bio_Model
     )
-    result$grading$Bio <- data$Bio
-    result$grading$S <- data$S
+    result$Input$Bio <- data$Bio
+    result$Input$S <- data$S
     class(result$Biomodel) <- c("modelobj",class(result$Biomodel))
   }
 
-  result$estimateParameter <- parameterEstimate(result)
-  class(result$grading) <- c("dataobj",class(result$grading))
+  result$output <- parameterEstimate(result)
+  class(result$Input) <- c("dataobj",class(result$Input))
   class(result) <- c("forestData",class(result))
   return(result)
 }

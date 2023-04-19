@@ -19,33 +19,33 @@ print.summary.forestData <- function (data, ...){
   Max_MI <- NULL
   BAI <- NULL
   VI <- NULL
-  if(all(c("BA","Bio") %in% colnames(data$grading))){
-    select(data$grading,H,S,BA,Bio) %>% summary(.) %>% print(.)
-  } else if("BA" %in% colnames(data$grading)){
-    select(data$grading,H,S,BA) %>% summary(.) %>% print(.)
-  } else if("Bio" %in% colnames(data$grading)){
-    select(data$grading,H,S,Bio) %>% summary(.) %>% print(.)
+  if(all(c("BA","Bio") %in% colnames(data$Input))){
+    select(data$Input,H,S,BA,Bio) %>% summary(.) %>% print(.)
+  } else if("BA" %in% colnames(data$Input)){
+    select(data$Input,H,S,BA) %>% summary(.) %>% print(.)
+  } else if("Bio" %in% colnames(data$Input)){
+    select(data$Input,H,S,Bio) %>% summary(.) %>% print(.)
   } else{
-    select(data$grading,H) %>% summary(.) %>% print(.)
+    select(data$Input,H) %>% summary(.) %>% print(.)
   }
   cat("\n")
   if(inherits(data$Hmodel,"modelobj")){
     model <- data$Hmodel$model
-    parameter <- data$estimateParameter$H
+    parameter <- data$output$H
     cat("Hmodel Parameters:\n\n")
     print(summary(model))
     print.parameters(parameter)
   }
   if(inherits(data$BAmodel,"modelobj")){
     model <- data$BAmodel$model
-    parameter <- data$estimateParameter$BA
+    parameter <- data$output$BA
     cat("BAmodel Parameters:\n\n")
     print(summary(model))
     print.parameters(parameter)
   }
   if(inherits(data$Biomodel,"modelobj")){
     model <- data$Biomodel$model
-    parameter <- data$estimateParameter$Bio
+    parameter <- data$output$Bio
     cat("Biomodel Parameters:\n\n")
     print(summary(model))
     print.parameters(parameter)

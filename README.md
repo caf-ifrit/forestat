@@ -12,8 +12,6 @@
 
 </div>
 
-[TOC]
-
 ## <div align="center">1 概述</div>
 
 *`forestat`* 包实现了天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。其中，树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和蓄积生长模型仅可用Richard模型构建。*`forestat`* 包依赖于天然林立地的数据，包中带有一份样例数据。
@@ -73,18 +71,23 @@ library(forestat)
 ```R
 # 加载包中 forestData 样例数据
 data("forestData")
+
 # 基于 forestData 数据建立模型，返回一个 forestData 类对象
 forestData <- class.plot(forestData,model="Richards",
                          interval=5,number=5,a=19,b=0.1,c=0.8)
-# 绘制 forestData 的散点图
+
+# 绘制断面积生长模型散点图
 plot(forestData,model.type = "BA",plot.type = "Scatter",
      xlab = "AGE",ylab = "BA",legend.lab = "LastGroup",
      title = "Forest")
-# 计算 forestData 的潜在生产力
+
+# 计算 forestData 对象的潜在生产力
 forestData <- potential.productivity(forestData)
-# 计算 forestData 的现实生产力
+
+# 计算 forestData 对象的现实生产力
 forestData <- reality.productivity(forestData)
-# 获取 forestData 的汇总数据
+
+# 获取 forestData 对象的汇总数据
 summary(forestData)
 ```
 
@@ -102,10 +105,13 @@ summary(forestData)
 ```R
 # 加载包中 forestData 样例数据
 data("forestData")
+
 # 或者读取包中 forestat.csv 样例数据
-forestData <- read.csv(system.file("extdata", "forestData", package = "forestat"))
+forestData <- read.csv(system.file("extdata", "forestData.csv", package = "forestat"))
+
 # 筛选 forestData 样例数据中ID、code、AGE、H、S、BA 和 Bio字段，并查看前6行数据
 head(dplyr::select(forestData,ID,code,AGE,H,S,BA,Bio))
+
 # 输出
           ID code AGE    H        S       BA      Bio
 1 6100005337    1  45 11.9 1508.468 50.13462 474.4957
@@ -171,9 +177,11 @@ forestData <- class.plot(forestData,model="Richards",
 
 ```R
 summary(forestData)
+```
 
+```R
 # 输出
-# first paragraph
+# 第一段
        H               S                 BA               Bio         
  Min.   : 2.00   Min.   :  15.94   Min.   : 0.3017   Min.   :  1.224  
  1st Qu.: 7.70   1st Qu.: 360.38   1st Qu.: 9.3241   1st Qu.: 53.233  
@@ -182,7 +190,7 @@ summary(forestData)
  3rd Qu.:11.90   3rd Qu.: 764.38   3rd Qu.:21.6455   3rd Qu.:147.737  
  Max.   :17.70   Max.   :1772.26   Max.   :52.6455   Max.   :474.496  
 
-# second paragraph
+# 第二段
 Hmodel Parameters:
 
 Nonlinear mixed-effects model fit by maximum likelihood
@@ -228,14 +236,16 @@ Model Formulas:
                                        Func                  Spe
  model1:H ~ 1.3 + a * (1 - exp(-b * AGE))^c model1:pdDiag(a ~ 1)
  
-# third paragraph(Similar in format to the second paragraph)
+# 第三段（与第二段数据格式相似）
 BAmodel Parameters:
-# Omitted here
+
+# 此处省略
 ......
 
-# fourth paragraph(Still similar in format to the second paragraph)
+# 第四段（与第二段数据格式相似）
 Biomodel Parameters:
-# Omitted here
+
+# 此处省略
 ......
 ```
 
@@ -255,19 +265,20 @@ Biomodel Parameters:
 plot(forestData,model.type="H",
      plot.type="Curve",
      xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
-     title="Oak broadleaf")
+     title="橡阔叶树高模型曲线图")
 
 # 绘制断面积生长模型散点图
 plot(forestData,model.type="BA",
      plot.type="Scatter",
      xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
-     title="Oak broadleaf")
+     title="橡阔叶断面积生长模型散点图")
 ```
 
 不同的`plot.type`绘制的样图如图4所示：
 
 <div align="center">
-  <img width="60%" src="img/plot.png">
+  <img width="60%" src="img/plot-1.png">
+  <img width="60%" src="img/plot-2.png">
   <p>图 4. 不同的plot.type绘制的样图</p>
 </div>
 
@@ -368,7 +379,7 @@ forestData$reality.productivity %>% head(.)
 
 ```R
 
-# output
+# 输出
   code         ID AGE    H class0 LASTGROUP       BA        S      Bio
 1    1 6100005337  45 11.9      4         4 50.13462 1508.468 474.4957
 2    1  410001607  42 16.7      5         5 47.22381 1490.493 444.5069
@@ -404,15 +415,17 @@ VI：蓄积潜在生产力
 
 ```R
 summary(forestData)
-
+```
+```R
 # 输出
-# first paragraph
+# 第一段
        H               S                 BA               Bio         
  Min.   : 2.00   Min.   :  15.94   Min.   : 0.3017   Min.   :  1.224  
-# Omitted here
+ 
+# 此处省略
 ......
 
-# fifth paragraph
+# 第五段
      Max_GI           Max_MI      
  Min.   :0.1244   Min.   : 1.009  
  1st Qu.:0.1757   1st Qu.: 1.517  

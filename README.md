@@ -38,23 +38,23 @@
 在 R 中使用以下命令从 [CRAN](https://cran.r-project.org/web/packages/forestat/index.html) 安装 *`forestat`*  ：
 
 ```R
-#安装依赖的R包
+# 安装依赖的R包
 install.packages(c("dplyr", "ggplot2", "nlme"))
 
-#安装forestat
+# 安装forestat
 install.packages("forest")
 ```
 
 当然，你也可以在 R 中使用以下命令从 [GitHub](https://github.com/caf-ifrit/forestat) 安装 *`forestat`*  ：
 
 ```R
-#安装依赖的R包
+# 安装依赖的R包
 install.packages(c("dplyr", "ggplot2", "nlme"))
 
-#安装devtools
+# 安装devtools
 install.packages("devtools")
 
-#安装forestat
+# 安装forestat
 devtools::install_github("caf-ifrit/forestat/forestat")
 ```
 
@@ -277,8 +277,8 @@ plot(forestData,model.type="BA",
 不同的`plot.type`绘制的样图如图4所示：
 
 <div align="center">
-  <img width="60%" src="img/plot-1.png">
-  <img width="60%" src="img/plot-2.png">
+  <img width="100%" src="img/plot-1.png">
+  <img width="100%" src="img/plot-2.png">
   <p>图 4. 不同的plot.type绘制的样图</p>
 </div>
 
@@ -330,25 +330,25 @@ forestData$potential.productivity %>% head(.)
 
 输出结果中，各字段含义如下：
 
-Max_GI：最大林分断面积
+`Max_GI`：最大林分断面积
 
-Max_MI：蓄积最大生长量
+`Max_MI`：蓄积最大生长量
 
-N1：达到潜在生长量对应的林分株数
+`N1`：达到潜在生长量对应的林分株数
 
-D1：达到潜在生长里对应的林分平均直径
+`D1`：达到潜在生长里对应的林分平均直径
 
-S0： 初始林分密度指数
+`S0`： 初始林分密度指数
 
-S1：达到潜在生长里对应的林分最佳密度指数
+`S1`：达到潜在生长里对应的林分最佳密度指数
 
 G0：初始林分每公顷断面积
 
-G1：达到潜在生长量对应的林分每公项断面积(1年以后)
+`G1`：达到潜在生长量对应的林分每公项断面积(1年以后)
 
-M0：初始林分每公项蓄积
+`M0`：初始林分每公项蓄积
 
-M1：达到潜在生长量对应的林分每公项蓄积
+`M1`：达到潜在生长量对应的林分每公项蓄积
 
 </details>
 </details>
@@ -378,7 +378,6 @@ forestData$reality.productivity %>% head(.)
 ```
 
 ```R
-
 # 输出
   code         ID AGE    H class0 LASTGROUP       BA        S      Bio
 1    1 6100005337  45 11.9      4         4 50.13462 1508.468 474.4957
@@ -398,9 +397,9 @@ forestData$reality.productivity %>% head(.)
 
 输出结果中，各字段含义如下：
 
-BAI：蓄积现实生产力
+`BAI`：蓄积现实生产力
 
-VI：蓄积潜在生产力
+`VI`：蓄积潜在生产力
 
 </details>
 </details>
@@ -416,6 +415,7 @@ VI：蓄积潜在生产力
 ```R
 summary(forestData)
 ```
+
 ```R
 # 输出
 # 第一段

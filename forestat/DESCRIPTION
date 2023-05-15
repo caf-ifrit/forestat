@@ -2,23 +2,16 @@ Package: forestat
 Type: Package
 Title: Evaluating Forest Quality with Forestat
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: GPL-3
+Author: Liyong Fu <fuly@ifrit.ac.cn>, Zhong Wang <zhongwang@dlut.edu.cn>, Yuanyuan Han <hanyuanyuan@mail.dlut.edu.cn>
+Maintainer: Yuanyuan Han <jackhanyuan@foxmail.com>
+Description: Forestat is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry's "Natural Forest Stand Quality Evaluation Method". Its functions include the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. Using Forestat can provide reliable basis for accurately improving forest quality.
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-Depends: 
-    R (>= 2.10)
-RoxygenNote: 7.2.2
-Imports: 
-    dplyr,
-    ggplot2,
-    graphics,
-    nlme,
-    stats
-Suggests: 
-    knitr,
-    rmarkdown
+Depends: R (>= 2.10)
+RoxygenNote: 7.2.3
+Imports: dplyr, ggplot2, graphics, nlme, stats
+Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
+NeedsCompilation: no
+Packaged: 2023-05-15 12:20:05 UTC; jackhanyuan

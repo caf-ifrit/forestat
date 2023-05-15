@@ -2,8 +2,9 @@
 
 <p align="right"><strong>Forestat version:</strong> 0.1.0</p>
 <p align="right"><strong>Date:</strong> 04/22/2023 </p>
+<br>
 
-*`Forestat`* is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry's "Natural Forest Stand Quality Evaluation Method" [<sup>[1]</sup>](#refer-anchor-1). Its functions include the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. Using *`Forestat`* can provide reliable basis for accurately improving forest quality.
+*`Forestat`* is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry's "Natural Forest Stand Quality Evaluation Method" [<sup>[1]</sup>](#citation). Its functions include the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. Using *`Forestat`* can provide reliable basis for accurately improving forest quality.
 
 <div align="center">
 
@@ -19,7 +20,7 @@
 ### 1.1 *forestat* Flowchart
 
 <div align="center">
-  <img width="60%" src="img/flowchart.png">
+  <img width="70%" src="forestat/vignettes/img/flowchart.png">
   <p>Figure 1. Flowchart of <i>forestat</i></p>
 </div>
 
@@ -135,7 +136,7 @@ The `S (stand density index)`, `BA (stand basal area)`, and `Bio (stand biomass)
 In the subsequent calculation of potential productivity and actual productivity, the `BA Model` and `Bio Model` are required. That is, if the custom data lacks the `S`, `BA`, and `Bio` fields, potential productivity and actual productivity cannot be calculated.
 
 <div align="center">
-  <img width="60%" src="img/forestData.png">
+  <img width="70%" src="forestat/vignettes/img/forestData.png">
   <p>Figure 2. Custom data format requirements</p>
 </div>
 
@@ -143,7 +144,8 @@ In the subsequent calculation of potential productivity and actual productivity,
 
 <br>
 <details>
-<summary id="4.1.2" style="font-size:18px;"><strong>4.1.2 Build Stand Growth Model</strong></summary>
+<summary style="font-size:18px;"><strong>4.1.2 Build Stand Growth Model</strong></summary>
+<div id="4.1.2"></div>
 
 After the data is loaded, *`forestat`* will use the `class.plot()` function to build a stand growth model. If the custom data contains the `ID, code, AGE, H, S, BA, Bio` fields, the `H Model`, `BA Model`, and `Bio Model` will be built simultaneously. If only the `ID, code, AGE, H` fields are included, only the `H Model` will be built.
 
@@ -160,7 +162,7 @@ The `model` is the model used to build the `H Model` and can be selected from th
 The result returned by the `class.plot()` function is the `forestData` object, which includes `Input (input data and tree height classification results)`, `H model (tree height model)`, `BA model (stand basal area growth model)`, `Bio model (stand biomass growth model)`, and `output (model parameters)`.
 
 <div align="center">
-  <img width="60%" src="img/forestDataObj.png">
+  <img width="70%" src="forestat/vignettes/img/forestDataObj.png">
   <p>Figure 3. Structure of the forestData object</p>
 </div>
 
@@ -168,7 +170,8 @@ The result returned by the `class.plot()` function is the `forestData` object, w
 
 <br>
 <details>
-<summary id="4.1.3" style="font-size:18px;"><strong>4.1.3 Obtaining Summary Data</strong></summary>
+<summary style="font-size:18px;"><strong>4.1.3 Obtaining Summary Data</strong></summary>
+<div id="4.1.3"></div>
 
 To understand the establishment of the model, you can use the `summary(forestData)` function to obtain the summary data of the `forestData` object. The function returns the `summary.forestData` object and outputs the relevant data to the screen.
 
@@ -276,8 +279,8 @@ plot(forestData,model.type="BA",
 The sample plots produced by different `plot.type` values are shown in Figure 4:
 
 <div align="center">
-  <img width="100%" src="img/plot-1.png">
-  <img width="100%" src="img/plot-2.png">
+  <img width="100%" src="forestat/vignettes/img/plot-1.png">
+  <img width="100%" src="forestat/vignettes/img/plot-2.png">
   <p>Figure 4. Sample plots produced by different plot.type values</p>
 </div>
 
@@ -444,7 +447,7 @@ summary(forestData)
 </details>
 
 ## <div align="center">5 Citation</div>
-<div id="refer-anchor-1"></div>
+<div id="citation"></div>
 
 ```txt
 @article{lei2018methodology,

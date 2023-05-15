@@ -2,8 +2,9 @@
 
 <p align="right"><strong>Forestat version:</strong> 0.1.0</p>
 <p align="right"><strong>Date:</strong> 04/22/2023 </p>
+<br>
 
-*`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的`天然林立地质量评价方法`[<sup>[1]</sup>](#refer-anchor-1)开发的R包。实现的功能包括天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。使用 *`forestat`* 包可以为精准提升森林质量提供可靠依据。
+*`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的`天然林立地质量评价方法`[<sup>[1]</sup>](#citation)开发的R包。实现的功能包括天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。使用 *`forestat`* 包可以为精准提升森林质量提供可靠依据。
 
 <div align="center">
 
@@ -19,7 +20,7 @@
 ### 1.1 *forestat* 流程图
 
 <div align="center">
-  <img width="60%" src="img/flowchart.png">
+  <img width="70%" src="forestat/vignettes/img/flowchart.png">
   <p>图 1. <i>forestat</i>工作流程图</p>
 </div>
 
@@ -136,7 +137,7 @@ forestData <- read.csv("/path/to/your/folder/your_file.csv")
 在后续的潜在生产力和现实生产力计算中，断面积生长模型与蓄积生长模型是必须的。也就是自定义数据如果缺少`S`、`BA`和`Bio`字段将无法计算潜在生产力和现实生产力。
 
 <div align="center">
-  <img width="60%" src="img/forestData.png">
+  <img width="70%" src="forestat/vignettes/img/forestData.png">
   <p>图 2. 自定义数据格式要求</p>
 </div>
 
@@ -144,7 +145,8 @@ forestData <- read.csv("/path/to/your/folder/your_file.csv")
 
 <br>
 <details>
-<summary id="4.1.2" style="font-size:18px;"><strong>4.1.2 构建林分生长模型</strong></summary>
+<summary style="font-size:18px;"><strong>4.1.2 构建林分生长模型</strong></summary>
+<div id="4.1.2"></div>
 
 数据加载后，*`forestat`* 将使用`class.plot()`函数构建林分生长模型，如果自定义数据中同时包含`ID、code、AGE、H、S、BA、Bio`字段，则会同时构建`树高模型、断面积生长模型、蓄积生长模型`，如果只包含`ID、code、AGE、H`字段，则只会构建`树高模型`。
 
@@ -161,7 +163,7 @@ forestData <- class.plot(forestData,model="Richards",
 由`class.plot()`函数返回的结果为`forestData` 对象，包括`Input（输入数据和树高分级结果）`、`H model（树高模型）`、`BA model（断面积生长模型）`、`Bio model（蓄积生长模型）`以及`output（模型参数）`。
 
 <div align="center">
-  <img width="60%" src="img/forestDataObj.png">
+  <img width="70%" src="forestat/vignettes/img/forestDataObj.png">
   <p>图 3. forestData对象结构</p>
 </div>
 
@@ -169,7 +171,8 @@ forestData <- class.plot(forestData,model="Richards",
 
 <br>
 <details>
-<summary id="4.1.3" style="font-size:18px;"><strong>4.1.3 获取汇总数据</strong></summary>
+<summary style="font-size:18px;"><strong>4.1.3 获取汇总数据</strong></summary>
+<div id="4.1.3"></div>
 
 为了解模型的建立情况，可以使用`summary(forestData)`函数获取`forestData`对象汇总数据。该函数返回`summary.forestData`对象并将相关数据输出至屏幕。
 
@@ -277,8 +280,8 @@ plot(forestData,model.type="BA",
 不同的`plot.type`绘制的样图如图4所示：
 
 <div align="center">
-  <img width="100%" src="img/plot-1.png">
-  <img width="100%" src="img/plot-2.png">
+  <img width="100%" src="forestat/vignettes/img/plot-1.png">
+  <img width="100%" src="forestat/vignettes/img/plot-2.png">
   <p>图 4. 不同的plot.type绘制的样图</p>
 </div>
 
@@ -446,7 +449,7 @@ summary(forestData)
 
 ## <div align="center">5 引用</div>
 
-<div id="refer-anchor-1"></div>
+<div id="citation"></div>
 
 ```txt
 @article{lei2018methodology,

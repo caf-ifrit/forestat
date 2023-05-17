@@ -36,7 +36,7 @@
 ## <div align="center">2 安装</div>
 
 ### 2.1 从CRAN或GitHub安装
-在 R 中使用以下命令从 [CRAN](https://cran.r-project.org/web/packages/forestat/index.html) 安装 *`forestat`*  ：
+在 R 中使用以下命令从 [CRAN](https://CRAN.R-project.org/package=forestat) 安装 *`forestat`*  ：
 
 ```R
 # 安装依赖的R包
@@ -59,7 +59,7 @@ install.packages("devtools")
 devtools::install_github("caf-ifrit/forestat/forestat")
 ```
 
-### 2.2 加载  *forestat* 
+### 2.2 加载  *forestat*
 
 ```R
 library(forestat)

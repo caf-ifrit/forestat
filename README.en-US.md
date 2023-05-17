@@ -15,7 +15,7 @@
 
 ## <div align="center">1 Overview</div>
 
-*`Forestat`* package implements the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. The tree height models can be constructed using Richard model, Logistic model, Korf model, Gompertz model, Weibull model, and Schumacher model, while the sectional area growth models and stock growth models can only be constructed using Richard model. *`Forestat`* package relies on the data of natural forest stand, and a sample data is provided in the package.
+*`Forestat`* package implements the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. The tree height models can be constructed using Richard model, Logistic model, Korf model, Gompertz model, Weibull model, and Schumacher model, while the sectional area growth models and stock growth models can only be constructed using Richard model. *`forestat`* package relies on the data of natural forest stand, and a sample data is provided in the package.
 
 ### 1.1 *forestat* Flowchart
 
@@ -35,7 +35,7 @@
 ## <div align="center">2 Installation</div>
 
 ### 2.1 Install from CRAN or GitHub
-To install *`forestat`* from [CRAN](https://cran.r-project.org/web/packages/forestat/index.html) in R, use the following command:
+To install *`forestat`* from [CRAN](https://CRAN.R-project.org/package=forestat) in R, use the following command:
 
 ```R
 # Install required R packages

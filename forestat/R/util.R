@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #' @importFrom  nlme nlme pdDiag fixed.effects
 #' @importFrom  stats coef uniroot AIC BIC formula logLik var
 #' @importFrom graphics legend lines par points text

@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #' @title Calculate tree height grading parameters
 #' @description class.plot adds new variables: the original tree height grading and the adjusted tree height grading. And the existing variables are retained.
 #' @details Input takes a data.frame with three variables ID,AGE,H and returns the tree height grading value of every sample(rows in the data.frame).

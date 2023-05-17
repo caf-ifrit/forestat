@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #' @title Calculate the reality productivity.
 #' @description reality.productivity calculate the reality productivity of each tree based on model parameters(obtained from the parameterOutput function).
 #' @details reality.productivity takes data,data_BA,data_V parameters as required inputs.

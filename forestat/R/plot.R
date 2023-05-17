@@ -1,8 +1,9 @@
+# -*- coding: UTF-8 -*-
 #' @title ForestData Plot
 #' @description Plot example figures about the forestData.
 #' @param x A data of forestData class.
-#' @param model.type A character in one of the three characters H,BA,Bio.This means that the figure should use the model you choose to plot.
-#' @param plot.type A character in one of the four characters "Curve","residuals","Scatter_Curve","Scatter".This means that the picture is drawn of the type you have chosen
+#' @param model.type A character in one of the three characters H,BA,Bio.This means that the figure should use the model you have chosen to plot.
+#' @param plot.type A character in one of the four characters "Curve","residuals","Scatter_Curve","Scatter".This means that the picture is drawn of the type you have chosen.
 #' @param xlab The title for the x axis.
 #' @param ylab The title for the y axis.
 #' @param legend.lab The title for the legends.

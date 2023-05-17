@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #' @title ForestData Summary
 #' @description Gives summary information about the forestData.
 #' @details The summary includes the summary of raw data, the model, the model parameters, potential productivity and real productivity in forestData(if available)
@@ -10,7 +11,7 @@ summary.forestData <- function(object, ...){
 }
 
 
-print.summary.forestData <- function (data, ...){
+print.summary.forestData <- function (x, ...){
   H <- NULL
   S <- NULL
   BA <- NULL
@@ -19,6 +20,7 @@ print.summary.forestData <- function (data, ...){
   Max_MI <- NULL
   BAI <- NULL
   VI <- NULL
+  data <- x
   if(all(c("BA","Bio") %in% colnames(data$Input))){
     select(data$Input,H,S,BA,Bio) %>% summary(.) %>% print(.)
   } else if("BA" %in% colnames(data$Input)){
@@ -59,7 +61,8 @@ print.summary.forestData <- function (data, ...){
   }
 }
 
-print.parameters <- function(parameter){
+print.parameters <- function(x, ...){
+  parameter <- x
   cat("\nConcise Parameter Report:\n")
   cat("Model Coefficients:\n")
   print(parameter[c("a1","a2","a3","a4","a5","b","c")],row.names = F)

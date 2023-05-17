@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #' @title Calculate the potential productivity.
 #' @description potential.productivity calculate the potential productivity of each tree based on model parameters(obtained from the parameterOutput function).
 #' @details potential.productivity takes data_BA,data_V parameters as required inputs.

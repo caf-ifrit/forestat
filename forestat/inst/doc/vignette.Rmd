@@ -1,6 +1,10 @@
 ---
 title: "Evaluating Forest Quality with Forestat"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+  pdf_document:
+    toc: true
 vignette: >
   %\VignetteIndexEntry{forestat}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,7 +15,7 @@ vignette: >
 <p align="right"><strong>Date:</strong> 04/22/2023 </p>
 <br>
 
-*`Forestat`* is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry's "Natural Forest Stand Quality Evaluation Method" [<sup>[1]</sup>](#refer-anchor-1). Its functions include the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. Using *`Forestat`* can provide reliable basis for accurately improving forest quality.
+*`Forestat`* is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry's "Natural Forest Stand Quality Evaluation Method" [<sup>[1]</sup>](#refer-anchor-1). Its functions include the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. Using *`forestat`* can provide reliable basis for accurately improving forest quality.
 
 
 ## 1 Overview
@@ -36,7 +40,7 @@ vignette: >
 ## 2 Installation
 
 ### 2.1 Install from CRAN or GitHub
-To install *`forestat`* from [CRAN](https://cran.r-project.org/web/packages/forestat/index.html) in R, use the following command:
+To install *`forestat`* from [CRAN](https://CRAN.R-project.org/package=forestat) in R, use the following command:
 
 ```R
 # Install required R packages

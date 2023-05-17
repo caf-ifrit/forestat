@@ -1,3 +1,4 @@
+# -*- coding: UTF-8 -*-
 #' Subzone 6 Oak broadleaf mixed data
 #'
 #' Subzone 6 Oak broadleaf mixed data from fieldwork

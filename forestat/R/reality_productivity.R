@@ -6,6 +6,10 @@
 #' @param left Solving for the left boundary of the reality productivity.
 #' @param right Solving for the right boundary of the reality productivity.
 #' @return A forestData class in which a data.frame with reality productivity parameters is added.
+#' @examples
+#' \dontrun{
+#' forestData <- reality.productivity(forestData,left=0.05,right=100)
+#' }
 #' @export reality.productivity
 
 reality.productivity <- function(forestData, left=0.05, right=100) {

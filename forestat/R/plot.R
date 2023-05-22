@@ -1,14 +1,22 @@
 # -*- coding: UTF-8 -*-
 #' @title ForestData Plot
-#' @description Plot example figures about the forestData.
+#' @description Plot graphs about the forestData.
 #' @param x A data of forestData class.
-#' @param model.type A character in one of the three characters H,BA,Bio.This means that the figure should use the model you have chosen to plot.
-#' @param plot.type A character in one of the four characters "Curve","residuals","Scatter_Curve","Scatter".This means that the picture is drawn of the type you have chosen.
+#' @param model.type Type of model used for fitting, options are `H` (tree height model), `BA` (basal area growth model), or `Bio` (stocking growth model).
+#' @param plot.type Type of plot, options are `Curve` (curve plot), `Scatter_Curve` (scatter plot with curve), `residual` (residual plot), or `Scatter` (scatter plot).
 #' @param xlab The title for the x axis.
 #' @param ylab The title for the y axis.
 #' @param legend.lab The title for the legends.
-#' @param title The text for the title.
+#' @param title The text for the Plot title.
 #' @param ... Additional arguments affecting the figure plotted.
+#' @return A trellis plot object
+#' @examples
+#' \dontrun{
+#' plot(forestData, model.type="H",
+#'      plot.type="Curve",
+#'      xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
+#'      title="Curve of the Oak and Broadleaf Tree Height Model")
+#' }
 #' @export
 #' @import ggplot2
 #' @importFrom stats residuals fitted
@@ -50,7 +58,6 @@ plot.forestData <-function(x,model.type="H",
   }
 }
 
-
 plot_Curve <- function(forestData,type="H",xlab="Stand age (year)",
                        ylab=NA,legend.lab="Site class",
                        title="Oak broadleaf mixed"){
@@ -63,7 +70,6 @@ plot_Curve <- function(forestData,type="H",xlab="Stand age (year)",
     plotModel <- forestData$Biomodel$model
   }
 
-
   aa <- as.numeric(coef(plotModel)[,1])
   bb <- as.numeric(coef(plotModel)[,2])
   cc <- as.numeric(coef(plotModel)[,3])
@@ -74,6 +80,8 @@ plot_Curve <- function(forestData,type="H",xlab="Stand age (year)",
     dd <- NA
   }
   S <- mean(temp$S)
+  oldpar <- par(no.readonly = TRUE)    # save current graphical parameters
+  on.exit(par(oldpar))                 # reset graphical parameters on exit
   par(mfrow=c(1,1),mar=c(4.5,5.5,1,1))
   DrawFigure2(temp,aa,bb,cc,S,type,xlab,ylab,
               legend.lab,title,dd)
@@ -131,6 +139,8 @@ plot_Scatter_Curve <- function(forestData,type="H",xlab="Stand age (year)",
     dd <- NA
   }
   S <- mean(temp$S)
+  oldpar <- par(no.readonly = TRUE)    # save current graphical parameters
+  on.exit(par(oldpar))                 # reset graphical parameters on exit
   par(mfrow=c(1,1),mar=c(4.5,5.5,1,1))
   DrawFigure(temp,aa,bb,cc,S,type,xlab,ylab,
              legend.lab,title,dd)

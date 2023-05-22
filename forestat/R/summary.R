@@ -1,9 +1,14 @@
 # -*- coding: UTF-8 -*-
-#' @title ForestData Summary
-#' @description Gives summary information about the forestData.
+#' @title Summary of forestData
+#' @description Generates summary statistics for forestData objects.
 #' @details The summary includes the summary of raw data, the model, the model parameters, potential productivity and real productivity in forestData(if available)
-#' @param object Data of a forestData class(after class.plot).
+#' @param object A forestData object (after class.plot).
 #' @param ... Additional arguments affecting the summary produced.
+#' @return A summary object of class "summary.forestData"
+#' @examples
+#' \dontrun{
+#' summary(forestData)
+#' }
 #' @export
 summary.forestData <- function(object, ...){
   structure(object, class="summary.forestData")

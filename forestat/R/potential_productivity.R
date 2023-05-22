@@ -11,12 +11,19 @@
 #' @param e Accuracy parameters for solving the forest density index according to Newton's iterative method.
 #' @param maxiter Maximum number of iterations parameter for solving the forest density index according to Newton's iteration method.
 #' @return A forestData class in which a data.frame with potential productivity parameters is added.
+#' @examples
+#' \dontrun{
+#' forestData <- potential.productivity(forestData,code=1,
+#'                                      age.min=5,age.max=150,
+#'                                      left=0.05,right=100,
+#'                                      e=1e-05,maxiter=50)
+#' }
 #' @export potential.productivity
 
 potential.productivity <- function(forestData, code=1,
                                    age.min=5,age.max=150,
                                    left=0.05, right=100,
-                                   e=1e-05, maxiter = 50) {
+                                   e=1e-05, maxiter=50) {
   if(!inherits(forestData, "forestData")){
     stop("Only data in forestData format is available!")
   }

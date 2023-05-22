@@ -41,3 +41,11 @@ potential.productivity calculate the potential productivity of each tree based o
 \details{
 potential.productivity takes data_BA,data_V parameters as required inputs.
 }
+\examples{
+\dontrun{
+forestData <- potential.productivity(forestData,code=1,
+                                     age.min=5,age.max=150,
+                                     left=0.05,right=100,
+                                     e=1e-05,maxiter=50)
+}
+}

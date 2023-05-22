@@ -37,3 +37,10 @@ class.plot adds new variables: the original tree height grading and the adjusted
 \details{
 Input takes a data.frame with three variables ID,AGE,H and returns the tree height grading value of every sample(rows in the data.frame).
 }
+\examples{
+\dontrun{
+forestData <- class.plot(forestData,model="Richards",
+                         interval=5,number=5,
+                         a=19,b=0.1,c=0.8)
+}
+}

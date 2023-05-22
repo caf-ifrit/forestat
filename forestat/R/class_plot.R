@@ -9,10 +9,16 @@
 #' @param a,b,c The initial parameters of the fitted model.
 #' @param maxiter The maximum number of iterations to fit the model.
 #' @return A data of forestData class with output values, models and model parameters.
+#' @examples
+#' \dontrun{
+#' forestData <- class.plot(forestData,model="Richards",
+#'                          interval=5,number=5,
+#'                          a=19,b=0.1,c=0.8)
+#' }
 #' @export class.plot
 class.plot <- function(data,model="Logistic",
                        interval=5,number=5,a=30,b=10,c=0.5,
-                       maxiter = 1000){
+                       maxiter=1000){
   dataList <- c("ID","AGE","H","code")
   modelList <- c("Logistic","Richards","Korf",
                  "Gompertz","Weibull","Schumacher")

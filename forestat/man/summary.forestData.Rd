@@ -2,18 +2,26 @@
 % Please edit documentation in R/summary.R
 \name{summary.forestData}
 \alias{summary.forestData}
-\title{ForestData Summary}
+\title{Summary of forestData}
 \usage{
 \method{summary}{forestData}(object, ...)
 }
 \arguments{
-\item{object}{Data of a forestData class(after class.plot).}
+\item{object}{A forestData object (after class.plot).}
 
 \item{...}{Additional arguments affecting the summary produced.}
 }
+\value{
+A summary object of class "summary.forestData"
+}
 \description{
-Gives summary information about the forestData.
+Generates summary statistics for forestData objects.
 }
 \details{
 The summary includes the summary of raw data, the model, the model parameters, potential productivity and real productivity in forestData(if available)
+}
+\examples{
+\dontrun{
+summary(forestData)
+}
 }

@@ -22,3 +22,8 @@ reality.productivity calculate the reality productivity of each tree based on mo
 \details{
 reality.productivity takes data,data_BA,data_V parameters as required inputs.
 }
+\examples{
+\dontrun{
+forestData <- reality.productivity(forestData,left=0.05,right=100)
+}
+}

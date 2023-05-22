@@ -561,7 +561,8 @@ index.f<-function(model,var,num,m=6){
     TT<-c(TT1,rep(NA,m-length(TT1)))
     TT<-c(TT,FittingEvaluationIndex(fitted(model),var),AIC=AIC(model),BIC=BIC(model),logLik=as.numeric(logLik(model)))
   } else {
-    print("Please check the attribute of model!")
+    message("Please check the attribute of model!")
+    return(NULL)
   }
   TT<-rbind(TT,data.frame())
   names(TT)<-c(paste0("a",1:m), "pe","RMSE","R2","Var","TRE","AIC","BIC","logLik")

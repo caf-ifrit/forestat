@@ -18,9 +18,9 @@
 \arguments{
 \item{x}{A data of forestData class.}
 
-\item{model.type}{A character in one of the three characters H,BA,Bio.This means that the figure should use the model you have chosen to plot.}
+\item{model.type}{Type of model used for fitting, options are `H` (tree height model), `BA` (basal area growth model), or `Bio` (stocking growth model).}
 
-\item{plot.type}{A character in one of the four characters "Curve","residuals","Scatter_Curve","Scatter".This means that the picture is drawn of the type you have chosen.}
+\item{plot.type}{Type of plot, options are `Curve` (curve plot), `Scatter_Curve` (scatter plot with curve), `residual` (residual plot), or `Scatter` (scatter plot).}
 
 \item{xlab}{The title for the x axis.}
 
@@ -28,10 +28,21 @@
 
 \item{legend.lab}{The title for the legends.}
 
-\item{title}{The text for the title.}
+\item{title}{The text for the Plot title.}
 
 \item{...}{Additional arguments affecting the figure plotted.}
 }
+\value{
+A trellis plot object
+}
 \description{
-Plot example figures about the forestData.
+Plot graphs about the forestData.
+}
+\examples{
+\dontrun{
+plot(forestData, model.type="H",
+     plot.type="Curve",
+     xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
+     title="Curve of the Oak and Broadleaf Tree Height Model")
+}
 }

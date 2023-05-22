@@ -452,7 +452,7 @@ summary(forestData)
 ```txt
 @article{lei2018methodology,
   title={Methodology and applications of site quality assessment based on potential mean annual increment.},
-  author={Lei, XiangDong and Fu, LiYong and Li, Haikui and Li, YuTang and Tang, ShouZheng and others},
+  author={Lei Xiangdong, Fu Liyong, Li Haikui, Li Yutang, Tang Shouzheng},
   journal={Scientia Silvae Sinicae},
   volume={54},
   number={12},

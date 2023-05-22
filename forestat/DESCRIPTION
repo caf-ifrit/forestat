@@ -16,4 +16,4 @@ Imports: dplyr, ggplot2, graphics, nlme, stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-05-17 11:05:36 UTC; jackhanyuan
+Packaged: 2023-05-22 01:02:13 UTC; jackhanyuan

@@ -1,0 +1,16 @@
+citHeader("To cite forestat in publications use:")
+
+bibentry(
+  bibtype  = "Article",
+  title    = "Methodology and applications of site quality assessment based on potential mean annual increment.",
+  author   = "Lei Xiangdong, Fu Liyong, Li Haikui, Li Yutang, Tang Shouzheng",
+  journal  = "Scientia Silvae Sinicae",
+  year     = "2018",
+  volume   = "54",
+  number   = "12",
+  pages    = "116-126",
+  url      = "https://doi.org/10.11707/j.1001-7488.20181213",
+  textVersion = paste(
+
+  )
+)

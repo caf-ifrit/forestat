@@ -1,7 +1,7 @@
 # <div align="center"><strong>使用 Forestat 评估森林质量</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 0.1.0</p>
-<p align="right"><strong>Date:</strong> 04/22/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.0.0</p>
+<p align="right"><strong>Date:</strong> 05/22/2023 </p>
 <br>
 
 *`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的`天然林立地质量评价方法`[<sup>[1]</sup>](#citation)开发的R包。实现的功能包括天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。使用 *`forestat`* 包可以为精准提升森林质量提供可靠依据。
@@ -110,7 +110,8 @@ data("forestData")
 # 或者读取包中 forestat.csv 样例数据
 forestData <- read.csv(system.file("extdata", "forestData.csv", package = "forestat"))
 
-# 筛选 forestData 样例数据中ID、code、AGE、H、S、BA 和 Bio字段，并查看前6行数据
+# 筛选 forestData 样例数据中ID、code、AGE、H、S、BA 和 Bio字段
+# 并查看前6行数据
 head(dplyr::select(forestData,ID,code,AGE,H,S,BA,Bio))
 
 # 输出

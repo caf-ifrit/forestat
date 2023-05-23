@@ -7,7 +7,16 @@
 #' @param right Solving for the right boundary of the reality productivity.
 #' @return A forestData class in which a data.frame with reality productivity parameters is added.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' # Load sample data
+#' data("forestData")
+#'
+#' # Build a model based on the forestData and return a forestData class object
+#' forestData <- class.plot(forestData,model="Richards",
+#'                          interval=5,number=5,
+#'                          a=19,b=0.1,c=0.8)
+#'
+#' # Calculate the reality productivity of the forestData object
 #' forestData <- reality.productivity(forestData,left=0.05,right=100)
 #' }
 #' @export reality.productivity

@@ -1,11 +1,15 @@
 Package: forestat
 Type: Package
 Title: Evaluating the Quality of Natural Forest
-Version: 0.1.0
-Author: Liyong Fu <fuly@ifrit.ac.cn>, Zhong Wang <zhongwang@dlut.edu.cn>, Yuanyuan Han <hanyuanyuan@mail.dlut.edu.cn>
+Version: 1.0.0
+Authors@R: c(
+    person("Liyong Fu", role = "aut", email = "fuly@ifrit.ac.cn"),
+    person("Zhong Wang", role = "aut", email = "zhongwang@dlut.edu.cn"),
+    person("Yuanyuan Han", role = c("aut", "cre"), email = "jackhanyuan@foxmail.com")
+  )
 Maintainer: Yuanyuan Han <jackhanyuan@foxmail.com>
-Repository: CRAN, https://github.com/caf-ifrit/forestat
-Description: Evaluating the quality of natural forest, including height classification, tree height model establishment, sectional area growth and stock growth modeling, and calculation of actual and potential forest productivity.
+Repository: CRAN
+Description: Including tree height classification, tree height model establishment, sectional area growth and stock growth modeling, and calculation of actual and potential forest productivity.
 License: GPL (>= 3)
 Encoding: UTF-8
 Language: en-US
@@ -16,4 +20,8 @@ Imports: dplyr, ggplot2, graphics, nlme, stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-05-22 01:02:13 UTC; jackhanyuan
+Packaged: 2023-05-22 14:52:40 UTC; jackhanyuan
+Author: Liyong Fu [aut],
+  Zhong Wang [aut],
+  Yuanyuan Han [aut, cre]
+Date/Publication: 2023-05-22 18:20:02 UTC

@@ -42,7 +42,16 @@ potential.productivity calculate the potential productivity of each tree based o
 potential.productivity takes data_BA,data_V parameters as required inputs.
 }
 \examples{
-\dontrun{
+\donttest{
+# Load sample data
+data("forestData")
+
+# Build a model based on the forestData and return a forestData class object
+forestData <- class.plot(forestData,model="Richards",
+                         interval=5,number=5,
+                         a=19,b=0.1,c=0.8)
+
+# Calculate the potential productivity of the forestData object
 forestData <- potential.productivity(forestData,code=1,
                                      age.min=5,age.max=150,
                                      left=0.05,right=100,

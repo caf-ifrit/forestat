@@ -6,7 +6,16 @@
 #' @param ... Additional arguments affecting the summary produced.
 #' @return A summary object of class "summary.forestData"
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' # Load the forestat.csv sample data
+#' forestData <- read.csv(system.file("extdata", "forestData.csv", package = "forestat"))
+#'
+#' # Build a model based on the forestData and return a forestData class object
+#' forestData <- class.plot(forestData,model="Richards",
+#'                          interval=5,number=5,
+#'                          a=19,b=0.1,c=0.8)
+#'
+#' # Get the summary data of the forestData object
 #' summary(forestData)
 #' }
 #' @export

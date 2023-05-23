@@ -39,7 +39,16 @@ A trellis plot object
 Plot graphs about the forestData.
 }
 \examples{
-\dontrun{
+\donttest{
+# Load sample data
+data("forestData")
+
+# Build a model based on the forestData and return a forestData class object
+forestData <- class.plot(forestData,model="Richards",
+                         interval=5,number=5,
+                         a=19,b=0.1,c=0.8)
+
+# Plot the curve of the tree height model
 plot(forestData, model.type="H",
      plot.type="Curve",
      xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",

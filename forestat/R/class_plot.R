@@ -2,15 +2,19 @@
 #' @title Calculate tree height grading parameters
 #' @description class.plot adds new variables: the original tree height grading and the adjusted tree height grading. And the existing variables are retained.
 #' @details Input takes a data.frame with three variables ID,AGE,H and returns the tree height grading value of every sample(rows in the data.frame).
-#' @param data A data.frame data in which at least four columns are required as input: ID, code, AGE, H
-#' @param model A character in one of the six characters "Logistic","Richards","Korf","Gompertz","Weibull","Schumacher".This means that the calculation should use the model you choose to build the H model.
+#' @param data A data.frame data in which at least four columns are required as input: ID, code, AGE, H.
+#' @param model Type of model used for building the H model (tree height model), options are `Logistic`, `Richards`, `Korf`, `Gompertz`, `Weibull`, or `Schumacher`.
 #' @param interval The intervals for tree height classification.
 #' @param number The maximum value of the tree height classification interval.
 #' @param a,b,c The initial parameters of the fitted model.
 #' @param maxiter The maximum number of iterations to fit the model.
 #' @return A data of forestData class with output values, models and model parameters.
 #' @examples
-#' \dontrun{
+#' \donttest{
+#' # Load sample data
+#' data("forestData")
+#'
+#' # Build a model based on the forestData and return a forestData class object
 #' forestData <- class.plot(forestData,model="Richards",
 #'                          interval=5,number=5,
 #'                          a=19,b=0.1,c=0.8)

@@ -364,10 +364,10 @@ Tutorial</a></li>
 </div>
 
 <p align="right">
-<strong>Forestat version:</strong> 0.1.0
+<strong>Forestat version:</strong> 1.0.0
 </p>
 <p align="right">
-<strong>Date:</strong> 04/22/2023
+<strong>Date:</strong> 05/22/2023
 </p>
 <p><br></p>
 <p><em><code>Forestat</code></em> is an R package developed based on the
@@ -498,17 +498,18 @@ set that can be loaded and viewed using the following command:</p>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or read the forestat.csv sample data included in the package</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>forestData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;forestData.csv&quot;</span>, <span class="at">package =</span> <span class="st">&quot;forestat&quot;</span>))</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the ID, code, AGE, H, S, BA, and Bio fields from the forestData sample data and view the first 6 rows of data</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(forestData, ID, code, AGE, H, S, BA, Bio))</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Output</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>          ID code AGE    H        S       BA      Bio</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">6100005337</span>    <span class="dv">1</span>  <span class="dv">45</span> <span class="fl">11.9</span> <span class="fl">1508.468</span> <span class="fl">50.13462</span> <span class="fl">474.4957</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  <span class="dv">410001607</span>    <span class="dv">1</span>  <span class="dv">42</span> <span class="fl">16.7</span> <span class="fl">1490.493</span> <span class="fl">47.22381</span> <span class="fl">444.5069</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">6100005337</span>    <span class="dv">1</span>  <span class="dv">35</span> <span class="fl">11.0</span> <span class="fl">1401.944</span> <span class="fl">46.64877</span> <span class="fl">435.8741</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">6100005337</span>    <span class="dv">1</span>  <span class="dv">40</span> <span class="fl">12.8</span> <span class="fl">1303.489</span> <span class="fl">44.15220</span> <span class="fl">415.9098</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  <span class="dv">410001607</span>    <span class="dv">1</span>  <span class="dv">38</span> <span class="fl">15.2</span> <span class="fl">1350.941</span> <span class="fl">42.37152</span> <span class="fl">400.3925</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">6220002848</span>    <span class="dv">1</span>  <span class="dv">88</span> <span class="fl">11.2</span> <span class="fl">1631.235</span> <span class="fl">50.43886</span> <span class="fl">395.2503</span></span></code></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the ID, code, AGE, H, S, BA, and Bio fields from the forestData sample data </span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># and view the first 6 rows of data</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(forestData, ID, code, AGE, H, S, BA, Bio))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Output</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>          ID code AGE    H        S       BA      Bio</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="dv">6100005337</span>    <span class="dv">1</span>  <span class="dv">45</span> <span class="fl">11.9</span> <span class="fl">1508.468</span> <span class="fl">50.13462</span> <span class="fl">474.4957</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>  <span class="dv">410001607</span>    <span class="dv">1</span>  <span class="dv">42</span> <span class="fl">16.7</span> <span class="fl">1490.493</span> <span class="fl">47.22381</span> <span class="fl">444.5069</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="dv">6100005337</span>    <span class="dv">1</span>  <span class="dv">35</span> <span class="fl">11.0</span> <span class="fl">1401.944</span> <span class="fl">46.64877</span> <span class="fl">435.8741</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span> <span class="dv">6100005337</span>    <span class="dv">1</span>  <span class="dv">40</span> <span class="fl">12.8</span> <span class="fl">1303.489</span> <span class="fl">44.15220</span> <span class="fl">415.9098</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>  <span class="dv">410001607</span>    <span class="dv">1</span>  <span class="dv">38</span> <span class="fl">15.2</span> <span class="fl">1350.941</span> <span class="fl">42.37152</span> <span class="fl">400.3925</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span> <span class="dv">6220002848</span>    <span class="dv">1</span>  <span class="dv">88</span> <span class="fl">11.2</span> <span class="fl">1631.235</span> <span class="fl">50.43886</span> <span class="fl">395.2503</span></span></code></pre></div>
 <p>Of course, you can also choose to load custom data:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load custom data</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>forestData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/path/to/your/folder/your_file.csv&quot;</span>)</span></code></pre></div>
@@ -866,15 +867,16 @@ the potential and actual productivity data.</p>
 
 </div>
 <div class="sourceCode" id="cb19"><pre class="sourceCode txt"><code class="sourceCode default"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>@article{lei2018methodology,</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  title={Methodology and applications of site quality assessment based on potential mean annual increment.},</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  author={Lei Xiangdong, Fu Liyong, Li Haikui, Li Yutang, Tang Shouzheng},</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  journal={Scientia Silvae Sinicae},</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  volume={54},</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  number={12},</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  pages={116-126},</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  year={2018},</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  publisher={The Chinese Society of Forestry}</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  title={Methodology and applications of site quality assessment based on potential mean </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>         annual increment.},</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  author={Lei Xiangdong, Fu Liyong, Li Haikui, Li Yutang, Tang Shouzheng},</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  journal={Scientia Silvae Sinicae},</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>  volume={54},</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>  number={12},</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  pages={116-126},</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  year={2018},</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  publisher={The Chinese Society of Forestry}</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 </div>
 
 

@@ -38,9 +38,6 @@
 To install *`forestat`* from [CRAN](https://CRAN.R-project.org/package=forestat) in R, use the following command:
 
 ```R
-# Install required R packages
-install.packages(c("dplyr", "ggplot2", "nlme"))
-
 # Install forestat
 install.packages("forest")
 ```
@@ -48,9 +45,6 @@ install.packages("forest")
 Alternatively, you can install *`forestat`* from [GitHub](https://github.com/caf-ifrit/forestat) in R using the following command:
 
 ```R
-# Install required R packages
-install.packages(c("dplyr", "ggplot2", "nlme"))
-
 # Install devtools
 install.packages("devtools")
 

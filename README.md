@@ -39,19 +39,13 @@
 在 R 中使用以下命令从 [CRAN](https://CRAN.R-project.org/package=forestat) 安装 *`forestat`*  ：
 
 ```R
-# 安装依赖的R包
-install.packages(c("dplyr", "ggplot2", "nlme"))
-
 # 安装forestat
-install.packages("forest")
+install.packages("forestat")
 ```
 
 当然，你也可以在 R 中使用以下命令从 [GitHub](https://github.com/caf-ifrit/forestat) 安装 *`forestat`*  ：
 
 ```R
-# 安装依赖的R包
-install.packages(c("dplyr", "ggplot2", "nlme"))
-
 # 安装devtools
 install.packages("devtools")
 

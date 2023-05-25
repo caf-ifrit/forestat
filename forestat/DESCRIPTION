@@ -1,15 +1,23 @@
 Package: forestat
 Type: Package
 Title: Evaluating the Quality of Natural Forest
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
     person("Liyong Fu", role = "aut", email = "fuly@ifrit.ac.cn"),
+    person("Shirong Liu", role = "aut"),
+    person("Shouzheng Tang", role = "aut"),
+    person("Guangshuang Duan", role = "aut"),
     person("Zhong Wang", role = "aut", email = "zhongwang@dlut.edu.cn"),
+    person("Linyan Feng", role = "aut"),
+    person("Dongbo Xie", role = "aut"),
     person("Yuanyuan Han", role = c("aut", "cre"), email = "jackhanyuan@foxmail.com")
   )
+Description: Including tree height classification, tree height model establishment, sectional area growth and stock growth modeling, and calculation of actual and potential forest productivity.
 Maintainer: Yuanyuan Han <jackhanyuan@foxmail.com>
 Repository: CRAN
-Description: Including tree height classification, tree height model establishment, sectional area growth and stock growth modeling, and calculation of actual and potential forest productivity.
+URL: https://cran.r-project.org/package=forestat,
+        https://github.com/caf-ifrit/forestat
+BugReports: https://github.com/caf-ifrit/forestat/issues
 License: GPL (>= 3)
 Encoding: UTF-8
 Language: en-US
@@ -20,8 +28,13 @@ Imports: dplyr, ggplot2, graphics, nlme, stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-05-22 14:52:40 UTC; jackhanyuan
+Packaged: 2023-05-24 02:47:29 UTC; jackhanyuan
 Author: Liyong Fu [aut],
+  Shirong Liu [aut],
+  Shouzheng Tang [aut],
+  Guangshuang Duan [aut],
   Zhong Wang [aut],
+  Linyan Feng [aut],
+  Dongbo Xie [aut],
   Yuanyuan Han [aut, cre]
-Date/Publication: 2023-05-22 18:20:02 UTC
+Date/Publication: 2023-05-25 09:10:02 UTC

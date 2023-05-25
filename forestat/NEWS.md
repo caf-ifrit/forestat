@@ -1,6 +1,13 @@
 # Forestat
 
-## Version 1.0.0
+## Version 1.0.1 (2023-05-24)
+
+### Other
+
+* Added new authors and updated DESCRIPTION.
+* Updated vignette.
+
+## Version 1.0.0 (2023-05-22)
 
 ### New Features
 

@@ -1,7 +1,7 @@
 # <div align="center"><strong>Evaluating Forest Quality with Forestat</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 1.0.0</p>
-<p align="right"><strong>Date:</strong> 05/22/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.0.1</p>
+<p align="right"><strong>Date:</strong> 05/24/2023 </p>
 <br>
 
 *`Forestat`* is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry's "Natural Forest Stand Quality Evaluation Method" [<sup>[1]</sup>](#citation). Its functions include the classification of natural forest stand height, establishment of tree height models, sectional area growth models, and stock growth models, as well as the calculation of forest actual productivity and potential productivity. Using *`Forestat`* can provide reliable basis for accurately improving forest quality.

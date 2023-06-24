@@ -1,10 +1,10 @@
 # <div align="center"><strong>使用 Forestat 评估森林质量</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 1.0.1</p>
-<p align="right"><strong>Date:</strong> 05/24/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.0.2</p>
+<p align="right"><strong>Date:</strong> 06/25/2023 </p>
 <br>
 
-*`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的`天然林立地质量评价方法`[<sup>[1]</sup>](#citation)开发的R包。实现的功能包括天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。使用 *`forestat`* 包可以为精准提升森林质量提供可靠依据。
+*`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的`天然林立地质量评价方法`[<sup>[1]</sup>](#citation)开发的R包。实现的功能包括天然林基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。使用 *`forestat`* 包可以为精准提升森林质量提供可靠依据。
 
 <div align="center">
 
@@ -15,7 +15,7 @@
 
 ## <div align="center">1 概述</div>
 
-*`forestat`* 包实现了天然林立地树高分级的划分，树高模型、断面积生长模型、蓄积生长模型的建立，森林现实生产力与潜在生产力的计算。其中，树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和蓄积生长模型仅可用Richard模型构建。*`forestat`* 包依赖于天然林立地的数据，包中带有一份样例数据。
+*`forestat`* 包实现了天然林基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。其中，树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和生物量生长模型仅可用Richard模型构建。*`forestat`* 包依赖于天然林的样地数据，包中带有一份样例数据。
 
 ### 1.1 *forestat* 流程图
 
@@ -68,13 +68,14 @@ library(forestat)
 data("forestData")
 
 # 基于 forestData 数据建立模型，返回一个 forestData 类对象
-forestData <- class.plot(forestData,model="Richards",
-                         interval=5,number=5,a=19,b=0.1,c=0.8)
+forestData <- class.plot(forestData, model = "Richards",
+                         interval = 5, number = 5,
+                         H_start=c(a=20,b=0.05,c=1.0))
 
 # 绘制断面积生长模型散点图
 plot(forestData,model.type = "BA",plot.type = "Scatter",
      xlab = "AGE",ylab = "BA",legend.lab = "LastGroup",
-     title = "Forest")
+     title = "桦木阔叶混断面积生长模型散点图")
 
 # 计算 forestData 对象的潜在生产力
 forestData <- potential.productivity(forestData)
@@ -109,13 +110,13 @@ forestData <- read.csv(system.file("extdata", "forestData.csv", package = "fores
 head(dplyr::select(forestData,ID,code,AGE,H,S,BA,Bio))
 
 # 输出
-          ID code AGE    H        S       BA      Bio
-1 6100005337    1  45 11.9 1508.468 50.13462 474.4957
-2  410001607    1  42 16.7 1490.493 47.22381 444.5069
-3 6100005337    1  35 11.0 1401.944 46.64877 435.8741
-4 6100005337    1  40 12.8 1303.489 44.15220 415.9098
-5  410001607    1  38 15.2 1350.941 42.37152 400.3925
-6 6220002848    1  88 11.2 1631.235 50.43886 395.2503
+  ID code AGE   H         S       BA       Bio
+1  1    1  13 2.0 152.67461 4.899382 32.671551
+2  2    1  15 3.5  68.23825 1.387268  5.698105
+3  3    1  20 4.2 128.32683 3.388492 22.631467
+4  4    1  19 4.2 204.93928 4.375324 18.913886
+5  5    1  13 4.2  95.69713 1.904063  6.511951
+6  6    1  25 4.7 153.69394 4.129810 28.024739
 ```
 
 当然，你也可以选择加载自定义数据：
@@ -125,11 +126,11 @@ head(dplyr::select(forestData,ID,code,AGE,H,S,BA,Bio))
 forestData <- read.csv("/path/to/your/folder/your_file.csv")
 ```
 
-自定义数据要求为`csv`格式，数据中`ID（样地ID）`、`code（样地林类型代码）`、`AGE（林分平均年龄）`、`H（林分平均高）`是必须字段，用以建立`树高模型（H Model）`，并绘制相关示例图。
+自定义数据中`ID（样地ID）`、`code（样地林分类型代码）`、`AGE（林分平均年龄）`、`H（林分平均高）`是必须字段，用以建立`树高模型（H-model）`，并绘制相关示例图。
 
-`S（林分密度指数）`、`BA（林面积）`、`Bio（林生物量）`是可选的字段，用以建立`断面积生长模型（BA Model）`与`蓄积生长模型（Bio Model）`。
+`S（林分密度指数）`、`BA（林分断面积）`、`Bio（林分生物量）`是可选的字段，用以建立`断面积生长模型（BA-model）`与`生物量生长模型（Bio-model）`。
 
-在后续的潜在生产力和现实生产力计算中，断面积生长模型与蓄积生长模型是必须的。也就是自定义数据如果缺少`S`、`BA`和`Bio`字段将无法计算潜在生产力和现实生产力。
+在后续的潜在生产力和现实生产力计算中，断面积生长模型与生物量生长模型是必须的。也就是自定义数据如果缺少`S`、`BA`和`Bio`字段将无法计算潜在生产力和现实生产力。
 
 <div align="center">
   <img width="70%" src="forestat/vignettes/img/forestData.png">
@@ -143,19 +144,24 @@ forestData <- read.csv("/path/to/your/folder/your_file.csv")
 <summary style="font-size:18px;"><strong>4.1.2 构建林分生长模型</strong></summary>
 <div id="4.1.2"></div>
 
-数据加载后，*`forestat`* 将使用`class.plot()`函数构建林分生长模型，如果自定义数据中同时包含`ID、code、AGE、H、S、BA、Bio`字段，则会同时构建`树高模型、断面积生长模型、蓄积生长模型`，如果只包含`ID、code、AGE、H`字段，则只会构建`树高模型`。
+数据加载后，*`forestat`* 将使用`class.plot()`函数构建林分生长模型，如果自定义数据中同时包含`ID、code、AGE、H、S、BA、Bio`字段，则会同时构建`树高模型、断面积生长模型、生物量生长模型`，如果只包含`ID、code、AGE、H`字段，则只会构建`树高模型`。
 
 ```R
 # 选用 Richards 模型构建林分生长模型
-# interval=5表示初始树高分类的林分年龄区间设置为5，number=5表示初始树高分类数最多为5
-# 拟合模型的初始参数a=19, b=0.1, c=0.8
-forestData <- class.plot(forestData,model="Richards",
-                         interval=5,number=5,a=19,b=0.1,c=0.8)
+# interval=5表示初始树高分类的林分年龄区间设置为5，number=5表示初始树高分类数最多为5，maxiter=1000表示拟合模型的最大次数为1000
+# 树高模型拟合的初始参数H_start默认为c(a=20,b=0.05,c=1.0)
+# 断面积生长模型拟合的初始参数BA_start默认为c(a=80, b=0.0001, c=8, d=0.1)
+# 生物量生长模型拟合的初始参数Bio_start默认为c(a=450, b=0.0001, c=10, d=0.1)
+forestData <- class.plot(forestData, model = "Richards",
+                         interval = 5, number = 5, maxiter=1000,
+                         H_start=c(a=20,b=0.05,c=1.0),
+                         BA_start = c(a=80, b=0.0001, c=8, d=0.1),
+                         Bio_start=c(a=450, b=0.0001, c=10, d=0.1))
 ```
 
-其中，`model`为构建树高模型时选用的模型，可在`"Logistic"、"Richards"、"Korf"、"Gompertz"、"Weibull"、"Schumacher"`模型中任选一个，断面积生长模型和蓄积生长模型默认使用Richard模型构建。`interval`为初始树高分类的林分年龄区间，number为初始树高分类数的最大值。`a, b, c` 是拟合模型的初始参数，当拟合出现错误时，可以多尝试一些初始参数作为尝试。
+其中，`model`为构建树高模型时选用的模型，可在`"Logistic"、"Richards"、"Korf"、"Gompertz"、"Weibull"、"Schumacher"`模型中任选一个，断面积生长模型和生物量生长模型默认使用Richard模型构建。`interval`为初始树高分类的林分年龄区间，number为初始树高分类数的最大值，`maxiter`为最大拟合次数。`H_start` 是拟合树高模型的初始参数，`BA_start` 是拟合断面积生长模型的初始参数，`H_start` 是拟合生物量生长模型的初始参数，当拟合出现错误时，可以多尝试一些初始参数作为尝试。
 
-由`class.plot()`函数返回的结果为`forestData` 对象，包括`Input（输入数据和树高分级结果）`、`H model（树高模型）`、`BA model（断面积生长模型）`、`Bio model（蓄积生长模型）`以及`output（模型参数）`。
+由`class.plot()`函数返回的结果为`forestData` 对象，包括`Input`（输入数据和树高分级结果）、`Hmodel`（H-model: 树高模型）、`BAmodel`（BA-model: 断面积生长模型）、`Biomodel`（Bio-model: 生物量生长模型）以及`output`（模型参数）。
 
 <div align="center">
   <img width="70%" src="forestat/vignettes/img/forestDataObj.png">
@@ -171,7 +177,7 @@ forestData <- class.plot(forestData,model="Richards",
 
 为了解模型的建立情况，可以使用`summary(forestData)`函数获取`forestData`对象汇总数据。该函数返回`summary.forestData`对象并将相关数据输出至屏幕。
 
-输出的第一段为输入数据的汇总，第二、三、四段分别为`H model（树高模型）`、`BA model（断面积生长模型）`、`Bio model（蓄积生长模型）`的参数及其精简报告。
+输出的第一段为输入数据的汇总，第二、三、四段分别为`H-model`、`BA-model`、`Bio-model`的参数及其精简报告。
 
 ```R
 summary(forestData)
@@ -256,20 +262,20 @@ Biomodel Parameters:
 
 经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，就可以使用`plot()`函数绘制图像。
 
-其中，`model.type`为绘图使用的模型，可以选择`H`（树高模型）、`BA`（断面积生长模型）或者`Bio`（蓄积生长模型）。`plot.type`为绘图的类型，可以选择`Curve`（曲线图）、`Scatter_Curve`（散点曲线图）、`residual`（残差图）、`Scatter`（散点图）或者。`xlab`、`ylab`、`legend.lab`、`title`分别为`x轴标题`、`y轴标题`、`图例`、`图像标题`。
+其中，`model.type`为绘图使用的模型，可以选择`H`（树高模型）、`BA`（断面积生长模型）或者`Bio`（生物量生长模型）。`plot.type`为绘图的类型，可以选择`Curve`（曲线图）、`Scatter_Curve`（散点曲线图）、`residual`（残差图）、`Scatter`（散点图）。`xlab`、`ylab`、`legend.lab`、`title`分别为`x轴标题`、`y轴标题`、`图例`、`图像标题`。
 
 ```R
 # 绘制树高模型的曲线图
 plot(forestData,model.type="H",
      plot.type="Curve",
-     xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
-     title="橡阔叶树高模型曲线图")
+     xlab="年龄(year)",ylab="树高(m)",legend.lab="立地等级",
+     title="桦木阔叶混树高模型曲线图")
 
 # 绘制断面积生长模型散点图
 plot(forestData,model.type="BA",
      plot.type="Scatter",
-     xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
-     title="橡阔叶断面积生长模型散点图")
+     xlab="年龄(year)",ylab="树高(m)",legend.lab="立地等级",
+     title="桦木阔叶混断面积生长模型散点图")
 ```
 
 不同的`plot.type`绘制的样图如图4所示：
@@ -284,9 +290,9 @@ plot(forestData,model.type="BA",
 
 <br>
 <details>
-<summary style="font-size:21px;"><strong>4.3 计算森林的潜在生产力</strong></summary>
+<summary style="font-size:21px;"><strong>4.3 计算林分潜在生产力</strong></summary>
 
-经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，就可以使用`potential.productivity()`函数计算森林的潜在生产力。在计算之前，要求`forestData` 对象中`BA model`和`Bio model`已经建立。
+经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，就可以使用`potential.productivity()`函数计算林分潜在生产力。在计算之前，要求`forestData` 对象中`BA-model`和`Bio-model`已经建立。
 
 ```R
 forestData <- potential.productivity(forestData, code=1,
@@ -295,7 +301,7 @@ forestData <- potential.productivity(forestData, code=1,
                                      e=1e-05, maxiter = 50) 
 ```
 
-其中，参数`code`为计算潜在生产力使用的森林类型代码。`age.min`和`age.max`分别为林分年龄的最小值和最大值，潜在生产力的计算会在最小值和最大值的区间中进行。`left`和`right`为拟合模型的初始参数，当拟合出现错误时，可以多尝试一些初始参数作为尝试。`e`为拟合模型的精度，当残差低于`e`时，认为模型收敛并停止拟合。`maxiter`为拟合模型的最大次数，当拟合次数等于`maxiter`时，认为模型收敛并停止拟合。
+其中，参数`code`为计算潜在生产力使用的林分类型代码。`age.min`和`age.max`分别为林分年龄的最小值和最大值，潜在生产力的计算会在最小值和最大值的区间中进行。`left`和`right`为拟合模型的初始参数，当拟合出现错误时，可以多尝试一些初始参数作为尝试。`e`为拟合模型的精度，当残差低于`e`时，认为模型收敛并停止拟合。`maxiter`为拟合模型的最大次数，当拟合次数等于`maxiter`时，认为模型收敛并停止拟合。
 
 <br>
 <details>
@@ -328,34 +334,34 @@ forestData$potential.productivity %>% head(.)
 
 输出结果中，各字段含义如下：
 
-`Max_GI`：最大林分断面积
+`Max_GI`：最大年生长量
 
-`Max_MI`：蓄积最大生长量
+`Max_MI`：林分生物量最大年生长量
 
 `N1`：达到潜在生长量对应的林分株数
 
-`D1`：达到潜在生长里对应的林分平均直径
+`D1`：达到潜在生长量对应的林分平均直径
 
 `S0`： 初始林分密度指数
 
-`S1`：达到潜在生长里对应的林分最佳密度指数
+`S1`：达到潜在生长量对应的最佳林分密度指数
 
 G0：初始林分每公顷断面积
 
-`G1`：达到潜在生长量对应的林分每公项断面积(1年以后)
+`G1`：达到潜在生长量对应的林分每公顷断面积(1年以后)
 
-`M0`：初始林分每公项蓄积
+`M0`：初始林分每公顷生物量
 
-`M1`：达到潜在生长量对应的林分每公项蓄积
+`M1`：达到潜在生长量对应的林分每公顷生物量
 
 </details>
 </details>
 
 <br>
 <details>
-<summary style="font-size:20px;"><strong>4.4 计算森林的现实生产力</strong></summary>
+<summary style="font-size:20px;"><strong>4.4 计算林分现实生产力</strong></summary>
 
-经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，可以使用`reality.productivity()`函数计算森林的现实生产力。在计算之前，要求`forestData` 对象中`BA model`和`Bio model`已经建立。
+经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，可以使用`reality.productivity()`函数计算林分现实生产力。在计算之前，要求`forestData` 对象中`BA model`和`Bio model`已经建立。
 
 ```R
 forestData <- reality.productivity(forestData, 
@@ -395,9 +401,9 @@ forestData$reality.productivity %>% head(.)
 
 输出结果中，各字段含义如下：
 
-`BAI`：蓄积现实生产力
+`BAI`：生物量现实生产力
 
-`VI`：蓄积潜在生产力
+`VI`：生物量潜在生产力
 
 </details>
 </details>
@@ -406,7 +412,7 @@ forestData$reality.productivity %>% head(.)
 <details>
 <summary style="font-size:20px;"><strong>4.5 潜在生产力和现实生产力数据详情</strong></summary>
 
-在得到森林潜在生产力与现实生产力后，可以使用`summary(forestData)`函数获取`forestData`对象汇总数据。该函数返回`summary.forestData`对象并将相关数据输出至屏幕。
+在得到林分潜在生产力与现实生产力后，可以使用`summary(forestData)`函数获取`forestData`对象汇总数据。该函数返回`summary.forestData`对象并将相关数据输出至屏幕。
 
 输出的前四段在[4.1.3](#4.1.3)中已经介绍，第五段为潜在生产力与现实生产力数据详情。
 

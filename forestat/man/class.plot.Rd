@@ -2,40 +2,44 @@
 % Please edit documentation in R/class_plot.R
 \name{class.plot}
 \alias{class.plot}
-\title{Calculate tree height grading parameters}
+\title{Calculate the site classes based on stand height growth}
 \usage{
 class.plot(
   data,
-  model = "Logistic",
+  model = "Richards",
   interval = 5,
   number = 5,
-  a = 30,
-  b = 10,
-  c = 0.5,
-  maxiter = 1000
+  maxiter = 1000,
+  H_start = c(a = 20, b = 0.05, c = 1),
+  BA_start = c(a = 80, b = 1e-04, c = 8, d = 0.1),
+  Bio_start = c(a = 450, b = 1e-04, c = 12, d = 0.1)
 )
 }
 \arguments{
 \item{data}{A data.frame data in which at least four columns are required as input: ID, code, AGE, H.}
 
-\item{model}{Type of model used for building the H model (tree height model), options are `Logistic`, `Richards`, `Korf`, `Gompertz`, `Weibull`, or `Schumacher`.}
+\item{model}{Type of model used for building the H-model (stand height model), options are `Logistic`, `Richards`, `Korf`, `Gompertz`, `Weibull`, or `Schumacher`.}
 
-\item{interval}{The intervals for tree height classification.}
+\item{interval}{The initial stand age interval for height classes.}
 
-\item{number}{The maximum value of the tree height classification interval.}
+\item{number}{The maximum number of initial height classes.}
 
-\item{a, b, c}{The initial parameters of the fitted model.}
+\item{maxiter}{The maximum number of iterations to fit the H-model.}
 
-\item{maxiter}{The maximum number of iterations to fit the model.}
+\item{H_start}{The initial parameters for fitting the H-model, the default value is c(a=20,b=0.05,c=1.0).}
+
+\item{BA_start}{The initial parameters for fitting the BA-model, the default value is c(a = 80, b = 0.0001, c = 8, d = 0.1).}
+
+\item{Bio_start}{The initial parameters for fitting the Bio-model, the default value is c(a=450, b=0.0001, c=12, d=0.1).}
 }
 \value{
 A data of forestData class with output values, models and model parameters.
 }
 \description{
-class.plot adds new variables: the original tree height grading and the adjusted tree height grading. And the existing variables are retained.
+class.plot adds new variables: the original height classes and the adjusted height classes. And the existing variables are retained.
 }
 \details{
-Input takes a data.frame with three variables ID,AGE,H and returns the tree height grading value of every sample(rows in the data.frame).
+Input takes a data.frame with three variables ID, AGE, H and returns height classes of every sample (rows in the data.frame).
 }
 \examples{
 \donttest{
@@ -44,7 +48,7 @@ data("forestData")
 
 # Build a model based on the forestData and return a forestData class object
 forestData <- class.plot(forestData,model="Richards",
-                         interval=5,number=5,
-                         a=19,b=0.1,c=0.8)
+                         interval=5,number=5,maxiter=1000,
+                         H_start=c(a=20,b=0.05,c=1.0))
 }
 }

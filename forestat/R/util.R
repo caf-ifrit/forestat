@@ -6,7 +6,7 @@
 
 ####Tree height grading####
 utils::globalVariables(".")
-class.get <- function(data,model="Logistic",a=30,b=10,c=0.1,maxiter = 1000){
+class.get <- function(data,model="Logistic",H_start,maxiter = 1000){
 
 
   temp <- mutate(data,LASTGROUP = class0)
@@ -17,7 +17,7 @@ class.get <- function(data,model="Logistic",a=30,b=10,c=0.1,maxiter = 1000){
   #here is used to determine whether the value of LASTGROUP remains the same after the iteration.
   while(any(class0!=LASTGROUP) & k2 <= maxiter){
     class0 <- LASTGROUP
-    modelInformation <- build.model(data = temp,model,a,b,c)
+    modelInformation <- build.model(data = temp,model,H_start)
 
     if (any(class(modelInformation)=="try-error" )){
       if(k2==0){
@@ -43,36 +43,36 @@ class.get <- function(data,model="Logistic",a=30,b=10,c=0.1,maxiter = 1000){
   data$LASTGROUP <- temp$LASTGROUP
   data <- list(Input = data,
                Hmodel = list(residual = residuals(modelInformation),
-                             initialValue = list(a=a,b=b,c=c),
+                             initialValue = H_start,
                              model = modelInformation)
                )
   return(data)
 }
 
-build.model <- function(data,model="Logistic",a=30,b=10,c=0.1){
+build.model <- function(data,model="Logistic",H_start=H_start){
   if(model=="Logistic"){
     try<-try(model1<-nlme(H~1.3+a/(1+b*exp(-c*AGE)),data=data,
-                          start=c(a=a,b=b,c=c),fixed = a+b+c~1,
+                          start=H_start,fixed = a+b+c~1,
                           random = list(LASTGROUP=pdDiag(a~1))), TRUE)
   } else if(model=="Richards"){
     try<-try(model1<-nlme(H~1.3+a*(1-exp(-b*AGE))^c,data=data,
-                          start=c(a=a,b=b,c=c),fixed = a+b+c~1,
+                          start=H_start,fixed = a+b+c~1,
                           random = list(LASTGROUP=pdDiag(a~1))), TRUE)
   } else if(model=="Korf"){
     try<-try(model1<-nlme(H~1.3+a*exp(-b*AGE^(-c)),data=data,
-                          start=c(a=a,b=b,c=c),fixed = a+b+c~1,
+                          start=H_start,fixed = a+b+c~1,
                           random = list(LASTGROUP=pdDiag(a~1))), TRUE)
   } else if(model=="Gompertz"){
     try<-try(model1<-nlme(H~1.3+a*exp(-b*exp(-c*AGE)),data=data,
-                          start=c(a=a,b=b,c=c),fixed = a+b+c~1,
+                          start=H_start,fixed = a+b+c~1,
                           random = list(LASTGROUP=pdDiag(a~1))), TRUE)
   } else if(model=="Weibull"){
     try<-try(model1<-nlme(H~1.3+a*(1-exp(-b*AGE^c)),data=data,
-                          start=c(a=a,b=b,c=c),fixed = a+b+c~1,
+                          start=H_start,fixed = a+b+c~1,
                           random = list(LASTGROUP=pdDiag(a~1))), TRUE)
   } else if(model=="Schumacher"){
     try<-try(model1<-nlme(H~1.3+a*exp(-b/AGE),data=data,
-                          start=c(a=a,b=b),fixed = a+b~1,
+                          start=H_start,fixed = a+b~1,
                           random = list(LASTGROUP=pdDiag(a~1))), TRUE)
   }
   modelInformation <- try
@@ -547,7 +547,6 @@ FittingEvaluationIndex<-function(EstiH,ObsH){
   dimnames(Index)<-list(c("pe","RMSE","R2","Var","TRE"))
   return(Index)
 }
-
 
 index.f<-function(model,var,num,m=6){
   if(any(c("nls","lm","glm") %in% class(model))){

@@ -1,7 +1,7 @@
-Package: forestat
 Type: Package
+Package: forestat
 Title: Evaluating the Quality of Natural Forest
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Liyong Fu", role = "aut", email = "fuly@ifrit.ac.cn"),
     person("Shirong Liu", role = "aut"),
@@ -12,23 +12,22 @@ Authors@R: c(
     person("Dongbo Xie", role = "aut"),
     person("Yuanyuan Han", role = c("aut", "cre"), email = "jackhanyuan@foxmail.com")
   )
-Description: Including tree height classification, tree height model establishment, sectional area growth and stock growth modeling, and calculation of actual and potential forest productivity.
-Maintainer: Yuanyuan Han <jackhanyuan@foxmail.com>
-Repository: CRAN
-URL: https://cran.r-project.org/package=forestat,
-        https://github.com/caf-ifrit/forestat
-BugReports: https://github.com/caf-ifrit/forestat/issues
+Description: Including the site classes based on stand height growth, establishment the growth models of height (H), basal area of breast-height (BA), and biomass (Bio), as well as the calculation of stand’s realized site productivity and potential productivity. Reference: Xiangdong L, Liyong F, Haikui L, Yutang L, Shouzheng T (2018) <doi:10.11707/j.1001-7488.20181213>.
 License: GPL (>= 3)
+Maintainer: Yuanyuan Han <jackhanyuan@foxmail.com>
+URL: https://github.com/caf-ifrit/forestat
+BugReports: https://github.com/caf-ifrit/forestat/issues
+Repository: CRAN
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-Depends: R (>= 2.10)
+Depends: R (>= 3.5.0)
 RoxygenNote: 7.2.3
 Imports: dplyr, ggplot2, graphics, nlme, stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-05-24 02:47:29 UTC; jackhanyuan
+Packaged: 2023-06-24 07:04:59 UTC; jackhanyuan
 Author: Liyong Fu [aut],
   Shirong Liu [aut],
   Shouzheng Tang [aut],
@@ -37,4 +36,3 @@ Author: Liyong Fu [aut],
   Linyan Feng [aut],
   Dongbo Xie [aut],
   Yuanyuan Han [aut, cre]
-Date/Publication: 2023-05-25 09:10:02 UTC

@@ -3,18 +3,18 @@
 \docType{data}
 \name{forestData}
 \alias{forestData}
-\title{Subzone 6 Oak broadleaf mixed data}
+\title{Birch broadleaf mixed data}
 \format{
 `forestData`
-A data frame with 1,326 rows and 79 columns:
+A data frame with 320 rows and 16 columns:
 \describe{
-  \item{ID}{Unique identifier for each tree}
-  \item{AGE}{Stand age of the tree}
-  \item{H}{Height of the tree}
-  \item{BA}{Basal area of the tree}
-  \item{Bio}{Biomass of the tree}
-  \item{S}{Forest density index}
-  \item{code}{Codes for forest types}
+  \item{ID}{Plot ID}
+  \item{AGE}{The average age of the stand}
+  \item{H}{Stand height}
+  \item{BA}{Stand basal area}
+  \item{Bio}{Stand biomass}
+  \item{S}{Stand density index}
+  \item{code}{Forest type code of plot}
   ...
 }
 }
@@ -22,6 +22,6 @@ A data frame with 1,326 rows and 79 columns:
 forestData
 }
 \description{
-Subzone 6 Oak broadleaf mixed data from fieldwork
+Birch broadleaf mixed data
 }
 \keyword{datasets}

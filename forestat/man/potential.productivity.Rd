@@ -20,23 +20,23 @@ potential.productivity(
 
 \item{code}{Codes for forest types.}
 
-\item{age.min}{The minimum age of production potential.}
+\item{age.min}{The minimum age of the stand.}
 
-\item{age.max}{The maximum age of production potential}
+\item{age.max}{The maximum age of the stand.}
 
 \item{left}{Solving for the left boundary of the potential productivity.}
 
 \item{right}{Solving for the right boundary of the potential productivity.}
 
-\item{e}{Accuracy parameters for solving the forest density index according to Newton's iterative method.}
+\item{e}{Accuracy parameters for solving the stand density index according to Newton's iterative method.}
 
-\item{maxiter}{Maximum number of iterations parameter for solving the forest density index according to Newton's iteration method.}
+\item{maxiter}{Maximum number of iterations parameter for solving the stand density index according to Newton's iteration method.}
 }
 \value{
 A forestData class in which a data.frame with potential productivity parameters is added.
 }
 \description{
-potential.productivity calculate the potential productivity of each tree based on model parameters(obtained from the parameterOutput function).
+potential.productivity calculate the potential productivity of stand based on model parameters(obtained from the parameterOutput function).
 }
 \details{
 potential.productivity takes data_BA,data_V parameters as required inputs.
@@ -48,8 +48,8 @@ data("forestData")
 
 # Build a model based on the forestData and return a forestData class object
 forestData <- class.plot(forestData,model="Richards",
-                         interval=5,number=5,
-                         a=19,b=0.1,c=0.8)
+                         interval=5,number=5,maxiter=1000,
+                         H_start=c(a=20,b=0.05,c=1.0))
 
 # Calculate the potential productivity of the forestData object
 forestData <- potential.productivity(forestData,code=1,

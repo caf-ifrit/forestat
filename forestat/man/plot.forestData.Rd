@@ -11,7 +11,7 @@
   xlab = NA,
   ylab = NA,
   legend.lab = "Site class",
-  title = "Birch broadleaf mixed",
+  title = "Mixed birch-broadleaf forest",
   ...
 )
 }
@@ -20,7 +20,7 @@
 
 \item{model.type}{Type of model used for fitting, options are `H` (stand height growth model), `BA` (stand basal area model), or `Bio` (stand biomass model).}
 
-\item{plot.type}{Type of plot, options are `Curve` (curve plot), `Scatter_Curve` (scatter plot with curve), `residual` (residual plot), or `Scatter` (scatter plot).}
+\item{plot.type}{Type of plot, options are `Curve` (curve plot), `Scatter_Curve` (scatter plot with curve), `Residual` (residual plot), or `Scatter` (scatter plot).}
 
 \item{xlab}{The title for the x axis.}
 
@@ -52,6 +52,6 @@ forestData <- class.plot(forestData,model="Richards",
 plot(forestData, model.type="H",
      plot.type="Curve",
      xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
-     title="Curve of birch Broadleaf H-model")
+     title="The H-model curve of the mixed birch-broadleaf forest")
 }
 }

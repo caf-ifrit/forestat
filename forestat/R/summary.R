@@ -73,8 +73,8 @@ print.summary.forestData <- function (x, ...){
     select(data$potential.productivity,Max_GI,Max_MI) %>% summary(.) %>% print(.)
   }
   cat("\n")
-  if("reality.productivity" %in% names(data)){
-    select(data$reality.productivity,BAI,VI) %>% summary(.) %>% print(.)
+  if("realized.productivity" %in% names(data)){
+    select(data$realized.productivity,BAI,VI) %>% summary(.) %>% print(.)
   }
 }
 

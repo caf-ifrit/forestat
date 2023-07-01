@@ -2,7 +2,7 @@
 #' @title Calculate the potential productivity.
 #' @description potential.productivity calculate the potential productivity of stand based on model parameters(obtained from the parameterOutput function).
 #' @details potential.productivity takes data_BA,data_V parameters as required inputs.
-#' @inheritParams reality.productivity
+#' @inheritParams realized.productivity
 #' @param code Codes for forest types.
 #' @param age.min The minimum age of the stand.
 #' @param age.max The maximum age of the stand.

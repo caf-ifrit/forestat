@@ -3,7 +3,7 @@
 \docType{data}
 \name{forestData}
 \alias{forestData}
-\title{Birch broadleaf mixed data}
+\title{Mixed birch-broadleaf forest data}
 \format{
 `forestData`
 A data frame with 320 rows and 16 columns:
@@ -22,6 +22,6 @@ A data frame with 320 rows and 16 columns:
 forestData
 }
 \description{
-Birch broadleaf mixed data
+Mixed birch-broadleaf forest data
 }
 \keyword{datasets}

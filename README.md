@@ -1,7 +1,7 @@
 # <div align="center"><strong>使用 Forestat 评估森林质量</strong></div>
 
 <p align="right"><strong>Forestat version:</strong> 1.0.2</p>
-<p align="right"><strong>Date:</strong> 06/25/2023 </p>
+<p align="right"><strong>Date:</strong> 07/01/2023 </p>
 <br>
 
 *`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）的`天然林立地质量评价方法`[<sup>[1]</sup>](#citation)开发的R包。实现的功能包括天然林基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。使用 *`forestat`* 包可以为精准提升森林质量提供可靠依据。
@@ -74,14 +74,13 @@ forestData <- class.plot(forestData, model = "Richards",
 
 # 绘制断面积生长模型散点图
 plot(forestData,model.type = "BA",plot.type = "Scatter",
-     xlab = "AGE",ylab = "BA",legend.lab = "LastGroup",
      title = "桦木阔叶混断面积生长模型散点图")
 
 # 计算 forestData 对象的潜在生产力
 forestData <- potential.productivity(forestData)
 
 # 计算 forestData 对象的现实生产力
-forestData <- reality.productivity(forestData)
+forestData <- realized.productivity(forestData)
 
 # 获取 forestData 对象的汇总数据
 summary(forestData)
@@ -116,7 +115,7 @@ head(dplyr::select(forestData,ID,code,AGE,H,S,BA,Bio))
 3  3    1  20 4.2 128.32683 3.388492 22.631467
 4  4    1  19 4.2 204.93928 4.375324 18.913886
 5  5    1  13 4.2  95.69713 1.904063  6.511951
-6  6    1  25 4.7 153.69394 4.129810 28.024739
+6  6    1  25 4.7 153.69393 4.129810 28.024739
 ```
 
 当然，你也可以选择加载自定义数据：
@@ -151,12 +150,12 @@ forestData <- read.csv("/path/to/your/folder/your_file.csv")
 # interval=5表示初始树高分类的林分年龄区间设置为5，number=5表示初始树高分类数最多为5，maxiter=1000表示拟合模型的最大次数为1000
 # 树高模型拟合的初始参数H_start默认为c(a=20,b=0.05,c=1.0)
 # 断面积生长模型拟合的初始参数BA_start默认为c(a=80, b=0.0001, c=8, d=0.1)
-# 生物量生长模型拟合的初始参数Bio_start默认为c(a=450, b=0.0001, c=10, d=0.1)
+# 生物量生长模型拟合的初始参数Bio_start默认为c(a=450, b=0.0001, c=12, d=0.1)
 forestData <- class.plot(forestData, model = "Richards",
                          interval = 5, number = 5, maxiter=1000,
                          H_start=c(a=20,b=0.05,c=1.0),
                          BA_start = c(a=80, b=0.0001, c=8, d=0.1),
-                         Bio_start=c(a=450, b=0.0001, c=10, d=0.1))
+                         Bio_start=c(a=450, b=0.0001, c=12, d=0.1))
 ```
 
 其中，`model`为构建树高模型时选用的模型，可在`"Logistic"、"Richards"、"Korf"、"Gompertz"、"Weibull"、"Schumacher"`模型中任选一个，断面积生长模型和生物量生长模型默认使用Richard模型构建。`interval`为初始树高分类的林分年龄区间，number为初始树高分类数的最大值，`maxiter`为最大拟合次数。`H_start` 是拟合树高模型的初始参数，`BA_start` 是拟合断面积生长模型的初始参数，`H_start` 是拟合生物量生长模型的初始参数，当拟合出现错误时，可以多尝试一些初始参数作为尝试。
@@ -186,68 +185,65 @@ summary(forestData)
 ```R
 # 输出
 # 第一段
-       H               S                 BA               Bio         
- Min.   : 2.00   Min.   :  15.94   Min.   : 0.3017   Min.   :  1.224  
- 1st Qu.: 7.70   1st Qu.: 360.38   1st Qu.: 9.3241   1st Qu.: 53.233  
- Median : 9.40   Median : 557.25   Median :14.9777   Median : 95.002  
- Mean   : 9.83   Mean   : 583.88   Mean   :16.2648   Mean   :109.322  
- 3rd Qu.:11.90   3rd Qu.: 764.38   3rd Qu.:21.6455   3rd Qu.:147.737  
- Max.   :17.70   Max.   :1772.26   Max.   :52.6455   Max.   :474.496  
+       H               S                 BA              Bio         
+ Min.   : 2.00   Min.   :  68.24   Min.   : 1.387   Min.   :  5.698  
+ 1st Qu.: 8.10   1st Qu.: 366.37   1st Qu.: 9.641   1st Qu.: 52.326  
+ Median :10.30   Median : 494.76   Median :13.667   Median : 78.502  
+ Mean   :10.62   Mean   : 522.53   Mean   :14.516   Mean   : 90.229  
+ 3rd Qu.:12.90   3rd Qu.: 661.84   3rd Qu.:18.750   3rd Qu.:115.636  
+ Max.   :19.10   Max.   :1540.13   Max.   :45.749   Max.   :344.412  
 
 # 第二段
-Hmodel Parameters:
-
+H-model Parameters:
 Nonlinear mixed-effects model fit by maximum likelihood
   Model: H ~ 1.3 + a * (1 - exp(-b * AGE))^c 
   Data: data 
        AIC      BIC    logLik
-  2720.209 2746.159 -1355.105
+  728.4366 747.2782 -359.2183
 
 Random effects:
  Formula: a ~ 1 | LASTGROUP
-             a  Residual
-StdDev: 3.6513 0.6616545
+               a  Residual
+StdDev: 3.767163 0.7035752
 
 Fixed effects:  a + b + c ~ 1 
-      Value Std.Error   DF   t-value p-value
-a 11.226213 1.6509803 1319  6.799726       0
-b  0.020457 0.0029541 1319  6.924853       0
-c  0.370395 0.0228807 1319 16.188147       0
+      Value Std.Error  DF  t-value p-value
+a 12.185054 1.7050081 313 7.146625       0
+b  0.037840 0.0043682 313 8.662536       0
+c  0.761367 0.0769441 313 9.895060       0
  Correlation: 
   a      b     
-b -0.137       
-c -0.122  0.949
+b -0.110       
+c -0.093  0.946
 
 Standardized Within-Group Residuals:
-        Min          Q1         Med          Q3         Max 
--4.13170023 -0.75823758 -0.03968202  0.74727148  4.97834758 
+         Min           Q1          Med           Q3          Max 
+-3.858592084 -0.719253472  0.007120413  0.761123585  3.375793806 
 
-Number of Observations: 1326
+Number of Observations: 320
 Number of Groups: 5 
 
 Concise Parameter Report:
 Model Coefficients:
-       a1       a2       a3       a4       a5         b         c
- 6.331338 8.578689 10.91438 13.61481 16.69184 0.0204566 0.3703953
+       a1       a2       a3       a4       a5          b         c
+ 7.013778 9.575677 11.90324 14.67456 17.75801 0.03783956 0.7613666
 
 Model Evaluations:
-           pe      RMSE        R2       Var       TRE      AIC      BIC
- -0.001864527 0.6604061 0.9455896 0.4364619 0.4185215 2720.209 2746.159
-    logLik
- -1355.105
+           pe      RMSE        R2       Var       TRE      AIC      BIC    logLik
+ -0.006484677 0.6980625 0.9543312 0.4887767 0.3960163 728.4366 747.2782 -359.2183
 
 Model Formulas:
                                        Func                  Spe
  model1:H ~ 1.3 + a * (1 - exp(-b * AGE))^c model1:pdDiag(a ~ 1)
- 
+
 # 第三段（与第二段数据格式相似）
-BAmodel Parameters:
+BA-model Parameters:
 
 # 此处省略
 ......
 
 # 第四段（与第二段数据格式相似）
-Biomodel Parameters:
+Bio-model Parameters:
 
 # 此处省略
 ......
@@ -262,7 +258,7 @@ Biomodel Parameters:
 
 经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，就可以使用`plot()`函数绘制图像。
 
-其中，`model.type`为绘图使用的模型，可以选择`H`（树高模型）、`BA`（断面积生长模型）或者`Bio`（生物量生长模型）。`plot.type`为绘图的类型，可以选择`Curve`（曲线图）、`Scatter_Curve`（散点曲线图）、`residual`（残差图）、`Scatter`（散点图）。`xlab`、`ylab`、`legend.lab`、`title`分别为`x轴标题`、`y轴标题`、`图例`、`图像标题`。
+其中，`model.type`为绘图使用的模型，可以选择`H`（树高模型）、`BA`（断面积生长模型）或者`Bio`（生物量生长模型）。`plot.type`为绘图的类型，可以选择`Curve`（曲线图）、`Residual`（残差图）、`Scatter_Curve`（散点曲线图）、`Scatter`（散点图）。`xlab`、`ylab`、`legend.lab`、`title`分别为`x轴标题`、`y轴标题`、`图例`、`图像标题`。
 
 ```R
 # 绘制树高模型的曲线图
@@ -316,20 +312,13 @@ forestData$potential.productivity %>% head(.)
 
 ```R
 # 输出
-    Max_GI   Max_MI       N1       D1       S0       S1       G0       G1
-1 3.432031 25.28960 7314.484 7.871238 1509.526 1637.494 32.16056 35.59259
-2 2.905191 21.52146 6715.212 8.179387 1492.373 1598.908 32.37989 35.28508
-3 2.518421 18.74017 6241.259 8.455917 1476.469 1567.516 32.53121 35.04963
-4 2.222457 16.60206 5854.617 8.707564 1461.918 1541.273 32.64190 34.86436
-5 1.988672 14.90643 5530.422 8.938955 1448.291 1518.519 32.71869 34.70736
-6 1.799336 13.52842 5253.364 9.153519 1435.503 1498.419 32.77100 34.57033
-        M0       M1 LASTGROUP AGE
-1 196.4822 221.7718         1   5
-2 199.6247 221.1461         1   6
-3 202.0687 220.8089         1   7
-4 204.0589 220.6610         1   8
-5 205.6789 220.5854         1   9
-6 207.0203 220.5487         1  10
+    Max_GI   Max_MI       N1       D1       S0       S1       G0       G1       M0       M1 LASTGROUP AGE
+1 3.761042 19.28856 9092.212 6.920702 1507.847 1655.607 30.44160 34.20265 108.8879 128.1764         1   5
+2 3.188422 16.87999 8155.087 7.271688 1485.048 1607.682 30.67953 33.86795 114.2059 131.0859         1   6
+3 2.767240 15.05141 7430.771 7.589146 1464.360 1568.882 30.84594 33.61318 118.7456 133.7970         1   7
+4 2.444777 13.61090 6848.971 7.880151 1445.173 1536.067 30.95813 33.40291 122.6777 136.2886         1   8
+5 2.189472 12.44383 6371.915 8.149517 1428.018 1508.285 31.04766 33.23713 126.2039 138.6477         1   9
+6 1.982947 11.47713 5968.835 8.400940 1411.699 1483.484 31.10237 33.08531 129.3253 140.8024         1  10
 ```
 
 输出结果中，各字段含义如下：
@@ -361,10 +350,10 @@ G0：初始林分每公顷断面积
 <details>
 <summary style="font-size:20px;"><strong>4.4 计算林分现实生产力</strong></summary>
 
-经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，可以使用`reality.productivity()`函数计算林分现实生产力。在计算之前，要求`forestData` 对象中`BA model`和`Bio model`已经建立。
+经过[4.1.2](#4.1.2) `class.plot()`函数构建林分生长模型后，可以使用`realized.productivity()`函数计算林分现实生产力。在计算之前，要求`forestData` 对象中`BA model`和`Bio model`已经建立。
 
 ```R
-forestData <- reality.productivity(forestData, 
+forestData <- realized.productivity(forestData, 
                                    left=0.05, right=100)
 ```
 
@@ -378,25 +367,18 @@ forestData <- reality.productivity(forestData,
 
 ```R
 library(dplyr)
-forestData$reality.productivity %>% head(.)
+forestData$realized.productivity %>% head(.)
 ```
 
 ```R
 # 输出
-  code         ID AGE    H class0 LASTGROUP       BA        S      Bio
-1    1 6100005337  45 11.9      4         4 50.13462 1508.468 474.4957
-2    1  410001607  42 16.7      5         5 47.22381 1490.493 444.5069
-3    1 6100005337  35 11.0      3         4 46.64877 1401.944 435.8741
-4    1 6100005337  40 12.8      4         4 44.15220 1303.489 415.9098
-5    1  410001607  38 15.2      5         5 42.37152 1350.941 400.3925
-6    1 6220002848  88 11.2      3         3 50.43886 1631.235 395.2503
-         BAI        VI
-1 0.36488249 2.8670220
-2 0.42883352 3.6013437
-3 0.57137875 4.7817218
-4 0.51822786 4.4346054
-5 0.55925908 4.9739993
-6 0.07333166 0.3845029
+  code ID AGE   H class0 LASTGROUP       BA         S       Bio        BAI        VI
+1    1  1  13 2.0      1         1 4.899382 152.67461 32.671551 0.19401957 1.0350981
+2    1  2  15 3.5      1         1 1.387268  68.23825  5.698105 0.07413948 0.3923068
+3    1  3  20 4.2      1         1 3.388492 128.32683 22.631467 0.11162375 0.6491135
+4    1  4  19 4.2      1         1 4.375324 204.93928 18.913886 0.19004576 1.1177796
+5    1  5  13 4.2      2         1 1.904063  95.69713  6.511951 0.11925821 0.6218927
+6    1  6  25 4.7      1         1 4.129810 153.69393 28.024739 0.11106428 0.6846125
 ```
 
 输出结果中，各字段含义如下：
@@ -423,27 +405,28 @@ summary(forestData)
 ```R
 # 输出
 # 第一段
-       H               S                 BA               Bio         
- Min.   : 2.00   Min.   :  15.94   Min.   : 0.3017   Min.   :  1.224  
+       H               S                 BA              Bio         
+ Min.   : 2.00   Min.   :  68.24   Min.   : 1.387   Min.   :  5.698  
  
 # 此处省略
 ......
 
 # 第五段
      Max_GI           Max_MI      
- Min.   :0.1244   Min.   : 1.009  
- 1st Qu.:0.1757   1st Qu.: 1.517  
- Median :0.2591   Median : 2.206  
- Mean   :0.4715   Mean   : 3.909  
- 3rd Qu.:0.4878   3rd Qu.: 4.086  
- Max.   :3.9588   Max.   :33.858  
-      BAI               VI       
- Min.   :0.0000   Min.   :0.000  
- 1st Qu.:0.1388   1st Qu.:1.028  
- Median :0.2077   Median :1.597  
- Mean   :0.2353   Mean   :1.846  
- 3rd Qu.:0.3116   3rd Qu.:2.558  
- Max.   :0.8562   Max.   :7.309  
+ Min.   :0.1396   Min.   : 1.201  
+ 1st Qu.:0.1966   1st Qu.: 1.779  
+ Median :0.2894   Median : 2.492  
+ Mean   :0.5224   Mean   : 3.871  
+ 3rd Qu.:0.5423   3rd Qu.: 4.277  
+ Max.   :4.2408   Max.   :25.399  
+
+      BAI                VI        
+ Min.   :0.06736   Min.   :0.3923  
+ 1st Qu.:0.16967   1st Qu.:1.3487  
+ Median :0.23468   Median :1.8711  
+ Mean   :0.26202   Mean   :2.0260  
+ 3rd Qu.:0.31483   3rd Qu.:2.4330  
+ Max.   :1.02810   Max.   :6.8336 
 ```
 
 </details>

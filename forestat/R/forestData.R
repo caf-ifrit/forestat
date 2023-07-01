@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
-#' Birch broadleaf mixed data
+#' Mixed birch-broadleaf forest data
 #'
-#' Birch broadleaf mixed data
+#' Mixed birch-broadleaf forest data
 #'
 #' @format `forestData`
 #' A data frame with 320 rows and 16 columns:

@@ -1,10 +1,10 @@
-# <div align="center"><strong>Evaluating Forest Quality with Forestat</strong></div>
+# <div align="center"><strong>Forest Carbon Sequestration and Potentiality Calculation</strong></div>
 
 <p align="right"><strong>Forestat version:</strong> 1.0.2</p>
-<p align="right"><strong>Date:</strong> 07/01/2023 </p>
+<p align="right"><strong>Date:</strong> 07/05/2023 </p>
 <br>
 
-*`Forestat`* is an R package developed based on the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry’s “Methodology and Applications of Site Quality Assessment Based on Potential Mean Annual Increment” [<sup>[1]</sup>](#refer-anchor-1). Its functions include the site classes based on stand height growth, establishment the growth models of height (H), basal area of breast-height (BA), and biomass (Bio), as well as the calculation of stand’s realized site productivity and potential productivity. Using *`forestat`* package can provide reliable basis for the precision improvement of forest quality.
+*`Forestat`* is an R package based on `Methodology and Applications of Site Quality Assessment Based on Potential Mean Annual Increment` [<sup>[1]</sup>](#citation) and `A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests` [<sup>[2]</sup>](#citation) proposed by the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry. It can classify site classes based on the stand height growth and establish a nonlinear mixed-effect biomass model under different site classes based on the whole stand model to achieve more accurate carbon sequestration. In particular, a carbon sequestration potentiality calculation method based on the potential mean annual increment is proposed. This package is applicable to both natural and plantation forests. It can quantitatively answer how much of the stand's potential productivity, realized productivity, and room for improvement under a certain site, and can be used in many aspects such as site quality assessment, tree species suitability evaluation, and degraded forest evaluation.
 
 <div align="center">
 
@@ -15,7 +15,7 @@
 
 ## <div align="center">1 Overview</div>
 
-*`Forestat`* package implements the site classes based on stand height growth, establishment the growth models of height, basal area of breast-height, and biomass, as well as the calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. *`forestat`* package relies on the data of natural forest, and a sample data is provided in the package.
+*`Forestat`* package implements the site classes based on stand height growth, establishment the growth models of height, basal area of breast-height, and biomass, as well as the calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. *`Forestat`* package relies on the data of natural forest, and a sample data is provided in the package.
 
 ### 1.1 *forestat* Flowchart
 
@@ -70,9 +70,9 @@ data("forestData")
 forestData <- class.plot(forestData, model = "Richards",
                          interval = 5, number = 5, H_start=c(a=20,b=0.05,c=1.0))
 
-# Plot the scatter plot of the BA-model
-plot(forestData,model.type="BA",plot.type="Scatter",
-     title="The BA-model scatter plot of the mixed birch-broadleaf forest")
+# Plot the scatter plot of the H-model
+plot(forestData,model.type="H",plot.type="Scatter",
+     title="The H-model scatter plot of the mixed birch-broadleaf forest")
 
 # Calculate the potential productivity of the forestData object
 forestData <- potential.productivity(forestData)
@@ -98,9 +98,6 @@ To build an accurate model, good data is essential. The *`forestat`* package inc
 ```R
 # Load the forestData sample data included in the package
 data("forestData")
-
-# Or read the forestat.csv sample data included in the package
-forestData <- read.csv(system.file("extdata", "forestData.csv", package = "forestat"))
 
 # Select the ID, code, AGE, H, S, BA, and Bio fields from the forestData sample data
 # and view the first 6 rows of data
@@ -158,7 +155,7 @@ forestData <- class.plot(forestData, model = "Richards",
 
 The `model` is the model used to build the `H-model` and can be selected from the `"Logistic"`, `"Richards"`, `"Korf"`, `"Gompertz"`, `"Weibull"`, and `"Schumacher"` models. The `BA-model` and `Bio-model` are built using the Richard model by default. `interval` is the initial stand age interval for height classes, `number` is the maximum number of initial height classes, and `maxiter` is the maximum number of fitting iterations. The `H_start` is the initial parameter for fitting the H-model, the `BA_start` is the initial parameter for fitting the BA-model, and the `Bio_start` is the initial parameter for fitting the Bio-model. If fitting encounters errors, you can try different initial parameters as attempts.
 
-The result returned by the `class.plot()` function is the `forestData` object, which includes `Input` (input data and height classes results), `Hmodel` (H-model: height model), `BAmodel` (BA-model: stand basal area growth model), `Biomodel` (Bio-model: stand biomass growth model), and `output` (model parameters).
+The result returned by the `class.plot()` function is the `forestData` object, which includes `Input` (input data and height classes results), `Hmodel` (H-model results), `BAmodel` (BA-model results), `Biomodel` (Bio-model results), and `output` (Expressions, parameters, and precision for all models).
 
 <div align="center">
   <img width="70%" src="forestat/vignettes/img/forestDataObj.png">
@@ -268,7 +265,7 @@ plot(forestData,model.type="H",
 # Plot the scatter plot of the BA-model
 plot(forestData,model.type="BA",
      plot.type="Scatter",
-     xlab="Stand age (year)",ylab="Height (m)",legend.lab="Site class",
+     xlab="Stand age (year)",ylab="Basal area (m2/hm2)",legend.lab="Site class",
      title="The BA-model scatter plot of the mixed birch-broadleaf forest")
 ```
 
@@ -311,12 +308,12 @@ forestData$potential.productivity %>% head(.)
 ```R
 # Output
     Max_GI   Max_MI       N1       D1       S0       S1       G0       G1       M0       M1 LASTGROUP AGE
-1 3.761042 19.28856 9092.212 6.920702 1507.847 1655.607 30.44160 34.20265 108.8879 128.1764         1   5
-2 3.188422 16.87999 8155.087 7.271688 1485.048 1607.682 30.67953 33.86795 114.2059 131.0859         1   6
-3 2.767240 15.05141 7430.771 7.589146 1464.360 1568.882 30.84594 33.61318 118.7456 133.7970         1   7
-4 2.444777 13.61090 6848.971 7.880151 1445.173 1536.067 30.95813 33.40291 122.6777 136.2886         1   8
-5 2.189472 12.44383 6371.915 8.149517 1428.018 1508.285 31.04766 33.23713 126.2039 138.6477         1   9
-6 1.982947 11.47713 5968.835 8.400940 1411.699 1483.484 31.10237 33.08531 129.3253 140.8024         1  10
+1 3.949820 20.47488 9830.149 6.945724 1645.486 1800.378 33.29664 37.24646 119.5148 139.9897         1   5
+2 3.348912 17.90140 8823.972 7.294578 1619.740 1748.342 33.52799 36.87690 125.2417 143.1431         1   6
+3 2.906982 15.94796 8044.876 7.609892 1596.350 1705.999 33.68334 36.59033 130.1117 146.0597         1   7
+4 2.568525 14.40953 7418.938 7.898755 1574.827 1670.207 33.78520 36.35373 134.3302 148.7398         1   8
+5 2.300998 13.16340 6902.612 8.166065 1554.965 1639.234 33.85073 36.15173 138.0482 151.2116         1   9
+6 2.084278 12.13145 6467.402 8.415423 1536.461 1611.846 33.88831 35.97259 141.3594 153.4908         1  10
 ```
 
 The meanings of the fields in the output are as follows:
@@ -371,12 +368,12 @@ forestData$realized.productivity %>% head(.)
 ```R
 # Output
   code ID AGE   H class0 LASTGROUP       BA         S       Bio        BAI        VI
-1    1  1  13 2.0      1         1 4.899382 152.67461 32.671551 0.19401957 1.0350981
-2    1  2  15 3.5      1         1 1.387268  68.23825  5.698105 0.07413948 0.3923068
-3    1  3  20 4.2      1         1 3.388492 128.32683 22.631467 0.11162375 0.6491135
-4    1  4  19 4.2      1         1 4.375324 204.93928 18.913886 0.19004576 1.1177796
-5    1  5  13 4.2      2         1 1.904063  95.69713  6.511951 0.11925821 0.6218927
-6    1  6  25 4.7      1         1 4.129810 153.69393 28.024739 0.11106428 0.6846125
+1    1  1  13 2.0      1         1 4.899382 152.67461 32.671551 0.18702090 1.0034425
+2    1  2  15 3.5      1         1 1.387268  68.23825  5.698105 0.07181113 0.3804467
+3    1  3  20 4.2      1         1 3.388492 128.32683 22.631467 0.10764262 0.6294930
+4    1  4  19 4.2      1         1 4.375324 204.93928 18.913886 0.18279397 1.0839852
+5    1  5  13 4.2      2         1 1.904063  95.69713  6.511951 0.11526498 0.6028645
+6    1  6  25 4.7      1         1 4.129810 153.69393 28.024739 0.10696539 0.6640617
 ```
 
 The meaning of each field in the output results is as follows:
@@ -411,20 +408,20 @@ summary(forestData)
 
 # Fifth paragraph
      Max_GI           Max_MI      
- Min.   :0.1396   Min.   : 1.201  
- 1st Qu.:0.1966   1st Qu.: 1.779  
- Median :0.2894   Median : 2.492  
- Mean   :0.5224   Mean   : 3.871  
- 3rd Qu.:0.5423   3rd Qu.: 4.277  
- Max.   :4.2408   Max.   :25.399  
+ Min.   :0.1446   Min.   : 1.216  
+ 1st Qu.:0.2046   1st Qu.: 1.813  
+ Median :0.3023   Median : 2.562  
+ Mean   :0.5477   Mean   : 4.029  
+ 3rd Qu.:0.5702   3rd Qu.: 4.446  
+ Max.   :4.4483   Max.   :26.961  
 
       BAI                VI        
- Min.   :0.06736   Min.   :0.3923  
- 1st Qu.:0.16967   1st Qu.:1.3487  
- Median :0.23468   Median :1.8711  
- Mean   :0.26202   Mean   :2.0260  
- 3rd Qu.:0.31483   3rd Qu.:2.4330  
- Max.   :1.02810   Max.   :6.8336 
+ Min.   :0.06481   Min.   :0.3804  
+ 1st Qu.:0.16296   1st Qu.:1.3086  
+ Median :0.22507   Median :1.8154  
+ Mean   :0.25199   Mean   :1.9743  
+ 3rd Qu.:0.30246   3rd Qu.:2.4227  
+ Max.   :0.98168   Max.   :6.6287 
 ```
 
 </details>
@@ -433,6 +430,7 @@ summary(forestData)
 <div id="citation"></div>
 
 ```txt
+[1]
 @article{lei2018methodology,
   title={Methodology and applications of site quality assessment based on potential mean annual increment.},
   author={Lei Xiangdong, Fu Liyong, Li Haikui, Li Yutang, Tang Shouzheng},
@@ -441,6 +439,20 @@ summary(forestData)
   number={12},
   pages={116-126},
   year={2018},
-  publisher={The Chinese Society of Forestry}
+  publisher={The Chinese Society of Forestry},
+  doi={10.11707/j.1001-7488.20181213}
+}
+
+[2]
+@article{fu2017basal,
+  title={A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests},
+  author={Fu Liyong, Sharma Ram P, Zhu Guangyu, Li Haikui, Hong Lingxia, Guo Hong, Duan Guangshuang, Shen Chenchen, Lei Yuancai, Li Yutang},
+  journal={Forests},
+  volume={8},
+  number={4},
+  pages={119},
+  year={2017},
+  publisher={MDPI},
+  doi={10.3390/f8040119}
 }
 ```

@@ -7,8 +7,8 @@
 #' @return A summary object of class "summary.forestData"
 #' @examples
 #' \donttest{
-#' # Load the forestat.csv sample data
-#' forestData <- read.csv(system.file("extdata", "forestData.csv", package = "forestat"))
+#' # Load sample data
+#' data("forestData")
 #'
 #' # Build a model based on the forestData and return a forestData class object
 #' forestData <- class.plot(forestData,model="Richards",

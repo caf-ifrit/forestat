@@ -2,7 +2,7 @@ citHeader("To cite forestat in publications use:")
 
 bibentry(
   bibtype  = "Article",
-  title    = "Methodology and applications of site quality assessment based on potential mean annual increment.",
+  title    = "Methodology and applications of site quality assessment based on potential mean annual increment",
   author   = "Lei Xiangdong, Fu Liyong, Li Haikui, Li Yutang, Tang Shouzheng",
   journal  = "Scientia Silvae Sinicae",
   year     = "2018",
@@ -10,7 +10,16 @@ bibentry(
   number   = "12",
   pages    = "116-126",
   url      = "https://doi.org/10.11707/j.1001-7488.20181213",
-  textVersion = paste(
+)
 
-  )
+bibentry(
+  bibtype  = "Article",
+  title    = "A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests",
+  author   = "Fu Liyong, Sharma Ram P, Zhu Guangyu, Li Haikui, Hong Lingxia, Guo Hong, Duan Guangshuang, Shen Chenchen, Lei Yuancai, Li Yutang",
+  journal  = "Forests",
+  year     = "2017",
+  volume   = "8",
+  number   = "4",
+  pages    = "119",
+  url      = "https://doi.org/10.3390/f8040119",
 )

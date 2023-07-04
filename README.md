@@ -4,7 +4,7 @@
 <p align="right"><strong>Date:</strong> 07/05/2023 </p>
 <br>
 
-*`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）提出的“基于林分潜在生长量的立地质量评价方法与应用”`[<sup>[1]</sup>](#citation)和“A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests”[<sup>[2]</sup>](#citation)开发的R包。可依据林分高生长，划分立地等级；并以全林整体模型为基础，建立不同立地等级下的非线性混合效应生物量模型，实现更精准的碳汇计量；尤其提出了一种基于林分潜在生长量的碳汇潜力计算方法。该套算法适用于天然林和人工林，能够定量回答一定立地条件下的潜在生产力、现实生产力、提升空间有多大，可用于立地质量评价、树种适宜性评价、退化林评价等多个方面。
+*`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）提出的`基于林分潜在生长量的立地质量评价方法与应用`[<sup>[1]</sup>](#citation)和`A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests`[<sup>[2]</sup>](#citation)开发的R包。可依据林分高生长，划分立地等级；并以全林整体模型为基础，建立不同立地等级下的非线性混合效应生物量模型，实现更精准的碳汇计量；尤其提出了一种基于林分潜在生长量的碳汇潜力计算方法。该套算法适用于天然林和人工林，能够定量回答一定立地条件下的潜在生产力、现实生产力、提升空间有多大，可用于立地质量评价、树种适宜性评价、退化林评价等多个方面。
 
 <div align="center">
 
@@ -100,9 +100,6 @@ summary(forestData)
 ```R
 # 加载包中 forestData 样例数据
 data("forestData")
-
-# 或者读取包中 forestat.csv 样例数据
-forestData <- read.csv(system.file("extdata", "forestData.csv", package = "forestat"))
 
 # 筛选 forestData 样例数据中ID、code、AGE、H、S、BA 和 Bio字段
 # 并查看前6行数据

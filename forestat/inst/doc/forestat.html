@@ -12,7 +12,7 @@
 
 
 
-<title>Forest Carbon Sequestration and Potentiality Calculationt</title>
+<title>Forest Carbon Sequestration and Potential Productivity Calculation</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -336,8 +336,8 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<h1 class="title toc-ignore">Forest Carbon Sequestration and
-Potentiality Calculationt</h1>
+<h1 class="title toc-ignore">Forest Carbon Sequestration and Potential
+Productivity Calculation</h1>
 
 
 <div id="TOC">
@@ -375,29 +375,30 @@ Tutorial</a></li>
 <a href="#citation"><sup>[1]</sup></a> and
 <code>A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests</code>
 <a href="#citation"><sup>[2]</sup></a> proposed by the Institute of
-Forest Resource Information Techniques, Chinese Academy of Forestry. It
-can classify site classes based on the stand height growth and establish
-a nonlinear mixed-effect biomass model under different site classes
-based on the whole stand model to achieve more accurate carbon
-sequestration. In particular, a carbon sequestration potentiality
-calculation method based on the potential mean annual increment is
-proposed. This package is applicable to both natural and plantation
-forests. It can quantitatively answer how much of the stand’s potential
-productivity, realized productivity, and room for improvement under a
-certain site, and can be used in many aspects such as site quality
-assessment, tree species suitability evaluation, and degraded forest
-evaluation.</p>
+Forest Resource Information Techniques, Chinese Academy of Forestry.
+This package can be used to classify site classes based on the stand
+height growth and establish a nonlinear mixed-effect biomass model under
+different site classes based on the whole stand model to achieve more
+accurate estimation of carbon sequestration. In particular, a carbon
+sequestration potential productivity calculation method based on the
+potential mean annual increment is proposed. This package is applicable
+to both natural forests and plantations. It can quantitatively assess
+stand’s potential productivity, realized productivity, and possible
+improvement under certain site, and can be used in many aspects such as
+site quality assessment, tree species suitability evaluation, and forest
+degradation evaluation.</p>
 <div id="overview" class="section level2">
 <h2>1 Overview</h2>
-<p><em><code>Forestat</code></em> package implements the site classes
-based on stand height growth, establishment the growth models of height,
-basal area of breast-height, and biomass, as well as the calculation of
-stand’s realized site productivity and potential productivity. The
-H-model can be constructed using Richard, Logistic, Korf, Gompertz,
-Weibull, and Schumacher model, while the BA-model and Bio-model can only
-be constructed using Richard model. <em><code>Forestat</code></em>
-package relies on the data of natural forest, and a sample data is
-provided in the package.</p>
+<p><em><code>Forestat</code></em> can be used to implement the
+assessment of site classes based on stand height growth, establishment
+of the growth models of height (H-model), basal area at breast-height
+(BA-model), and biomass (Bio-model), as well as calculation of stand’s
+realized site productivity and potential productivity. The H-model can
+be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and
+Schumacher model, while the BA-model and Bio-model can only be
+constructed using Richard model. <em><code>Forestat</code></em> relies
+on several plots data for a given forest type (tree species). A sample
+data is provided in the package.</p>
 <div id="forestat-flowchart" class="section level3">
 <h3>1.1 <em>forestat</em> Flowchart</h3>
 <div align="center">
@@ -456,9 +457,10 @@ following command:</p>
 </div>
 <div id="quick-start" class="section level2">
 <h2>3 Quick Start</h2>
-<p>This section demonstrates the complete steps to perform natural
-forest site quality assessment quickly using the <code>forestData</code>
-sample data included in the package.</p>
+<p>This section demonstrates the complete steps to perform the
+calculation of stand’s site classes, realized site productivity and
+potential productivity quickly using the sample dataset called
+<code>forestData</code> included in the package.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Load the forestData sample data included in the package</span></span>
 <span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;forestData&quot;</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
@@ -490,9 +492,9 @@ sample data included in the package.</p>
 <summary style="font-size:15px;">
 <strong>4.1.1 Custom Data</strong>
 </summary>
-<p>To build an accurate model, good data is essential. The
-<em><code>forestat</code></em> package includes a cleaned sample data
-set that can be loaded and viewed using the following command:</p>
+<p>To build an accurate model, high quality data is essential. The
+<em><code>forestat</code></em> package includes a cleaned sample dataset
+that can be loaded and viewed using the following command:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Load the forestData sample data included in the package</span></span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;forestData&quot;</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
@@ -511,17 +513,17 @@ set that can be loaded and viewed using the following command:</p>
 <p>Of course, you can also choose to load custom data:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Load custom data</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>forestData <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;/path/to/your/folder/your_file.csv&quot;</span>)</span></code></pre></div>
-<p>In the custom data, the <code>ID</code> (plot ID), <code>code</code>
-(forest type code of plot), <code>AGE</code> (the average age of the
-stand), and <code>H</code> (the average height of the stand) are
-mandatory fields used to build the “H-model” and plot relevant example
-graphs.</p>
+<p>The data from customers is required to have the csv or excel xlsx
+format. The following columns or fields including ID (plot ID), code
+(forest type code of plot), AGE (the average age of stand), and H (the
+average height of stand) are required to build the H-Model and make the
+relevant example graphs.</p>
 <p>The <code>S</code> (stand density index), <code>BA</code> (stand
 basal area), and <code>Bio</code> (stand biomass) are optional fields to
 build the <code>BA-model</code> and <code>Bio-model</code>.</p>
 <p>In the subsequent calculation of potential productivity and realized
 productivity, the <code>BA-model</code> and <code>Bio-model</code> are
-required. That is, if the custom data lacks the <code>S</code>,
+required. That is, if the customized data lacks the <code>S</code>,
 <code>BA</code>, and <code>Bio</code> fields, potential productivity and
 realized productivity cannot be calculated.</p>
 <div align="center">
@@ -556,20 +558,20 @@ fields, the <code>H-model</code>, <code>BA-model</code>, and
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>                         <span class="at">H_start=</span><span class="fu">c</span>(<span class="at">a=</span><span class="dv">20</span>,<span class="at">b=</span><span class="fl">0.05</span>,<span class="at">c=</span><span class="fl">1.0</span>),</span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>                         <span class="at">BA_start =</span> <span class="fu">c</span>(<span class="at">a=</span><span class="dv">80</span>, <span class="at">b=</span><span class="fl">0.0001</span>, <span class="at">c=</span><span class="dv">8</span>, <span class="at">d=</span><span class="fl">0.1</span>),</span>
 <span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>                         <span class="at">Bio_start=</span><span class="fu">c</span>(<span class="at">a=</span><span class="dv">450</span>, <span class="at">b=</span><span class="fl">0.0001</span>, <span class="at">c=</span><span class="dv">12</span>, <span class="at">d=</span><span class="fl">0.1</span>))</span></code></pre></div>
-<p>The <code>model</code> is the model used to build the
-<code>H-model</code> and can be selected from the
-<code>&quot;Logistic&quot;</code>, <code>&quot;Richards&quot;</code>, <code>&quot;Korf&quot;</code>,
-<code>&quot;Gompertz&quot;</code>, <code>&quot;Weibull&quot;</code>, and
-<code>&quot;Schumacher&quot;</code> models. The <code>BA-model</code> and
-<code>Bio-model</code> are built using the Richard model by default.
-<code>interval</code> is the initial stand age interval for height
-classes, <code>number</code> is the maximum number of initial height
-classes, and <code>maxiter</code> is the maximum number of fitting
-iterations. The <code>H_start</code> is the initial parameter for
-fitting the H-model, the <code>BA_start</code> is the initial parameter
-for fitting the BA-model, and the <code>Bio_start</code> is the initial
-parameter for fitting the Bio-model. If fitting encounters errors, you
-can try different initial parameters as attempts.</p>
+<p>The <code>model</code> parameter is the model used to build the
+<code>H-model</code>. Optional models include <code>&quot;Logistic&quot;</code>,
+<code>&quot;Richards&quot;</code>, <code>&quot;Korf&quot;</code>, <code>&quot;Gompertz&quot;</code>,
+<code>&quot;Weibull&quot;</code>, and <code>&quot;Schumacher&quot;</code>. The
+<code>BA-model</code> and <code>Bio-model</code> are built using the
+Richard model by default. <code>interval</code> parameter is the initial
+stand age interval for height classes, <code>number</code> parameter is
+the maximum number of initial height classes, and <code>maxiter</code>
+parameter is the maximum number of fitting iterations. The
+<code>H_start</code> is the initial parameter for fitting the H-model,
+the <code>BA_start</code> is the initial parameter for fitting the
+BA-model, and the <code>Bio_start</code> is the initial parameter for
+fitting the Bio-model. If fitting encounters errors, you can try
+different initial parameters as attempts.</p>
 <p>The result returned by the <code>class.plot()</code> function is the
 <code>forestData</code> object, which includes <code>Input</code> (input
 data and height classes results), <code>Hmodel</code> (H-model results),
@@ -586,7 +588,7 @@ Figure 3. Structure of the forestData object
 <br>
 <details>
 <summary style="font-size:15px;">
-<strong>4.1.3 Obtaining Summary Data</strong>
+<strong>4.1.3 Obtain Summary Data</strong>
 </summary>
 <div id="id_4.1.3">
 
@@ -670,11 +672,11 @@ concise reports of the <code>H-model</code>, <code>BA-model</code>, and
 <br>
 <details>
 <summary style="font-size:16.8px;">
-<strong>4.2 Plotting Graphs</strong>
+<strong>4.2 Make Graphs</strong>
 </summary>
 <p>After constructing the stand growth model using the
 <code>class.plot()</code> function in <a href="#id_4.1.2">4.1.2</a>, you
-can use the <code>plot()</code> function to plot graphs.</p>
+can use the <code>plot()</code> function to make graphs.</p>
 <p>The <code>model.type</code> parameter specifies the model used for
 plotting, which include <code>H</code>, <code>BA</code>, or
 <code>Bio</code>. The <code>plot.type</code> parameter specifies the
@@ -682,7 +684,7 @@ type of plot, which can be <code>Curve</code>, <code>Residual</code>,
 <code>Scatter_Curve</code>, or <code>Scatter</code>. The
 <code>xlab</code>, <code>ylab</code>, <code>legend.lab</code>, and
 <code>title</code> parameters represent the x-axis label, y-axis label,
-legend, and title of the plot, respectively.</p>
+legend, and title of the graph, respectively.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Plot the curve of the H-model</span></span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">plot</span>(forestData,<span class="at">model.type=</span><span class="st">&quot;H&quot;</span>,</span>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>     <span class="at">plot.type=</span><span class="st">&quot;Curve&quot;</span>,</span>
@@ -692,7 +694,7 @@ legend, and title of the plot, respectively.</p>
 <span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># Plot the scatter plot of the BA-model</span></span>
 <span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="fu">plot</span>(forestData,<span class="at">model.type=</span><span class="st">&quot;BA&quot;</span>,</span>
 <span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>     <span class="at">plot.type=</span><span class="st">&quot;Scatter&quot;</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Stand age (year)&quot;</span>,<span class="at">ylab=</span><span class="st">&quot;Basal area (m2/hm2)&quot;</span>,<span class="at">legend.lab=</span><span class="st">&quot;Site class&quot;</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">&quot;Stand age (year)&quot;</span>,<span class="at">ylab=</span><span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Basal area ( &quot;</span>,m<span class="sc">^</span><span class="dv">2</span>,<span class="st">&quot;/&quot;</span>,hm<span class="sc">^</span><span class="dv">2</span>,<span class="st">&quot;)&quot;</span>)),<span class="at">legend.lab=</span><span class="st">&quot;Site class&quot;</span>,</span>
 <span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>     <span class="at">title=</span><span class="st">&quot;The BA-model scatter plot of the mixed birch-broadleaf forest&quot;</span>)</span></code></pre></div>
 <p>The sample plots produced by different <code>plot.type</code> values
 are shown in Figure 4:</p>
@@ -707,27 +709,27 @@ Figure 4. Sample plots produced by different plot.type values
 <br>
 <details>
 <summary style="font-size:16.8px;">
-<strong>4.3 Calculate the Potential Productivity of Stand</strong>
+<strong>4.3 Calculate the Potential Productivity of Forest</strong>
 </summary>
 <p>After constructing the stand growth model using the
 <code>class.plot()</code> function in <a href="#id_4.1.2">4.1.2</a>, the
 potential productivity of stand can be calculated using the
 <code>potential.productivity()</code> function. Before calculation, it
-is required that the <code>BAmodel</code> and <code>Biomodel</code> have
-been established in the <code>forestData</code> object.</p>
+is required that the <code>BA-model</code> and <code>Bio-model</code>
+have been developed in the <code>forestData</code> object.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>forestData <span class="ot">&lt;-</span> <span class="fu">potential.productivity</span>(forestData, <span class="at">code=</span><span class="dv">1</span>,</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>                                     <span class="at">age.min=</span><span class="dv">5</span>,<span class="at">age.max=</span><span class="dv">150</span>,</span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>                                     <span class="at">left=</span><span class="fl">0.05</span>, <span class="at">right=</span><span class="dv">100</span>,</span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>                                     <span class="at">e=</span><span class="fl">1e-05</span>, <span class="at">maxiter =</span> <span class="dv">50</span>) </span></code></pre></div>
 <p>In the above code, the parameter <code>code</code> is the forest type
-code. <code>age.min</code> and <code>age.max</code> represent the
+code. The <code>age.min</code> and <code>age.max</code> represent the
 minimum and maximum age of the stand, and the calculation of potential
-productivity will be performed within this range. <code>left</code> and
-<code>right</code> are the initial parameters for fitting the model.
-When fitting fails, try multiple initial parameters. <code>e</code> is
-the precision of the fitting model. When the residual is less than
+productivity will be performed within this range. The <code>left</code>
+and <code>right</code> are the initial parameters for fitting the model.
+When fitting fails, try multiple initial parameters. The <code>e</code>
+is the precision of the fitting model. When the residual is less than
 <code>e</code>, the model is considered to have converged and the
-fitting is stopped. <code>maxiter</code> is the maximum number of
+fitting is stopped. The <code>maxiter</code> is the maximum number of
 iterations to the fitted model. When the number of fittings equals
 <code>maxiter</code>, the model is considered to have converged and the
 fitting is stopped.</p>
@@ -766,14 +768,14 @@ increment</p>
 <br>
 <details>
 <summary style="font-size:16.8px;">
-<strong>4.4 Calculate the Realized Productivity of the Forest</strong>
+<strong>4.4 Calculate the Realized Productivity of Forest</strong>
 </summary>
 <p>After constructing the stand growth model using the
 <code>class.plot()</code> function in <a href="#id_4.1.2">4.1.2</a>, the
-realized productivity of the stand can be calculated using the
+actual or realized productivity of the stand can be calculated using the
 <code>realized.productivity()</code> function. Prior to the calculation,
 it is required that the <code>BA-model</code> and <code>Bio-model</code>
-have been established in the <code>forestData</code> object.</p>
+have been obtained in the <code>forestData</code> object.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>forestData <span class="ot">&lt;-</span> <span class="fu">realized.productivity</span>(forestData, </span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>                                   <span class="at">left=</span><span class="fl">0.05</span>, <span class="at">right=</span><span class="dv">100</span>)</span></code></pre></div>
 <p>Here, the <code>left</code> and <code>right</code> parameters are the

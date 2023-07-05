@@ -28,7 +28,7 @@ Imports: dplyr, ggplot2, graphics, nlme, stats
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-07-05 12:08:43 UTC; jackhanyuan
+Packaged: 2023-07-05 13:11:24 UTC; jackhanyuan
 Author: Liyong Fu [aut],
   Shirong Liu [aut],
   Shouzheng Tang [aut],
@@ -37,3 +37,4 @@ Author: Liyong Fu [aut],
   Linyan Feng [aut],
   Dongbo Xie [aut],
   Yuanyuan Han [aut, cre]
+Date/Publication: 2023-07-05 23:23:09 UTC

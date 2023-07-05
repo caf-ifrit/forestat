@@ -1,5 +1,5 @@
 ---
-title: "Forest Carbon Sequestration and Potentiality Calculationt"
+title: "Forest Carbon Sequestration and Potential Productivity Calculation"
 output: 
   rmarkdown::html_vignette:
     toc: true
@@ -15,11 +15,11 @@ vignette: >
 <p align="right"><strong>Date:</strong> 07/05/2023 </p>
 <br>
 
-*`Forestat`* is an R package based on `Methodology and Applications of Site Quality Assessment Based on Potential Mean Annual Increment` [<sup>[1]</sup>](#citation) and `A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests` [<sup>[2]</sup>](#citation) proposed by the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry. It can classify site classes based on the stand height growth and establish a nonlinear mixed-effect biomass model under different site classes based on the whole stand model to achieve more accurate carbon sequestration. In particular, a carbon sequestration potentiality calculation method based on the potential mean annual increment is proposed. This package is applicable to both natural and plantation forests. It can quantitatively answer how much of the stand's potential productivity, realized productivity, and room for improvement under a certain site, and can be used in many aspects such as site quality assessment, tree species suitability evaluation, and degraded forest evaluation.
+*`Forestat`* is an R package based on `Methodology and Applications of Site Quality Assessment Based on Potential Mean Annual Increment` [<sup>[1]</sup>](#citation) and `A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests` [<sup>[2]</sup>](#citation) proposed by the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry. This package can be used to classify site classes based on the stand height growth and establish a nonlinear mixed-effect biomass model under different site classes based on the whole stand model to achieve more accurate estimation of carbon sequestration. In particular, a carbon sequestration potential productivity calculation method based on the potential mean annual increment is proposed. This package is applicable to both natural forests and plantations. It can quantitatively assess stand’s potential productivity, realized productivity, and possible improvement under certain site, and can be used in many aspects such as site quality assessment, tree species suitability evaluation, and forest degradation evaluation.
 
 ## 1 Overview
 
-*`Forestat`* package implements the site classes based on stand height growth, establishment the growth models of height, basal area of breast-height, and biomass, as well as the calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. *`Forestat`* package relies on the data of natural forest, and a sample data is provided in the package.
+*`Forestat`* can be used to implement the assessment of site classes based on stand height growth, establishment of the growth models of height (H-model), basal area at breast-height (BA-model), and biomass (Bio-model), as well as calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. *`Forestat`* relies on several plots data for a given forest type (tree species). A sample data is provided in the package.
 
 ### 1.1 *forestat* Flowchart
 
@@ -64,7 +64,7 @@ library(forestat)
 
 ## 3 Quick Start
 
-This section demonstrates the complete steps to perform natural forest site quality assessment quickly using the `forestData` sample data included in the package.
+This section demonstrates the complete steps to perform the calculation of stand’s site classes, realized site productivity and potential productivity quickly using the sample dataset called `forestData` included in the package.
 
 ```R
 # Load the forestData sample data included in the package
@@ -97,7 +97,7 @@ summary(forestData)
 <details>
 <summary style="font-size:15px;"><strong>4.1.1 Custom Data</strong></summary>
 
-To build an accurate model, good data is essential. The *`forestat`* package includes a cleaned sample data set that can be loaded and viewed using the following command:
+To build an accurate model, high quality data is essential. The *`forestat`* package includes a cleaned sample dataset that can be loaded and viewed using the following command:
 
 ```R
 # Load the forestData sample data included in the package
@@ -124,11 +124,11 @@ Of course, you can also choose to load custom data:
 forestData <- read.csv("/path/to/your/folder/your_file.csv")
 ```
 
-In the custom data, the `ID` (plot ID), `code` (forest type code of plot), `AGE` (the average age of the stand), and `H` (the average height of the stand) are mandatory fields used to build the "H-model" and plot relevant example graphs.
+The data from customers is required to have the csv or excel xlsx format. The following columns or fields including ID (plot ID), code (forest type code of plot), AGE (the average age of stand), and H (the average height of stand) are required to build the H-Model and make the relevant example graphs.
 
 The `S` (stand density index), `BA` (stand basal area), and `Bio` (stand biomass) are optional fields to build the `BA-model` and `Bio-model`.
 
-In the subsequent calculation of potential productivity and realized productivity, the `BA-model` and `Bio-model` are required. That is, if the custom data lacks the `S`, `BA`, and `Bio` fields, potential productivity and realized productivity cannot be calculated.
+In the subsequent calculation of potential productivity and realized productivity, the `BA-model` and `Bio-model` are required. That is, if the customized data lacks the `S`, `BA`, and `Bio` fields, potential productivity and realized productivity cannot be calculated.
 
 <div align="center">
   <img width="70%" src="img/forestData.png">
@@ -157,7 +157,7 @@ forestData <- class.plot(forestData, model = "Richards",
                          Bio_start=c(a=450, b=0.0001, c=12, d=0.1))
 ```
 
-The `model` is the model used to build the `H-model` and can be selected from the `"Logistic"`, `"Richards"`, `"Korf"`, `"Gompertz"`, `"Weibull"`, and `"Schumacher"` models. The `BA-model` and `Bio-model` are built using the Richard model by default. `interval` is the initial stand age interval for height classes, `number` is the maximum number of initial height classes, and `maxiter` is the maximum number of fitting iterations. The `H_start` is the initial parameter for fitting the H-model, the `BA_start` is the initial parameter for fitting the BA-model, and the `Bio_start` is the initial parameter for fitting the Bio-model. If fitting encounters errors, you can try different initial parameters as attempts.
+The `model` parameter is the model used to build the `H-model`. Optional models include `"Logistic"`, `"Richards"`, `"Korf"`, `"Gompertz"`, `"Weibull"`, and `"Schumacher"`. The `BA-model` and `Bio-model` are built using the Richard model by default. `interval` parameter is the initial stand age interval for height classes, `number` parameter is the maximum number of initial height classes, and `maxiter` parameter is the maximum number of fitting iterations. The `H_start` is the initial parameter for fitting the H-model, the `BA_start` is the initial parameter for fitting the BA-model, and the `Bio_start` is the initial parameter for fitting the Bio-model. If fitting encounters errors, you can try different initial parameters as attempts.
 
 The result returned by the `class.plot()` function is the `forestData` object, which includes `Input` (input data and height classes results), `Hmodel` (H-model results), `BAmodel` (BA-model results), `Biomodel` (Bio-model results), and `output` (Expressions, parameters, and precision for all models).
 
@@ -170,7 +170,7 @@ The result returned by the `class.plot()` function is the `forestData` object, w
 
 <br>
 <details>
-<summary style="font-size:15px;"><strong>4.1.3 Obtaining Summary Data</strong></summary>
+<summary style="font-size:15px;"><strong>4.1.3 Obtain Summary Data</strong></summary>
 <div id="4.1.3"></div>
 
 To understand the establishment of the model, you can use the `summary(forestData)` function to obtain the summary data of the `forestData` object. The function returns the `summary.forestData` object and outputs the relevant data to the screen.
@@ -253,11 +253,11 @@ Bio-model Parameters:
 
 <br>
 <details>
-<summary style="font-size:16.8px;"><strong>4.2 Plotting Graphs</strong></summary>
+<summary style="font-size:16.8px;"><strong>4.2 Make Graphs</strong></summary>
 
-After constructing the stand growth model using the `class.plot()` function in [4.1.2](#4.1.2), you can use the `plot()` function to plot graphs.
+After constructing the stand growth model using the `class.plot()` function in [4.1.2](#4.1.2), you can use the `plot()` function to make graphs.
 
-The `model.type` parameter specifies the model used for plotting, which include `H`, `BA`, or `Bio`. The `plot.type` parameter specifies the type of plot, which can be `Curve`, `Residual`, `Scatter_Curve`, or `Scatter`. The `xlab`, `ylab`, `legend.lab`, and `title` parameters represent the x-axis label, y-axis label, legend, and title of the plot, respectively.
+The `model.type` parameter specifies the model used for plotting, which include `H`, `BA`, or `Bio`. The `plot.type` parameter specifies the type of plot, which can be `Curve`, `Residual`, `Scatter_Curve`, or `Scatter`. The `xlab`, `ylab`, `legend.lab`, and `title` parameters represent the x-axis label, y-axis label, legend, and title of the graph, respectively.
 
 ```R
 # Plot the curve of the H-model
@@ -269,7 +269,7 @@ plot(forestData,model.type="H",
 # Plot the scatter plot of the BA-model
 plot(forestData,model.type="BA",
      plot.type="Scatter",
-     xlab="Stand age (year)",ylab="Basal area (m2/hm2)",legend.lab="Site class",
+     xlab="Stand age (year)",ylab=expression(paste("Basal area ( ",m^2,"/",hm^2,")")),legend.lab="Site class",
      title="The BA-model scatter plot of the mixed birch-broadleaf forest")
 ```
 
@@ -285,9 +285,9 @@ The sample plots produced by different `plot.type` values are shown in Figure 4:
 
 <br>
 <details>
-<summary style="font-size:16.8px;"><strong>4.3 Calculate the Potential Productivity of Stand</strong></summary>
+<summary style="font-size:16.8px;"><strong>4.3 Calculate the Potential Productivity of Forest</strong></summary>
 
-After constructing the stand growth model using the `class.plot()` function in [4.1.2](#4.1.2), the potential productivity of stand can be calculated using the `potential.productivity()` function. Before calculation, it is required that the `BAmodel` and `Biomodel` have been established in the `forestData` object.
+After constructing the stand growth model using the `class.plot()` function in [4.1.2](#4.1.2), the potential productivity of stand can be calculated using the `potential.productivity()` function. Before calculation, it is required that the `BA-model` and `Bio-model` have been developed in the `forestData` object.
 
 ```R
 forestData <- potential.productivity(forestData, code=1,
@@ -296,7 +296,7 @@ forestData <- potential.productivity(forestData, code=1,
                                      e=1e-05, maxiter = 50) 
 ```
 
-In the above code, the parameter `code` is the forest type code. `age.min` and `age.max` represent the minimum and maximum age of the stand, and the calculation of potential productivity will be performed within this range. `left` and `right` are the initial parameters for fitting the model. When fitting fails, try multiple initial parameters. `e` is the precision of the fitting model. When the residual is less than `e`, the model is considered to have converged and the fitting is stopped. `maxiter` is the maximum number of iterations to the fitted model. When the number of fittings equals `maxiter`, the model is considered to have converged and the fitting is stopped.
+In the above code, the parameter `code` is the forest type code. The `age.min` and `age.max` represent the minimum and maximum age of the stand, and the calculation of potential productivity will be performed within this range. The `left` and `right` are the initial parameters for fitting the model. When fitting fails, try multiple initial parameters. The `e` is the precision of the fitting model. When the residual is less than `e`, the model is considered to have converged and the fitting is stopped. The `maxiter` is the maximum number of iterations to the fitted model. When the number of fittings equals `maxiter`, the model is considered to have converged and the fitting is stopped.
 
 <br>
 <details>
@@ -347,9 +347,9 @@ The meanings of the fields in the output are as follows:
 
 <br>
 <details>
-<summary style="font-size:16.8px;"><strong>4.4 Calculate the Realized Productivity of the Forest</strong></summary>
+<summary style="font-size:16.8px;"><strong>4.4 Calculate the Realized Productivity of Forest</strong></summary>
 
-After constructing the stand growth model using the `class.plot()` function in [4.1.2](#4.1.2), the realized productivity of the stand can be calculated using the `realized.productivity()` function. Prior to the calculation, it is required that the `BA-model` and `Bio-model` have been established in the `forestData` object.
+After constructing the stand growth model using the `class.plot()` function in [4.1.2](#4.1.2), the actual or realized productivity of the stand can be calculated using the `realized.productivity()` function. Prior to the calculation, it is required that the `BA-model` and `Bio-model` have been obtained in the `forestData` object.
 
 ```R
 forestData <- realized.productivity(forestData, 

@@ -15,7 +15,7 @@
 
 ## <div align="center">1 概述</div>
 
-*`forestat`* 包实现了天然林基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。其中，树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和生物量生长模型仅可用Richard模型构建。*`forestat`* 包依赖于天然林的样地数据，包中带有一份样例数据。
+*`forestat`* 包实现了基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。其中，树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和生物量生长模型仅可用Richard模型构建。*`forestat`* 包依赖于给定林分类型（树种）的多个样地数据，包中带有一份样例数据。
 
 ### 1.1 *forestat* 流程图
 
@@ -31,7 +31,6 @@
 | dplyr       | https://CRAN.R-project.org/package=dplyr   |
 | ggplot2     | https://CRAN.R-project.org/package=ggplot2 |
 | nlme        | https://CRAN.R-project.org/package=nlme    |
-
 
 ## <div align="center">2 安装</div>
 
@@ -61,7 +60,7 @@ library(forestat)
 
 ## <div align="center">3 快速开始</div>
 
-本节展示的是快速完成天然林立地质量评估的完整步骤，使用的数据是包中自带的`forestData`样例数据。
+本节展示的是快速完成立地分级、潜在生产力和现实生产力的完整步骤，使用的数据是包中自带的`forestData`样例数据。
 
 ```R
 # 加载包中 forestData 样例数据
@@ -267,7 +266,7 @@ plot(forestData,model.type="H",
 # 绘制断面积生长模型散点图
 plot(forestData,model.type="BA",
      plot.type="Scatter",
-     xlab="年龄(year)",ylab="断面积(m2/hm2)",legend.lab="立地等级",
+     xlab="年龄(year)",ylab=expression(paste("断面积( ",m^2,"/",hm^2,")")),legend.lab="立地等级",
      title="桦木阔叶混断面积生长模型散点图")
 ```
 

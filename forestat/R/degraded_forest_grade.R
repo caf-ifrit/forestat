@@ -23,13 +23,14 @@
 #' @export calc_degraded_forest_grade
 #' @import dplyr
 #' @importFrom stats complete.cases
+#' @importFrom rlang .data
 
 # Calculation of degraded forest grade
 calc_degraded_forest_grade <- function(plot_data) {
   plot_data <- cal_indicator(plot_data)
 
-  normal_plot_data <- plot_data %>% dplyr::filter(land_type.y == 111, complete.cases(p1, p2, p3, p4))
-  abnormal_plot_data <- plot_data %>% dplyr::filter(land_type.y == 111, complete.cases(p1, p2, p3, p4))
+  normal_plot_data <- plot_data %>% filter(plot_data$land_type.y == 111, complete.cases(plot_data$p1, plot_data$p2, plot_data$p3, plot_data$p4))
+  abnormal_plot_data <- plot_data %>% filter(plot_data$land_type.y == 111, complete.cases(plot_data$p1, plot_data$p2, plot_data$p3, plot_data$p4))
 
   processlist <- I.divide_type(normal_plot_data, 30)
 
@@ -58,10 +59,11 @@ calc_degraded_forest_grade <- function(plot_data) {
       res_data$Z5[i] <- 1
     }
   }
-  res_data <- mutate(res_data, Z = Z1 + Z2 + Z3 + Z4 + Z5,
-                     Z_weights = Z1 + 0.75 * Z2 + 0.5 * Z3 + 0.5 * Z4 + 0.25 * Z5,
-                     Z_grade = I.cal_grade(Z, 1),
-                     Z_weights_grade = I.cal_grade(Z_weights, 2))
+
+  res_data <- mutate(res_data, Z = res_data$Z1 + res_data$Z2 + res_data$Z3 + res_data$Z4 + res_data$Z5,
+                     Z_weights = res_data$Z1 + 0.75 * res_data$Z2 + 0.5 * res_data$Z3 + 0.5 * res_data$Z4 + 0.25 * res_data$Z5,
+                     Z_grade = I.cal_grade(.data$Z, 1),
+                     Z_weights_grade = I.cal_grade(.data$Z_weights, 2))
 
   return(res_data)
 }
@@ -69,11 +71,11 @@ calc_degraded_forest_grade <- function(plot_data) {
 # Calculate indicators
 # forest accumulation growth rate (p1), forest recruitment rate (p2), tree species reduction rate (p3), forest canopy cover reduction rate (p4), and forest disaster level (p5).
 cal_indicator <- function(plot_data) {
-  indicator <- mutate(plot_data, p1 = I.p1(standing_stock.x, standing_stock.y + forest_cutting_stock.y + forest_cutting_stock.z),
-                      p2 = I.p2(standing_tree_1, recruitment_tree_23),
-                      p3 = I.p3(tree_species_num_1, tree_species_num_3),
-                      p4 = I.p4(crown_density.x, crown_density.y),
-                      p5 = disaster_level.y)
+  indicator <- mutate(plot_data, p1 = I.p1(plot_data$standing_stock.x, plot_data$standing_stock.y + plot_data$forest_cutting_stock.y + plot_data$forest_cutting_stock.z),
+                      p2 = I.p2(plot_data$standing_tree_1, plot_data$recruitment_tree_23),
+                      p3 = I.p3(plot_data$tree_species_num_1, plot_data$tree_species_num_3),
+                      p4 = I.p4(plot_data$crown_density.x, plot_data$crown_density.y),
+                      p5 = plot_data$disaster_level.y)
   return(indicator)
 }
 

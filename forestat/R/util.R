@@ -737,10 +737,10 @@ I.mean <- function(vector) {
 # Input: Data set (data)
 # Output: Index values (index)
 I.degradation_indicator <- function(data) {
-  data12 <- dplyr::filter(data, naturalness.y %in% 1:2)
-  data35 <- dplyr::filter(data, naturalness.y %in% 3:5)
-  data_12 <- dplyr::filter(data, naturalness.x %in% 1:2 | naturalness.z %in% 1:2)
-  data_35 <- dplyr::filter(data, naturalness.x %in% 3:5 & naturalness.z %in% 3:5)
+  data12 <- filter(data, data$naturalness.y %in% 1:2)
+  data35 <- filter(data, data$naturalness.y %in% 3:5)
+  data_12 <- filter(data, data$naturalness.x %in% 1:2 | data$naturalness.z %in% 1:2)
+  data_35 <- filter(data, data$naturalness.x %in% 3:5 & data$naturalness.z %in% 3:5)
 
   if (nrow(data12) > 0) {
     referenceID <- 1
@@ -756,8 +756,8 @@ I.degradation_indicator <- function(data) {
   N <- nrow(data_ref)
   p1m <- min(I.mean(data_ref$p1), median(data_ref$p1))
   p2m <- min(I.mean(data_ref$p2), median(data_ref$p2))
-  p3m <- ifelse(nrow(dplyr::filter(data35, p3 > 0)) > 0, min(I.mean(dplyr::filter(data35, p3 > 0)$p3), median(dplyr::filter(data35, p3 > 0)$p3)), 0)
-  p4m <- ifelse(nrow(dplyr::filter(data35, p4 > 0)) > 0, min(I.mean(dplyr::filter(data35, p4 > 0)$p4), median(dplyr::filter(data35, p4 > 0)$p4)), 0)
+  p3m <- ifelse(nrow(filter(data35, data35$p3 > 0)) > 0, min(I.mean(filter(data35, data35$p3 > 0)$p3), median(filter(data35, data35$p3 > 0)$p3)), 0)
+  p4m <- ifelse(nrow(filter(data35, data35$p4 > 0)) > 0, min(I.mean(filter(data35, data35$p4 > 0)$p4), median(filter(data35, data35$p4 > 0)$p4)), 0)
 
   index <- c(N, p1m, p2m, p3m, p4m, referenceID)
   return(index)

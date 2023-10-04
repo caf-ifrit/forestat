@@ -23,6 +23,8 @@
 #' plot_data <- degraded_forest_preprocess(tree_1,tree_2,tree_3,plot_1,plot_2,plot_3)
 #' }
 #' @export degraded_forest_preprocess
+#' @import dplyr
+#' @importFrom rlang .data
 
 # Preprocess the data and return the plot_data.
 degraded_forest_preprocess <- function(tree_1, tree_2, tree_3, plot_1, plot_2, plot_3) {
@@ -36,24 +38,24 @@ degraded_forest_preprocess <- function(tree_1, tree_2, tree_3, plot_1, plot_2, p
   plot_2 <- check_data(plot_2, plot_required_fields)
   plot_3 <- check_data(plot_3, plot_required_fields)
 
-  standing_tree <- select(tree_1, plot_id, inspection_type, tree_species_code) %>%
-    dplyr::filter(!(inspection_type %in% c(13, 14, 15, 17))) %>%
-    group_by(plot_id) %>%
-    summarise(standing_tree_1 = n(), tree_species_num_1 = n_distinct(tree_species_code))
+  standing_tree <- select(tree_1, c("plot_id", "inspection_type", "tree_species_code")) %>%
+    filter(!(.data$inspection_type %in% c(13, 14, 15, 17))) %>%
+    group_by(.data$plot_id) %>%
+    summarise(standing_tree_1 = n(), tree_species_num_1 = n_distinct(.data$tree_species_code))
 
-  recruitment_tree_2 <- select(tree_2, plot_id, inspection_type) %>%
-    dplyr::filter(inspection_type == 12) %>%
-    group_by(plot_id) %>%
+  recruitment_tree_2 <- select(tree_2, c("plot_id", "inspection_type")) %>%
+    filter(.data$inspection_type == 12) %>%
+    group_by(.data$plot_id) %>%
     summarise(recruitment_tree = n())
 
-  tree_species_num <- select(tree_3, plot_id, inspection_type, tree_species_code) %>%
-    dplyr::filter(!(inspection_type %in% c(13, 14, 15, 17))) %>%
-    group_by(plot_id) %>%
-    summarise(tree_species_num_3 = n_distinct(tree_species_code))
+  tree_species_num <- select(tree_3, c("plot_id", "inspection_type", "tree_species_code")) %>%
+    filter(!(.data$inspection_type %in% c(13, 14, 15, 17))) %>%
+    group_by(.data$plot_id) %>%
+    summarise(tree_species_num_3 = n_distinct(.data$tree_species_code))
 
-  recruitment_tree_3 <- select(tree_3, plot_id, inspection_type) %>%
-    dplyr::filter(inspection_type == 12) %>%
-    group_by(plot_id) %>%
+  recruitment_tree_3 <- select(tree_3, c("plot_id", "inspection_type")) %>%
+    filter(.data$inspection_type == 12) %>%
+    group_by(.data$plot_id) %>%
     summarise(recruitment_tree = n()) %>%
     full_join(tree_species_num, by = c("plot_id"))
 
@@ -62,13 +64,13 @@ degraded_forest_preprocess <- function(tree_1, tree_2, tree_3, plot_1, plot_2, p
   recruitment_tree <- full_join(recruitment_tree_3, recruitment_tree_2, by = c("plot_id"))
   recruitment_tree[is.na(recruitment_tree$recruitment_tree.x), ]$recruitment_tree.x <- 0
   recruitment_tree[is.na(recruitment_tree$recruitment_tree.y), ]$recruitment_tree.y <- 0
-  recruitment_tree <- mutate(recruitment_tree, recruitment_tree_23 = recruitment_tree.x + recruitment_tree.y)
+  recruitment_tree <- mutate(recruitment_tree, recruitment_tree_23 = recruitment_tree$recruitment_tree.x + recruitment_tree$recruitment_tree.y)
 
   plot_1 <- select(plot_1, all_of(plot_required_fields)) %>%
-    left_join(select(standing_tree, "plot_id", tree_species_num_1, standing_tree_1), by = c("plot_id"))
+    left_join(select(standing_tree, c("plot_id", "tree_species_num_1", "standing_tree_1")), by = c("plot_id"))
 
   plot_3 <- select(plot_3, all_of(plot_required_fields)) %>%
-    left_join(select(recruitment_tree, "plot_id", tree_species_num_3, recruitment_tree_23), by = c("plot_id"))
+    left_join(select(recruitment_tree, c("plot_id", "tree_species_num_3", "recruitment_tree_23")), by = c("plot_id"))
 
   plot_13 <- inner_join(plot_1, plot_3, by = c("plot_id"))
   plot_123 <- inner_join(plot_13, select(plot_2, c("plot_id", "naturalness.z" = "naturalness", "standing_stock.z" = "standing_stock", "forest_cutting_stock.z" = "forest_cutting_stock")), by = c("plot_id"))

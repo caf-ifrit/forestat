@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 #' @importFrom  nlme nlme pdDiag fixed.effects
-#' @importFrom  stats coef uniroot AIC BIC formula logLik var
+#' @importFrom  stats coef uniroot AIC BIC formula logLik var median na.omit quantile
 #' @importFrom graphics legend lines par points text
 #' @import dplyr
 
@@ -576,3 +576,242 @@ index.f<-function(model,var,num,m=6){
 }
 
 
+####The function for calculating degraded forest####
+
+NA_VALUE <- NA  # Missing value
+UNKNOWN_VALUE <- NA  # Unknown situation
+
+# Forest accumulation growth rate based on initial and final accumulation
+# Input: Initial accumulation (v1), Final accumulation (v2) (3th period standing accumulation + 2/3th period harvested accumulation)
+# Output: Forest accumulation growth rate as the average growth rate of accumulation over time
+I.p1 <- function(v1, v2) {
+  N <- length(v2)
+  VIr <- rep(0, N)
+
+  for (i in 1:N) {
+    if (is.na(v1[i]) | is.na(v2[i]) | (v1[i] == 0 & v2[i] == 0)) {
+      VIr[i] <- NA_VALUE
+    } else if (v1[i] != 0) {
+      VIr[i] <- (v2[i] - v1[i]) / v1[i]
+    } else {
+      VIr[i] <- UNKNOWN_VALUE
+    }
+  }
+
+  return(as.numeric(VIr))
+}
+
+# Forest recruitment rate based on initial and final tree counts
+# Input: Initial tree count (v1), Tree count at the 2th and 3th forest recruitment (v2)
+# Output: Forest recruitment rate as the ratio of tree count at forest recruitment to initial tree count
+I.p2 <- function(v1, v2) {
+  N <- length(v2)
+  VIr <- rep(0, N)
+
+  for (i in 1:N) {
+    if (is.na(v1[i]) | is.na(v2[i]) | (v1[i] == 0 & v2[i] == 0)) {
+      VIr[i] <- NA_VALUE
+    } else if (v1[i] != 0) {
+      VIr[i] <- v2[i] / v1[i]
+    } else {
+      VIr[i] <- UNKNOWN_VALUE
+    }
+  }
+
+  return(as.numeric(VIr))
+}
+
+# Tree species reduction rate based on initial and final counts of tree species
+# Input: Initial count of tree species (v1), Final count of tree species (v2)
+# Output: Tree species reduction rate as the ratio of the difference between initial and final counts to the initial count
+I.p3 <- function(v1, v2) {
+  N <- length(v2)
+  VIr <- rep(0, N)
+
+  for (i in 1:N) {
+    if (is.na(v1[i]) | is.na(v2[i]) | (v1[i] == 0 & v2[i] == 0)) {
+      VIr[i] <- NA_VALUE
+    } else if (v1[i] != 0) {
+      VIr[i] <- (v1[i] - v2[i]) / v1[i]
+    } else {
+      VIr[i] <- UNKNOWN_VALUE
+    }
+  }
+
+  return(as.numeric(VIr))
+}
+
+# Forest canopy cover reduction rate based on initial and final crown density
+# Input: Initial crown density (v1), Final crown density (v2)
+# Output: Forest canopy cover reduction rate as the ratio of the difference between initial and final crown density to the initial crown density
+I.p4 <- function(v1, v2) {
+  N <- length(v2)
+  VIr <- rep(0, N)
+
+  for (i in 1:N) {
+    if (is.na(v1[i]) | is.na(v2[i]) | (v1[i] == 0 & v2[i] == 0)) {
+      VIr[i] <- NA_VALUE
+    } else if (v1[i] != 0) {
+      VIr[i] <- (v1[i] - v2[i]) / v1[i]
+    } else {
+      VIr[i] <- UNKNOWN_VALUE
+    }
+  }
+
+  return(as.numeric(VIr))
+}
+
+# Main function for dividing data into subgroups based on thresholds
+# Input: Data set (data), Threshold value (threshold)
+# Output: Split data sets as a list
+I.divide_type <- function(data, threshold) {
+  branch <- c("origin", "dominant_tree_species.y", "age_group.y")
+  if (!all(branch %in% names(data))) {
+    stop("corresponding variable not in data")
+  }
+
+  for (i in branch) {
+    data <- I.divide_data(data, i, threshold)
+    if (length(data) == 1) {
+      break
+    }
+  }
+
+  return(data)
+}
+
+# Subfunction for dividing data into subgroups based on a specified variable and threshold
+# Input: Data set (data), Variable for division (variable), Threshold value (threshold, default = 30)
+# Output: Split data sets as a list
+I.divide_data <- function(data, variable, threshold = 30) {
+  if (is.data.frame(data)) {
+    data <- list(data = data)
+  }
+
+  res_list <- list()
+  for (m in data) {
+    data1 <- as.data.frame(m)
+    datalist <- list()
+    N <- nrow(unique(data1[variable]))
+
+    if (nrow(data1) >= N * threshold & N > 1 & min(table(data1[variable])) >= threshold) {
+      for (i in 1:N) {
+        datalist[[i]] <- filter(data1, data1[variable] == unique(data1[variable])[i, 1])
+      }
+    } else {
+      datalist[[1]] <- data1
+    }
+
+    res_list <- c(res_list, datalist)
+  }
+
+  return(res_list)
+}
+
+# Label function to generate a type unit name based on the input data set
+# Input: Data set (data)
+# Output: Type unit name (lab)
+I.label<-function(data){
+  origin<-paste(sort(unique(data$origin)),sep = "",collapse = "")
+  dominant<-paste0(sort(unique(data$dominant_tree_species.y)),collapse = "")
+  age_group<-paste0(sort(unique(data$age_group.y)),collapse = "")
+  lab<-paste(origin,dominant,age_group,sep = "_")
+
+  return(lab)
+}
+
+# Calculate the mean value of a vector after excluding outliers using the boxplot principle
+# Input: Vector (vector)
+# Output: Mean value (meanvalue)
+I.mean <- function(vector) {
+  a <- na.omit(vector)
+  a <- a[a != 1]
+  newvector <- a[a >= (quantile(a, 0.25) - 1.5 * (quantile(a, 0.75) - quantile(a, 0.25))) &
+                   a <= (quantile(a, 0.75) + 1.5 * (quantile(a, 0.75) - quantile(a, 0.25)))]
+
+  meanvalue <- mean(newvector)
+  return(meanvalue)
+}
+
+# Select three types of reference objects
+# Input: Data set (data)
+# Output: Index values (index)
+I.degradation_indicator <- function(data) {
+  data12 <- dplyr::filter(data, naturalness.y %in% 1:2)
+  data35 <- dplyr::filter(data, naturalness.y %in% 3:5)
+  data_12 <- dplyr::filter(data, naturalness.x %in% 1:2 | naturalness.z %in% 1:2)
+  data_35 <- dplyr::filter(data, naturalness.x %in% 3:5 & naturalness.z %in% 3:5)
+
+  if (nrow(data12) > 0) {
+    referenceID <- 1
+    data_ref <- data12
+  } else if (nrow(data_12) > 0) {
+    referenceID <- 2
+    data_ref <- data_12
+  } else {
+    referenceID <- 3
+    data_ref <- data35
+  }
+
+  N <- nrow(data_ref)
+  p1m <- min(I.mean(data_ref$p1), median(data_ref$p1))
+  p2m <- min(I.mean(data_ref$p2), median(data_ref$p2))
+  p3m <- ifelse(nrow(dplyr::filter(data35, p3 > 0)) > 0, min(I.mean(dplyr::filter(data35, p3 > 0)$p3), median(dplyr::filter(data35, p3 > 0)$p3)), 0)
+  p4m <- ifelse(nrow(dplyr::filter(data35, p4 > 0)) > 0, min(I.mean(dplyr::filter(data35, p4 > 0)$p4), median(dplyr::filter(data35, p4 > 0)$p4)), 0)
+
+  index <- c(N, p1m, p2m, p3m, p4m, referenceID)
+  return(index)
+}
+
+# Determine if the index indicates degraded forest
+# Input: Reference object code (referenceID), index value for the plot (p), index value for the reference object (pm), index sorting (M), coefficient of variation (coef12)
+# Output: Level (level) where 0 represents non-degraded forest
+I.discriminant_factor <- function(referenceID, p, pm, M, coef12 = 1.2) {
+  level <- 0
+
+  valid_referenceIDs <- c(1, 2, 3)
+  valid_M_values <- c(1, 2, 3, 4)
+
+  if (!referenceID %in% valid_referenceIDs) {
+    stop("Please check out the value of referenceID!")
+  }
+
+  if (!M %in% valid_M_values) {
+    stop("Please check out the value of M!")
+  }
+
+  if (p != 1) {
+    if ((M == 1 | M == 2) & ((referenceID == 1 & p <= 0.6 * pm) | (referenceID == 2 & p <= pm) | (referenceID == 3 & p <= coef12 * pm))) {
+      level <- 1
+    }
+
+    if ((M == 3 & p >= 0.8 * pm) | (M == 4 & p >= 1.4 * pm)) {
+      level <- 1
+    }
+  }
+
+  return(level)
+}
+
+# Determine the degraded forest grade of a plot based on the comprehensive discriminant factor Z_sum
+# Input: Comprehensive discriminant factor (vector). M equals 1 means Z is unweighted, m equals 2 means Z is weighted. (M)
+# Output: Degraded forest grade (value)
+I.cal_grade <- function(vector, M) {
+  value <- rep(0, length(vector))
+
+  if (M == 1) {
+    value[vector == 0] <- 1
+    value[vector == 1] <- 2
+    value[vector %in% c(2, 3)] <- 3
+    value[vector %in% c(4, 5)] <- 4
+  } else if (M == 2) {
+    value[vector == 0] <- 1
+    value[vector > 0 & vector <= 1] <- 2
+    value[vector > 1 & vector <= 2] <- 3
+    value[vector > 2 & vector <= 3] <- 4
+  } else {
+    stop("Please check out the value of M!")
+  }
+
+  return(value)
+}

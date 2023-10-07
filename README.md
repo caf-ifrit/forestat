@@ -1,7 +1,7 @@
 # <div align="center"><strong>森林碳汇计量和潜力计算</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 1.0.2</p>
-<p align="right"><strong>Date:</strong> 07/05/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.1.0</p>
+<p align="right"><strong>Date:</strong> 10/10/2023 </p>
 <br>
 
 *`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）提出的`基于林分潜在生长量的立地质量评价方法与应用`[<sup>[1]</sup>](#citation)和`A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests`[<sup>[2]</sup>](#citation)开发的R包。可依据林分高生长，划分立地等级；并以全林整体模型为基础，建立不同立地等级下的非线性混合效应生物量模型，实现更精准的碳汇计量；尤其提出了一种基于林分潜在生长量的碳汇潜力计算方法。该套算法适用于天然林和人工林，能够定量回答一定立地条件下的潜在生产力、现实生产力、提升空间有多大，可用于立地质量评价、树种适宜性评价、退化林评价等多个方面。
@@ -15,13 +15,18 @@
 
 ## <div align="center">1 概述</div>
 
-*`forestat`* 包实现了基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。其中，树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和生物量生长模型仅可用Richard模型构建。*`forestat`* 包依赖于给定林分类型（树种）的多个样地数据，包中带有一份样例数据。
+*`forestat`* 包实现了碳汇潜力计算和退化林评价，其中碳汇潜力计算包括了基于林分高生长的立地等级划分，树高模型、断面积生长模型、生物量生长模型的建立，林分现实生产力与潜在生产力的计算。树高模型可用Richard模型、Logistic模型、korf模型、Gompertz模型、Weibull模型和Schumacher模型构建，断面积生长模型和生物量生长模型仅可用Richard模型构建。碳汇潜力计算依赖于给定林分类型（树种）的多个样地数据，退化林的评价依赖于多个样木和样地数据，*`forestat`* 包中带有一些样例数据。
 
 ### 1.1 *forestat* 流程图
 
 <div align="center">
-  <img width="70%" src="forestat/vignettes/img/flowchart.png">
-  <p>图 1. <i>forestat</i>工作流程图</p>
+  <img width="70%" src="forestat/vignettes/img/flowchart-1.png">
+  <p>图 1.1 碳汇计算工作流程图</p>
+</div>
+
+<div align="center">
+  <img width="50%" src="forestat/vignettes/img/flowchart-2.png">
+  <p>图 1.2 退化林评价工作流程图</p>
 </div>
 
 ### 1.2 *forestat* 依赖的R包
@@ -60,7 +65,7 @@ library(forestat)
 
 ## <div align="center">3 快速开始</div>
 
-本节展示的是快速完成立地分级、潜在生产力和现实生产力的完整步骤，使用的数据是包中自带的`forestData`样例数据。
+本部分展示的是快速完成立地分级、潜在生产力和现实生产力的完整步骤，使用的数据是包中自带的`forestData`样例数据。
 
 ```R
 # 加载包中 forestData 样例数据
@@ -85,7 +90,29 @@ forestData <- realized.productivity(forestData)
 summary(forestData)
 ```
 
-## <div align="center">4 详细教程</div>
+本部分展示的是快速完成退化林评价的完整步骤，使用的数据是包中自带的`tree_1`、`tree_2`、 `tree_3`、`plot_1`、`plot_2`、`plot_3`样例数据。
+
+```R
+# 加载包中tree_1 tree_2 tree_3 plot_1 plot_2 plot_3样例数据
+data(tree_1)
+data(tree_2)
+data(tree_3)
+data(plot_1)
+data(plot_2)
+data(plot_3)
+
+# 对退化林数据进行预处理
+plot_data <- degraded_forest_preprocess(tree_1, tree_2, tree_3,
+                                        plot_1, plot_2, plot_3)
+
+# 计算退化林评价指标
+res_data <- calc_degraded_forest_grade(plot_data)
+
+# 查看计算结果
+res_data
+```
+
+## <div align="center">4 碳汇潜力计算</div>
 
 <details>
 <summary style="font-size:21px;"><strong>4.1 建立模型</strong></summary>
@@ -427,7 +454,195 @@ summary(forestData)
 
 </details>
 
-## <div align="center">5 引用</div>
+## <div align="center">5 退化林评价</div>
+
+<details>
+<summary style="font-size:21px;"><strong>5.1 数据要求</strong></summary>
+
+在 *`forestat`* 包中内置了样例数据，包括了`tree_1`、`tree_2`、`tree_3`三个样木数据以及`plot_1`、`plot_2`、`plot_3`三个样地数据，可以通过如下命令加载查看样例数据：
+
+```R
+# 加载包中tree_1 tree_2 tree_3 plot_1 plot_2 plot_3样例数据
+# tree_1 plot_1, tree_2 plot_2, tree_3 plot_3 分别为2005年、2010年、2015年清查数据
+data(tree_1)
+data(tree_2)
+data(tree_3)
+data(plot_1)
+data(plot_2)
+data(plot_3)
+
+# 查看tree_1前6行数据
+head(tree_1)
+
+# 输出
+  tree_number sample_plot_number inspection_type tree_species_code   plot_id
+1           3                  4              11               410 700000004
+2          13                  4              14               410 700000004
+3          19                  4              11               420 700000004
+4          26                  4              12               420 700000004
+5          28                  4              12               420 700000004
+6          29                  4              12               410 700000004
+
+# 查看plot_1前6行数据
+head(plot_1)
+
+# 输出
+  sample_plot_number sample_plot_type altitudes slope_direction slope_position gradient soil_thickness humus_thickness
+1                  2               11       410               9              6        0             60               0
+2                  5               11       333               3              3        4             30              10
+3                  6               11       350               2              5        1             70              20
+4                  7               11       395               2              3        5             75              20
+5                  8               11       438               2              4        4             80              20
+6                  9               11       472               7              4        5             60              25
+  land_type origin dominant_tree_species average_age age_group average_diameter_at_breast_height average_tree_height
+1       180      0                     0           0         0                                 0                   0
+2       111     13                   620          37         2                               125                 116
+3       240      0                     0           0         0                                 0                   0
+4       111     13                   620          20         1                                97                 110
+5       111     11                   620          75         4                               195                  97
+6       111     13                   630          35         2                               120                  89
+  crown_density naturalness disaster_type disaster_level standing_stock dead_wood_stock forest_cutting_stock   plot_id
+1             0           0             0              0          0.000           0.000                0.000 700000002
+2            85           4            20              1          4.816           0.131                0.000 700000005
+3             0           0             0              0          0.000           0.000                0.000 700000006
+4            60           4             0              0          1.560           0.082                0.040 700000007
+5            50           4            20              1          3.665           0.464                0.013 700000008
+6            60           4            20              1          4.890           0.041                1.408 700000009
+```
+
+样例数据中各字段含义如下：
+
+`tree_number`: 样木号
+
+`sample_plot_number`: 样地号
+
+`inspection_type`：检尺类型
+
+`tree_species_code`：树种代码
+
+`plot_id`：样地ID
+
+`sample_plot_type`: 样地类型
+
+`altitudes`：海拔
+
+`slope_direction`：坡向
+
+`slope_position`：坡位
+
+`gradient`：坡度
+
+`soil_thickness`：土壤厚度
+
+`humus_thickness`：腐殖质厚度
+
+`land_type`：地类
+
+`origin`：起源
+
+`dominant_tree_species`：优势树种
+
+`average_age`：平均年龄
+
+`age_group`：龄组
+
+`average_diameter_at_breast_height`：平均胸径
+
+`average_tree_height`：平均树高
+
+`crown_density`：郁闭度
+
+`naturalness`：自然度
+
+`disaster_type`：灾害类型
+
+`disaster_level`：灾害等级
+
+`standing_stock`：活立蓄积
+
+`dead_wood_stock`：枯损蓄积
+
+`forest_cutting_stock`：采伐蓄积
+
+你也可以加载自定义数据，自定义数据中tree_1、tree_2、tree_3 必须包含字段`plot_id`、`inspection_type`和`tree_species_code`。plot_1、plot_2和plot_3必须包含字段`plot_id`、`stand_stock`、`forest_cutting_stock`、`crown_density`、`disaster_level`、`origin`、`dominant_tree_species`、`age_group`、`naturalness`和`land_type`。
+
+```R
+# 加载openxlsx包
+library("openxlsx")
+
+# 从xlsx中加载自定义数据tree_1 tree_2 tree_3 plot_1 plot_2 plot_3
+tree_1 <- read.xlsx("/path/to/your/folder/tree_1.xlsx", sheet = 1)
+tree_2 ...
+...
+```
+
+</details>
+
+<br>
+<details>
+<summary style="font-size:20px;"><strong>5.2 退化林等级计算</strong></summary>
+
+在加载数据后，可以使用`degraded_forest_preprocess()`函数完成退化林数据预处理，使用`calc_degraded_forest_grade()`函数完成退化林等级计算。
+
+```R
+# 退化林数据预处理
+plot_data <- degraded_forest_preprocess(tree_1, tree_2, tree_3,
+                                        plot_1, plot_2, plot_3)
+
+# 退化林等级计算
+res_data <- calc_degraded_forest_grade(plot_data)
+
+# 查看计算结果
+res_data
+```
+
+`res_data`中包括了p1、p2、p3、p4、p5、ID、referenceID、num、p1m、p2m、p3m、p4m、Z1、Z2、Z3、Z4、Z5、Z、Z_weights、Z_grade、Z_weights_grade等字段，含义如下：
+
+`p1`：蓄积平均净增长率
+
+`p2`：进界率
+
+`p3`：树种减少率
+
+`p4`：林分郁闭度减少率
+
+`p5`：森林灾害等级
+
+`ID`：分组ID，按照`起源-优势数种-龄组`分组
+
+`referenceID`：参照对象ID
+
+`num`：参照对象数量
+
+`p1m`：蓄积平均净增长率的参照值
+
+`p2m`：进界率的参照值
+
+`p3m`：树种减少率的参照值
+
+`p4m`：林分郁闭度减少率的参照值
+
+`Z1`：判别因子Z1
+
+`Z2`：判别因子Z2
+
+`Z3`：判别因子Z3
+
+`Z4`：判别因子Z4
+
+`Z5`：判别因子Z5
+
+`Z`：判别因子之和，$Z = Z1 + Z2 + Z3 + Z4 + Z5$
+
+`Z_weights`：综合判别因子，判别因子权重之和 $Z_weights = Z1 + 0.75 \times Z2 + 0.5 \times Z3 + 0.5 \times Z4 + 0.25 \times Z5$
+
+`Z_grade`：Z 对应的退化林等级
+
+`Z_weights_grade`：Z_weights 对应的退化林等级
+
+</details>
+
+## <div align="center">6 引用</div>
 
 <div id="citation"></div>
 

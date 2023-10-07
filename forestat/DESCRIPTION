@@ -2,7 +2,7 @@ Type: Package
 Package: forestat
 Title: Forest Carbon Sequestration and Potential Productivity
         Calculation
-Version: 1.0.2
+Version: 1.1.0
 Authors@R: c(
     person("Liyong Fu", role = "aut", email = "fuly@ifrit.ac.cn"),
     person("Shirong Liu", role = "aut"),
@@ -24,11 +24,11 @@ Language: en-US
 LazyData: true
 Depends: R (>= 3.5.0)
 RoxygenNote: 7.2.3
-Imports: dplyr, ggplot2, graphics, nlme, stats
+Imports: dplyr, ggplot2, graphics, nlme, stats, rlang
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2023-07-05 13:11:24 UTC; jackhanyuan
+Packaged: 2023-10-07 13:20:56 UTC; jackhanyuan
 Author: Liyong Fu [aut],
   Shirong Liu [aut],
   Shouzheng Tang [aut],
@@ -37,4 +37,3 @@ Author: Liyong Fu [aut],
   Linyan Feng [aut],
   Dongbo Xie [aut],
   Yuanyuan Han [aut, cre]
-Date/Publication: 2023-07-05 23:23:09 UTC

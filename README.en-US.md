@@ -1,10 +1,10 @@
 # <div align="center"><strong>Forest Carbon Sequestration and Potential Productivity Calculation</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 1.0.2</p>
-<p align="right"><strong>Date:</strong> 07/05/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.1.0</p>
+<p align="right"><strong>Date:</strong> 10/10/2023 </p>
 <br>
 
-*`Forestat`* is an R package based on `Methodology and Applications of Site Quality Assessment Based on Potential Mean Annual Increment` [<sup>[1]</sup>](#citation) and `A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests` [<sup>[2]</sup>](#citation) proposed by the Institute of Forest Resource Information Techniques, Chinese Academy of Forestry. This package can be used to classify site classes based on the stand height growth and establish a nonlinear mixed-effect biomass model under different site classes based on the whole stand model to achieve more accurate estimation of carbon sequestration. In particular, a carbon sequestration potential productivity calculation method based on the potential mean annual increment is proposed. This package is applicable to both natural forests and plantations. It can quantitatively assess stand’s potential productivity, realized productivity, and possible improvement under certain site, and can be used in many aspects such as site quality assessment, tree species suitability evaluation, and forest degradation evaluation.
+*`Forestat`* can be used to implement the calculation of carbon sequestration potential productivity and the assessment of degraded forests. The calculation of carbon sequestration potential productivity includes the assessment of site classes based on stand height growth, establishment of the growth models of height (H-model), basal area at breast-height (BA-model), and biomass (Bio-model), as well as calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. The calculation of carbon sequestration potential productivity relies on data from several plots for a given forest type (tree species). The assessment of degraded forests relies on data from several trees and sample plots. Some sample datas are provided in the *`Forestat`* package.
 
 <div align="center">
 
@@ -15,16 +15,23 @@
 
 ## <div align="center">1 Overview</div>
 
-*`Forestat`* can be used to implement the assessment of site classes based on stand height growth, establishment of the growth models of height (H-model), basal area at breast-height (BA-model), and biomass (Bio-model), as well as calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. *`Forestat`* relies on several plots data for a given forest type (tree species). A sample data is provided in the package.
+*`Forestat`* can be used to implement the assessment of site classes based on stand height growth, establishment of the growth models of height (H-model), basal area at breast-height (BA-model), and biomass (Bio-model), calculation of stand’s realized site productivity and potential productivity, as well as the assessment of degraded forest. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. *`Forestat`* relies on several plots data for a given forest type (tree species). Some sample datas are provided in the package.
 
 ### 1.1 *forestat* Flowchart
 
 <div align="center">
-  <img width="70%" src="forestat/vignettes/img/flowchart.png">
-  <p>Figure 1. Flowchart of <i>forestat</i></p>
+  <img width="70%" src="forestat/vignettes/img/flowchart-1.png">
+  <p>Figure 1.1 Flowchart of the carbon sequestration potential productivity calculation</p>
 </div>
 
-### 1.2 R Packages Required by *forestat*
+<br>
+
+<div align="center">
+  <img width="50%" src="forestat/vignettes/img/flowchart-2.png">
+  <p>Figure 1.2 Flowchart of the degraded forest assessment</p>
+</div>
+
+### 1.3 R Packages Required by *forestat*
 
 | **Package** | **Download Link**                          |
 | ----------- | ------------------------------------------ |
@@ -60,7 +67,7 @@ library(forestat)
 
 ## <div align="center">3 Quick Start</div>
 
-This section demonstrates the complete steps to perform the calculation of stand’s site classes, realized site productivity and potential productivity quickly using the sample dataset called `forestData` included in the package.
+This part demonstrates the complete steps to perform the calculation of stand’s site classes, realized site productivity and potential productivity quickly using the sample dataset called `forestData` included in the package.
 
 ```R
 # Load the forestData sample data included in the package
@@ -84,7 +91,29 @@ forestData <- realized.productivity(forestData)
 summary(forestData)
 ```
 
-## <div align="center">4 Detailed Tutorial</div>
+This part demonstrates the complete steps to perform the assessment of degraded forests using the sample data: tree_1, tree_2, tree_3, plot_1, plot_2, and plot_3 included in the package.
+
+```R
+# Load the sample data tree_1, tree_2, tree_3, plot_1, plot_2, and plot_3 included in the package
+data(tree_1)
+data(tree_2)
+data(tree_3)
+data(plot_1)
+data(plot_2)
+data(plot_3)
+
+# Preprocessing the degraded forest data
+plot_data <- degraded_forest_preprocess(tree_1, tree_2, tree_3,
+                                        plot_1, plot_2, plot_3)
+
+# Calculation of degraded forest
+res_data <- calc_degraded_forest_grade(plot_data)
+
+# View calculation results
+res_data
+```
+
+## <div align="center">4 Carbon Sequestration Potential Productivity Calculation</div>
 
 <details>
 <summary style="font-size:21px;"><strong>4.1 Build Model</strong></summary>
@@ -426,7 +455,195 @@ summary(forestData)
 
 </details>
 
-## <div align="center">5 Citation</div>
+## 5 Degraded Forest Assessment
+
+<details>
+<summary style="font-size:21px;"><strong>5.1 Preprocess the Degraded Forest Data</strong></summary>
+
+Sample data is built into the *`forestat`* package, including three tree data of `tree_1`, `tree_2` and `tree_3` and three sample plot data of `plot_1`, `plot_2` and `plot_3`. You can load and view the sample data using the following command:
+
+```R
+# Load tree_1 tree_2 tree_3 plot_1 plot_2 plot_3 sample data in the package
+# tree_1 plot_1, tree_2 plot_2, tree_3 plot_3 are the survey data in 2005, 2010 and 2015 respectively.
+data(tree_1)
+data(tree_2)
+data(tree_3)
+data(plot_1)
+data(plot_2)
+data(plot_3)
+
+# View the first 6 rows of data in tree_1
+head(tree_1)
+
+# Output
+  tree_number sample_plot_number inspection_type tree_species_code   plot_id
+1           3                  4              11               410 700000004
+2          13                  4              14               410 700000004
+3          19                  4              11               420 700000004
+4          26                  4              12               420 700000004
+5          28                  4              12               420 700000004
+6          29                  4              12               410 700000004
+
+# View the first 6 rows of data in plot_1
+head(plot_1)
+
+# Output
+  sample_plot_number sample_plot_type altitudes slope_direction slope_position gradient soil_thickness humus_thickness
+1                  2               11       410               9              6        0             60               0
+2                  5               11       333               3              3        4             30              10
+3                  6               11       350               2              5        1             70              20
+4                  7               11       395               2              3        5             75              20
+5                  8               11       438               2              4        4             80              20
+6                  9               11       472               7              4        5             60              25
+  land_type origin dominant_tree_species average_age age_group average_diameter_at_breast_height average_tree_height
+1       180      0                     0           0         0                                 0                   0
+2       111     13                   620          37         2                               125                 116
+3       240      0                     0           0         0                                 0                   0
+4       111     13                   620          20         1                                97                 110
+5       111     11                   620          75         4                               195                  97
+6       111     13                   630          35         2                               120                  89
+  crown_density naturalness disaster_type disaster_level standing_stock dead_wood_stock forest_cutting_stock   plot_id
+1             0           0             0              0          0.000           0.000                0.000 700000002
+2            85           4            20              1          4.816           0.131                0.000 700000005
+3             0           0             0              0          0.000           0.000                0.000 700000006
+4            60           4             0              0          1.560           0.082                0.040 700000007
+5            50           4            20              1          3.665           0.464                0.013 700000008
+6            60           4            20              1          4.890           0.041                1.408 700000009
+```
+
+The meanings of each field in the sample data are as follows:
+
+`tree_number`: Tree number
+
+`sample_plot_number`: Sample plot number
+
+`inspection_type`: Inspection type
+
+`tree_species_code`: Tree species code
+
+`plot_id`: The ID of the sample plot
+
+`sample_plot_type`: The type of sample plot
+
+`altitudes`: Altitude
+
+`slope_direction`: Slope direction
+
+`slope_position`: Slope position
+
+`gradient`: Gradient
+
+`soil_thickness`: Soil thickness
+
+`humus_thickness`: Humus thickness
+
+`land_type`: The type of land
+
+`origin`: Origin
+
+`dominant_tree_species`: Dominant tree species
+
+`average_age`: Average age
+
+`age_group`: Age group
+
+`average_diameter_at_breast_height`: Average diameter at breast height
+
+`average_tree_height`: Average tree height
+
+`crown_density`: Crown density
+
+`naturalness`: Naturalness
+
+`disaster_type`: Disaster type
+
+`disaster_level`: Disaster level
+
+`standing_stock`: Standing stock
+
+`dead_wood_stock`: Dead wood stock
+
+`forest_cutting_stock`: Forest cutting stock
+
+You can also load custom data. In the custom data, tree_1, tree_2, tree_3 are required to include the fields `plot_id`, `inspection_type`, and `tree_species_code`. plot_1, plot_2, and plot_3 are required to include the fields `plot_id`, `standing_stock`, `forest_cutting_stock`, `crown_density`, `disaster_level`, `origin`, `dominant_tree_species`, `age_group`, `naturalness`, and `land_type`.
+
+```R
+# Load openxlsx package
+library("openxlsx")
+
+# Load custom data (tree_1 tree_2 tree_3 plot_1 plot_2 plot_3) from xlsx files
+tree_1 <- read.xlsx("/path/to/your/folder/tree_1.xlsx", sheet = 1)
+tree_2 ...
+...
+```
+
+</details>
+
+<br>
+<details>
+<summary style="font-size:20px;"><strong>5.2 Calculate the Degraded Forest Grade</strong></summary>
+
+After loading the data, you can use the `degraded_forest_preprocess()` function to complete degraded forest data preprocessing, and use the `calc_degraded_forest_grade()` function to complete the degraded forest grade calculation.
+
+```R
+# Degraded forest data preprocessing
+plot_data <- degraded_forest_preprocess(tree_1, tree_2, tree_3,
+                                        plot_1, plot_2, plot_3)
+
+# Degraded forest grade calculation
+res_data <- calc_degraded_forest_grade(plot_data)
+
+# View calculation results
+res_data
+```
+
+`res_data` includes `p1`, `p2`, `p3`, `p4`, `p5`, `ID`, `referenceID`, `num`, `p1m`, `p2m`, `p3m`, `p4m`, `Z1`, `Z2`, `Z3`, `Z4`,`Z5`, `Z`, `Z_weights`, `Z_grade`, `Z_weights_grade`. The meaning is as follows:
+
+`p1`: Forest accumulation growth rate
+
+`p2`: Forest recruitment rate
+
+`p3`: Tree species reduction rate
+
+`p4`: Forest canopy cover reduction rate
+
+`p5`: Forest disaster level
+
+`ID`: Group ID, grouped according to `origin-dominant tree species-age group`
+
+`referenceID`: Reference object ID
+
+`num`: Number of reference objects
+
+`p1m`: The reference value of Forest accumulation growth rate
+
+`p2m`: The reference value of forest recruitment rate
+
+`p3m`: The reference value of tree species reduction rate
+
+`p4m`: The reference value of forest canopy cover reduction rate
+
+`Z1`: Discriminant factor Z1
+
+`Z2`: Discriminant factor Z2
+
+`Z3`: Discriminant factor Z3
+
+`Z4`: Discriminant factor Z4
+
+`Z5`: Discriminant factor Z5
+
+`Z`: the sum of discriminant factor, $Z = Z1 + Z2 + Z3 + Z4 + Z5$
+
+`Z_weights`: Comprehensive discriminant factor, the sum of discriminant factor weights, $Z_weights = Z1 + 0.75 \times Z2 + 0.5 \times Z3 + 0.5 \times Z4 + 0.25 \times Z5$
+
+`Z_grade`: The grade of degraded forest corresponding to Z
+
+`Z_weights_grade`: The grade of degraded forest corresponding to Z_weights
+
+</details>
+
+## <div align="center">6 Citation</div>
 <div id="citation"></div>
 
 ```txt

@@ -5,9 +5,9 @@
 #' @param tree_1 Tree data for the 1st period
 #' @param tree_2 Tree data for the 2nd period
 #' @param tree_3 Tree data for the 3rd period
-#' @param plot_1 Plot data for the 1st period
-#' @param plot_2 Plot data for the 2nd period
-#' @param plot_3 Plot data for the 3rd period
+#' @param plot_1 Sample plot data for the 1st period
+#' @param plot_2 Sample plot data for the 2nd period
+#' @param plot_3 Sample plot data for the 3rd period
 #' @return Preprocessed plot_data
 #' @examples
 #' \donttest{

@@ -753,13 +753,13 @@ I.degradation_indicator <- function(data) {
     data_ref <- data35
   }
 
-  N <- nrow(data_ref)
   p1m <- min(I.mean(data_ref$p1), median(data_ref$p1))
   p2m <- min(I.mean(data_ref$p2), median(data_ref$p2))
   p3m <- ifelse(nrow(filter(data35, data35$p3 > 0)) > 0, min(I.mean(filter(data35, data35$p3 > 0)$p3), median(filter(data35, data35$p3 > 0)$p3)), 0)
   p4m <- ifelse(nrow(filter(data35, data35$p4 > 0)) > 0, min(I.mean(filter(data35, data35$p4 > 0)$p4), median(filter(data35, data35$p4 > 0)$p4)), 0)
+  N <- nrow(data_ref)
 
-  index <- c(N, p1m, p2m, p3m, p4m, referenceID)
+  index <- c(p1m, p2m, p3m, p4m, referenceID, N)
   return(index)
 }
 

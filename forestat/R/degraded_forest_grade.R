@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 #' @title Calculating degraded forest grade
 #' @description Calculation of degraded forest grade.
-#' @details Calculation of degraded forest grade, icluding p1, p2,p3, p4, p5, p1m, p2m, p3m, p4m, Z1, Z2, Z3, Z4, Z5, Z_sum, etc.
+#' @details Calculation of degraded forest grade, icluding p1, p2,p3, p4, p5, p1m, p2m, p3m, p4m, Z1, Z2, Z3, Z4, Z5, Z, Z_weights, Z_grade, Z_weights_grade etc.
 #' @param plot_data Preprocessed plot_data
 #' @return res_data with degraded forest grade
 #' @examples
@@ -38,12 +38,12 @@ calc_degraded_forest_grade <- function(plot_data) {
   for (i in 1:length(processlist)) {
     data <- processlist[[i]]
     data$ID <- I.label(data)
-    data$num <- I.degradation_indicator(data)[1]
-    data$p1m <- I.degradation_indicator(data)[2]
-    data$p2m <- I.degradation_indicator(data)[3]
-    data$p3m <- I.degradation_indicator(data)[4]
-    data$p4m <- I.degradation_indicator(data)[5]
-    data$referenceID <- I.degradation_indicator(data)[6]
+    data$referenceID <- I.degradation_indicator(data)[5]
+    data$num <- I.degradation_indicator(data)[6]
+    data$p1m <- I.degradation_indicator(data)[1]
+    data$p2m <- I.degradation_indicator(data)[2]
+    data$p3m <- I.degradation_indicator(data)[3]
+    data$p4m <- I.degradation_indicator(data)[4]
     res_list[[i]] <- data
   }
   res_data <- bind_rows(res_list)

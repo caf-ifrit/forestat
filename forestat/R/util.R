@@ -526,6 +526,18 @@ parameterEstimate <- function(forestData){
   return(parameter_list)
 }
 
+#' Calculate Fitting Evaluation Indices
+#'
+#' Calculates fitting evaluation indices from estimated and observed values.
+#'
+#' @param EstiH A numeric vector of estimated values.
+#' @param ObsH A numeric vector of observed values.
+#' @return A named numeric vector containing mean error (`pe`), root mean
+#'   squared error (`RMSE`), coefficient of determination (`R2`), variance of
+#'   the error (`Var`), and total relative error in percent (`TRE`).
+#' @examples
+#' FittingEvaluationIndex(c(1, 2, 4), c(1, 3, 5))
+#' @export
 FittingEvaluationIndex<-function(EstiH,ObsH){
   temp <- !is.na(EstiH) & !is.na(ObsH)
   EstiH <- EstiH[temp]

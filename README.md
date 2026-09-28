@@ -1,7 +1,7 @@
 # <div align="center"><strong>森林碳汇计量和潜力计算</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 1.1.0</p>
-<p align="right"><strong>Date:</strong> 10/10/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.2.0</p>
+<p align="right"><strong>Date:</strong> 09/28/2026 </p>
 <br>
 
 *`forestat`* 是基于中国林业科学研究院资源信息研究所（Institute of Forest Resource Information Techniques, Chinese Academy of Forestry）提出的`基于林分潜在生长量的立地质量评价方法与应用`[<sup>[1]</sup>](#citation)和`A basal area increment-based approach of site productivity evaluation for multi-aged and mixed forests`[<sup>[2]</sup>](#citation)开发的R包。可依据林分高生长，划分立地等级；并以全林整体模型为基础，建立不同立地等级下的非线性混合效应生物量模型，实现更精准的碳汇计量；尤其提出了一种基于林分潜在生长量的碳汇潜力计算方法。该套算法适用于天然林和人工林，能够定量回答一定立地条件下的潜在生产力、现实生产力、提升空间有多大，可用于立地质量评价、树种适宜性评价、退化林评价等多个方面。
@@ -110,6 +110,27 @@ res_data <- calc_degraded_forest_grade(plot_data)
 
 # 查看计算结果
 res_data
+```
+
+### 3.1 1.2.0版本新增数据集和拟合评价指标
+
+1.2.0版本新增了 `birch`、`larch` 和 `picea` 三个已配套帮助文档的单木数据集，
+并将 `FittingEvaluationIndex()` 作为公开函数，用于计算模型拟合评价指标。
+
+```R
+# 加载1.2.0版本新增数据集
+data("birch")
+data("larch")
+data("picea")
+
+dim(birch)
+dim(larch)
+dim(picea)
+
+# 计算拟合评价指标
+estimated <- c(1, 2, 4)
+observed <- c(1, 3, 5)
+FittingEvaluationIndex(estimated, observed)
 ```
 
 ## <div align="center">4 碳汇潜力计算</div>

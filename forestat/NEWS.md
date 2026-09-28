@@ -1,3 +1,15 @@
+# forestat 1.2.0 (2026-09-28)
+
+## New Features
+
+* Exported `FittingEvaluationIndex()` for calculating model fitting evaluation indices.
+* Added the `birch`, `larch`, and `picea` datasets and their documentation.
+
+## Other
+
+* Updated the forestat vignette with usage examples for the new datasets and exported function.
+* Existing datasets and previously exported functions remain unchanged.
+
 # forestat 1.1.0 (2023-10-10)
 
 ## New Features

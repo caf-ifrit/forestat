@@ -1,7 +1,7 @@
 # <div align="center"><strong>Forest Carbon Sequestration and Potential Productivity Calculation</strong></div>
 
-<p align="right"><strong>Forestat version:</strong> 1.1.0</p>
-<p align="right"><strong>Date:</strong> 10/10/2023 </p>
+<p align="right"><strong>Forestat version:</strong> 1.2.0</p>
+<p align="right"><strong>Date:</strong> 09/28/2026 </p>
 <br>
 
 *`Forestat`* can be used to implement the calculation of carbon sequestration potential productivity and the assessment of degraded forests. The calculation of carbon sequestration potential productivity includes the assessment of site classes based on stand height growth, establishment of the growth models of height (H-model), basal area at breast-height (BA-model), and biomass (Bio-model), as well as calculation of stand’s realized site productivity and potential productivity. The H-model can be constructed using Richard, Logistic, Korf, Gompertz, Weibull, and Schumacher model, while the BA-model and Bio-model can only be constructed using Richard model. The calculation of carbon sequestration potential productivity relies on data from several plots for a given forest type (tree species). The assessment of degraded forests relies on data from several trees and sample plots. Some sample datas are provided in the *`Forestat`* package.
@@ -31,7 +31,7 @@
   <p>Figure 1.2 Flowchart of the degraded forest assessment</p>
 </div>
 
-### 1.3 R Packages Required by *forestat*
+### 1.2 R Packages Required by *forestat*
 
 | **Package** | **Download Link**                          |
 | ----------- | ------------------------------------------ |
@@ -46,7 +46,7 @@ To install *`forestat`* from [CRAN](https://CRAN.R-project.org/package=forestat)
 
 ```R
 # Install forestat
-install.packages("forest")
+install.packages("forestat")
 ```
 
 Alternatively, you can install *`forestat`* from [GitHub](https://github.com/caf-ifrit/forestat) in R using the following command:
@@ -111,6 +111,26 @@ res_data <- calc_degraded_forest_grade(plot_data)
 
 # View calculation results
 res_data
+```
+
+### 3.1 Additional Datasets and Fitting Evaluation in Version 1.2.0
+
+Version 1.2.0 adds three documented tree-level datasets: `birch`, `larch`, and
+`picea`. It also exports `FittingEvaluationIndex()` for calculating model
+fitting evaluation indices.
+
+```R
+data("birch")
+data("larch")
+data("picea")
+
+dim(birch)
+dim(larch)
+dim(picea)
+
+estimated <- c(1, 2, 4)
+observed <- c(1, 3, 5)
+FittingEvaluationIndex(estimated, observed)
 ```
 
 ## <div align="center">4 Carbon Sequestration Potential Productivity Calculation</div>

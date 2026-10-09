@@ -12,7 +12,7 @@
 #' @param maxiter Maximum number of iterations parameter for solving the stand density index according to Newton's iteration method.
 #' @return A forestData class in which a data.frame with potential productivity parameters is added.
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' # Load sample data
 #' data("forestData")
 #'

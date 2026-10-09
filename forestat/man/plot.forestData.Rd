@@ -39,7 +39,7 @@ A trellis plot object
 Plot graphs about the forestData.
 }
 \examples{
-\donttest{
+if (interactive()) {
 # Load sample data
 data("forestData")
 

@@ -23,7 +23,7 @@ realized.productivity calculate the realized productivity of each stand based on
 realized.productivity takes data,data_BA,data_V parameters as required inputs.
 }
 \examples{
-\donttest{
+if (interactive()) {
 # Load sample data
 data("forestData")
 

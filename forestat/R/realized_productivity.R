@@ -7,7 +7,7 @@
 #' @param right Solving for the right boundary of the realized productivity.
 #' @return A forestData class in which a data.frame with realized productivity parameters is added.
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' # Load sample data
 #' data("forestData")
 #'

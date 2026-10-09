@@ -12,7 +12,7 @@
 #' @param Bio_start The initial parameters for fitting the Bio-model, the default value is c(a=450, b=0.0001, c=12, d=0.1).
 #' @return A data of forestData class with output values, models and model parameters.
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' # Load sample data
 #' data("forestData")
 #'

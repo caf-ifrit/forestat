@@ -526,26 +526,49 @@ parameterEstimate <- function(forestData){
   return(parameter_list)
 }
 
-FittingEvaluationIndex<-function(EstiH,ObsH){
-  temp <- !is.na(EstiH) & !is.na(ObsH)
-  EstiH <- EstiH[temp]
-  ObsH <- ObsH[temp]
-  Index<-array(dim=5)
-  n<-length(ObsH)
-  e<-ObsH-EstiH
-  e1<-ObsH-mean(ObsH)
-  pe<-mean(e)
-  var2<-var(e)
-  RMSE<-sqrt(pe^2+var2*(n-1)/n)
-  R2<-1-sum(e^2)/sum((e1)^2)
-  TRE<-100*sum(e^2)/sum((EstiH)^2)
-  Index[1]<-pe
-  Index[2]<-RMSE
-  Index[3]<-R2
-  Index[4]<-var2
-  Index[5]<-TRE
-  dimnames(Index)<-list(c("pe","RMSE","R2","Var","TRE"))
-  return(Index)
+#' Calculate Fitting Evaluation Indices
+#'
+#' Calculates fitting evaluation indices from estimated and observed values.
+#'
+#' @param EstiH A numeric vector of estimated values.
+#' @param ObsH A numeric vector of observed values.
+#' @return A named numeric vector containing mean error (`pe`), root mean
+#'   squared error (`RMSE`), coefficient of determination (`R2`), variance of
+#'   the error (`Var`), and total relative error in percent (`TRE`).
+#' @details `EstiH` and `ObsH` must have the same length. Non-finite pairs are
+#'   removed, and at least two finite pairs are required. `R2` is `NA` when all
+#'   observed values are equal, and `TRE` is `NA` when all estimated values are
+#'   zero.
+#' @examples
+#' FittingEvaluationIndex(c(1, 2, 4), c(1, 3, 5))
+#' @export
+FittingEvaluationIndex <- function(EstiH, ObsH) {
+  if (!is.numeric(EstiH) || !is.numeric(ObsH)) {
+    stop("`EstiH` and `ObsH` must be numeric vectors.")
+  }
+  if (length(EstiH) != length(ObsH)) {
+    stop("`EstiH` and `ObsH` must have the same length.")
+  }
+
+  finite <- is.finite(EstiH) & is.finite(ObsH)
+  EstiH <- EstiH[finite]
+  ObsH <- ObsH[finite]
+  if (length(ObsH) < 2L) {
+    stop("At least two finite estimated-observed pairs are required.")
+  }
+
+  n <- length(ObsH)
+  e <- ObsH - EstiH
+  e1 <- ObsH - mean(ObsH)
+  pe <- mean(e)
+  var2 <- var(e)
+  RMSE <- sqrt(pe^2 + var2 * (n - 1) / n)
+  r2_denominator <- sum(e1^2)
+  tre_denominator <- sum(EstiH^2)
+  R2 <- if (r2_denominator > 0) 1 - sum(e^2) / r2_denominator else NA_real_
+  TRE <- if (tre_denominator > 0) 100 * sum(e^2) / tre_denominator else NA_real_
+
+  c(pe = pe, RMSE = RMSE, R2 = R2, Var = var2, TRE = TRE)
 }
 
 index.f<-function(model,var,num,m=6){

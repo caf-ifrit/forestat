@@ -42,7 +42,7 @@ class.plot adds new variables: the original height classes and the adjusted heig
 Input takes a data.frame with three variables ID, AGE, H and returns height classes of every sample (rows in the data.frame).
 }
 \examples{
-\donttest{
+if (interactive()) {
 # Load sample data
 data("forestData")
 

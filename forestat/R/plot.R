@@ -11,7 +11,7 @@
 #' @param ... Additional arguments affecting the figure plotted.
 #' @return A trellis plot object
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' # Load sample data
 #' data("forestData")
 #'

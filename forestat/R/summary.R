@@ -6,7 +6,7 @@
 #' @param ... Additional arguments affecting the summary produced.
 #' @return A summary object of class "summary.forestData"
 #' @examples
-#' \donttest{
+#' if (interactive()) {
 #' # Load sample data
 #' data("forestData")
 #'

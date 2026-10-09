@@ -42,7 +42,7 @@ potential.productivity calculate the potential productivity of stand based on mo
 potential.productivity takes data_BA,data_V parameters as required inputs.
 }
 \examples{
-\donttest{
+if (interactive()) {
 # Load sample data
 data("forestData")
 

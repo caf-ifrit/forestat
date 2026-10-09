@@ -21,7 +21,7 @@ Generates summary statistics for forestData objects.
 The summary includes the summary of raw data, the model, the model parameters, potential productivity and real productivity in forestData(if available)
 }
 \examples{
-\donttest{
+if (interactive()) {
 # Load sample data
 data("forestData")
 

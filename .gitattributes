@@ -1,0 +1,17 @@
+# Normalize text files to LF across platforms
+* text=auto eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.rda binary
+*.RData binary
+*.rds binary
+*.RDS binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.exe binary
